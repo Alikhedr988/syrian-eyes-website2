@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syrian Eyes — Investing in the future of our societies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #faf8f4;
+  color: #1a1714;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+
+:root {
+  /* ── Base ── */
+  --dark:      #1a1714;
+  --dark-mid:  #241f1b;
+  --dark-soft: #2e2824;
+  --cream:     #faf8f4;
+  --cream-mid: #f2f0ea;
+  --white:     #ffffff;
+  --muted:     #7a7570;
+
+  /* ── Blue ── */
+  --blue:      #4a8ec2;
+  --blue-dark: #3578ac;
+  --blue-deep: #0e2238;
+
+  /* ── Paint palette (from My Eyes artwork) ── */
+  --paint-red:    #c85a32;
+  --paint-teal:   #2d6b5e;
+  --paint-purple: #4a2d66;
+
+  /* ── Text on dark backgrounds — all must meet WCAG AA ── */
+  --text-on-dark-primary:   rgba(255,255,255,0.88);
+  --text-on-dark-secondary: rgba(255,255,255,0.58);
+  --text-on-dark-tertiary:  rgba(255,255,255,0.36);
+  --text-on-dark-muted:     rgba(255,255,255,0.28);
+
+  /* ── Spacing scale ── */
+  --sp-section:   100px;   /* desktop section padding */
+  --sp-section-y: 120px;   /* hero-adjacent sections  */
+  --sp-inner:      64px;   /* within-section gap      */
+
+  /* ── Type ── */
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', sans-serif;
+
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23g)' opacity='0.13'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s ease, transform 0.85s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal.d1 { transition-delay: 0.1s; }
+.reveal.d2 { transition-delay: 0.22s; }
+.reveal.d3 { transition-delay: 0.34s; }
+.reveal.d4 { transition-delay: 0.46s; }
+
+/* ═══════════════════════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════════════════════ */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 52px;
+  transition: background 0.45s, border-color 0.45s;
+  border-bottom: 1px solid transparent;
+}
+#nav.on-dark {
+  background: rgba(26,23,20,0.94);
+  border-bottom-color: rgba(255,255,255,0.06);
+}
+#nav.on-light {
+  background: rgba(250,248,244,0.97);
+  border-bottom-color: rgba(26,23,20,0.09);
+}
+.nav-logo { display: flex; align-items: center; gap: 11px; }
+.nav-logo-ring {
+  width: 33px; height: 33px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.32);
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.45s;
+}
+#nav.on-light .nav-logo-ring { border-color: rgba(26,23,20,0.28); }
+.nav-logo-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(255,255,255,0.48);
+  transition: background 0.45s;
+}
+#nav.on-light .nav-logo-dot { background: rgba(26,23,20,0.38); }
+.nav-logo-name {
+  font-family: var(--serif); font-size: 14px; font-weight: 400;
+  letter-spacing: 0.05em; color: rgba(255,255,255,0.82);
+  transition: color 0.45s;
+}
+#nav.on-light .nav-logo-name { color: var(--dark); }
+
+.nav-links { display: flex; align-items: center; gap: 34px; }
+.nav-links a {
+  font-size: 12px; font-weight: 400; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.6); transition: color 0.2s;
+}
+#nav.on-light .nav-links a { color: rgba(26,23,20,0.6); }
+.nav-links a:hover { color: var(--blue); }
+.nav-donate {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+  padding: 9px 22px;
+  border: 1px solid rgba(255,255,255,0.38);
+  color: rgba(255,255,255,0.88);
+  background: transparent; cursor: pointer;
+  transition: all 0.25s;
+}
+#nav.on-light .nav-donate { border-color: rgba(26,23,20,0.32); color: var(--dark); }
+.nav-donate:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO — PARALLAX
+═══════════════════════════════════════════════════════════════ */
+#hero {
+  position: relative;
+  height: 100vh; min-height: 700px;
+  background: var(--dark);
+  display: flex; align-items: flex-end;
+  padding: 0 0 88px 88px;
+  overflow: hidden;
+  cursor: none;
+}
+/* Artwork texture layer — warm painting at near-invisible opacity */
+#hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background-image: url('assets/design elements - kids drawings - my eyes project (1).jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.07;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Custom cursor */
+#hero-cursor {
+  position: absolute;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  pointer-events: none;
+  z-index: 20;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: difference;
+}
+#hero-cursor.expanded {
+  width: 48px; height: 48px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* The three photo panels — each moves independently */
+.hero-panels {
+  position: absolute; inset: 0;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+}
+.hero-panel {
+  position: relative; overflow: hidden;
+  background: var(--dark-mid);
+  will-change: transform;
+}
+/* Hero panels — photographic panels desaturated via CSS filter on inner */
+.hero-panel-inner {
+  position: absolute;
+  inset: -8%;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--dark-soft);
+  will-change: transform;
+  transition: transform 0.08s linear;
+  filter: grayscale(85%) contrast(1.08);
+}
+/* ↓ Hero panel photos — grayscale treatment via hero-panel-dim overlay */
+.hero-panel:nth-child(1) .hero-panel-inner { background-image: url('assets/cover photo(1).jpg'); }
+.hero-panel:nth-child(2) .hero-panel-inner { background-image: url('assets/rehabilitation.jpg'); }
+.hero-panel:nth-child(3) .hero-panel-inner { background-image: url('assets/volunteers_.jpg'); }
+
+.hero-panel-dim {
+  position: absolute; inset: 0;
+  background: rgba(26,23,20,0.42);
+}
+
+.hero-vignette {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(
+    to top,
+    rgba(26,23,20,0.97) 0%,
+    rgba(26,23,20,0.42) 52%,
+    rgba(26,23,20,0.12) 100%
+  );
+}
+.hero-vignette-left {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to right, rgba(26,23,20,0.72) 0%, transparent 58%);
+}
+.hero-grain {
+  position: absolute; inset: 0; z-index: 3;
+  background-image: var(--grain);
+  background-size: 220px; opacity: 0.5; pointer-events: none;
+}
+.hero-col-lines {
+  position: absolute; inset: 0; z-index: 3;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; pointer-events: none;
+}
+.hero-col-line { border-right: 1px solid rgba(255,255,255,0.03); }
+
+.hero-side {
+  position: absolute; right: 22px; top: 50%; transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  font-size: 9px; letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.18); z-index: 5;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.hero-side::before, .hero-side::after {
+  content: ''; width: 1px; height: 32px;
+  background: rgba(255,255,255,0.1);
+}
+
+.hero-content { position: relative; z-index: 5; }
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 13px;
+  font-size: 10px; letter-spacing: 0.28em;
+  color: rgba(255,255,255,0.36);
+  margin-bottom: 26px;
+}
+.hero-eyebrow::before {
+  content: ''; width: 34px; height: 1px;
+  background: rgba(255,255,255,0.22);
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(60px, 8.5vw, 116px);
+  font-weight: 300; line-height: 0.93;
+  letter-spacing: -0.01em; color: var(--white);
+  margin-bottom: 34px;
+}
+.hero-title .accent { color: var(--blue); font-style: italic; }
+.hero-body {
+  font-size: 14px; font-weight: 300; line-height: 1.82;
+  color: var(--text-on-dark-secondary); max-width: 400px;
+  margin-bottom: 46px;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 13px;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.84);
+  border: 1px solid rgba(255,255,255,0.24);
+  padding: 15px 30px; transition: all 0.3s;
+}
+.hero-cta:hover { background: var(--white); color: var(--dark); border-color: var(--white); }
+.hero-cta svg { width: 13px; height: 13px; }
+
+.hero-scroll-hint {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  z-index: 5; cursor: pointer;
+}
+.hero-scroll-line { width: 1px; height: 26px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.22)); }
+.hero-scroll-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.22); animation: blink 2.4s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+/* ═══════════════════════════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════════════════════════ */
+#about {
+  background: var(--cream);
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 620px;
+}
+.about-text {
+  padding: var(--sp-section-y) 72px var(--sp-section-y) 88px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.eyebrow {
+  font-size: 10px; letter-spacing: 0.22em; color: var(--blue);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 22px;
+}
+.eyebrow::before { content: ''; width: 26px; height: 1px; background: var(--blue); }
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.2vw, 46px);
+  font-weight: 400; line-height: 1.22; color: var(--dark);
+  margin-bottom: 30px;
+}
+.body-text {
+  font-size: 15px; font-weight: 300; line-height: 1.86;
+  color: #5a5450; margin-bottom: 18px;
+}
+.about-photo {
+  position: relative; overflow: hidden; background: var(--dark-soft);
+}
+.about-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: transform 9s ease; }
+.about-photo:hover img { transform: scale(1.04); }
+.about-photo-placeholder {
+  width: 100%; height: 100%; min-height: 500px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; letter-spacing: 0.12em; color: rgba(255,255,255,0.18);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STATS
+═══════════════════════════════════════════════════════════════ */
+#stats {
+  background: var(--blue);
+  display: grid; grid-template-columns: repeat(4,1fr);
+}
+.stat {
+  padding: 56px 28px; text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.14);
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--serif);
+  font-size: clamp(44px, 5vw, 66px);
+  font-weight: 300; color: var(--white); line-height: 1;
+  margin-bottom: 12px;
+}
+.stat-lbl {
+  font-size: 10px; font-weight: 400; letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.68);
+}
+.stat-bar { height: 2px; background: rgba(255,255,255,0.18); margin-top: 14px; border-radius: 1px; overflow: hidden; }
+.stat-fill { height: 100%; background: rgba(255,255,255,0.65); width: 0; border-radius: 1px; transition: width 1.6s ease; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PROGRAMS
+═══════════════════════════════════════════════════════════════ */
+.prog-block {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 580px;
+}
+.prog-block.is-dark { background: var(--dark); position: relative; }
+.prog-block.is-light { background: var(--cream); }
+.prog-grain {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: var(--grain);
+  background-size: 220px; opacity: 0.42; pointer-events: none;
+}
+.prog-text {
+  padding: 80px 64px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; z-index: 2;
+}
+.prog-tag {
+  font-size: 10px; letter-spacing: 0.2em;
+  color: var(--blue); margin-bottom: 16px;
+}
+.prog-title {
+  font-family: var(--serif);
+  font-size: clamp(26px, 2.8vw, 38px);
+  font-weight: 400; line-height: 1.18; margin-bottom: 22px;
+}
+.is-dark .prog-title { color: var(--white); }
+.is-light .prog-title { color: var(--dark); }
+.prog-body {
+  font-size: 14px; font-weight: 300; line-height: 1.86;
+}
+.is-dark .prog-body { color: var(--text-on-dark-secondary); }  /* was rgba(255,255,255,0.58) */
+.is-light .prog-body { color: #5a5450; }
+
+.prog-photo {
+  position: relative; overflow: hidden; background: var(--dark-mid);
+}
+.prog-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: transform 7s ease; }
+.prog-photo:hover img { transform: scale(1.04); }
+.prog-photo-ph {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; letter-spacing: 0.1em; min-height: 380px;
+}
+.is-dark .prog-photo-ph { background: var(--dark-soft); color: rgba(255,255,255,0.13); }
+.is-light .prog-photo-ph { background: #dedad4; color: rgba(26,23,20,0.25); }
+.prog-photo-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(26,23,20,0.28) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* Two-col programs */
+#prog-2col {
+  background: var(--cream);
+  padding: var(--sp-section) 88px;
+  border-top: 1px solid rgba(26,23,20,0.07);
+}
+.prog2-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  border-top: 1px solid rgba(26,23,20,0.09); padding-top: 56px; margin-top: 8px;
+}
+.prog2-tag { font-size: 10px; letter-spacing: 0.2em; color: var(--blue); margin-bottom: 14px; }
+.prog2-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 400; line-height: 1.2; color: var(--dark); margin-bottom: 18px;
+}
+.prog2-body { font-size: 14px; font-weight: 300; line-height: 1.86; color: #5a5450; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PAST PROJECTS — INTERACTIVE TIMELINE
+═══════════════════════════════════════════════════════════════ */
+#past-projects {
+  background: var(--cream-mid);
+  padding: var(--sp-section) 88px;
+  border-top: 1px solid rgba(26,23,20,0.06);
+}
+.archive-hdr { margin-bottom: 64px; }
+.archive-title {
+  font-family: var(--serif);
+  font-size: clamp(40px, 4.5vw, 62px);
+  font-weight: 400; color: var(--dark);
+  margin-bottom: 14px; line-height: 1.1;
+}
+.archive-sub {
+  font-size: 14px; font-weight: 300; line-height: 1.8;
+  color: var(--muted); max-width: 520px;
+}
+
+/* ── Timeline component ── */
+#timeline-wrap {
+  background: var(--white);
+  border: 1px solid rgba(26,23,20,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.tl-top {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 360px;
+}
+.tl-detail {
+  padding: 52px 56px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid rgba(26,23,20,0.08);
+}
+.tl-detail-year {
+  font-family: var(--serif);
+  font-size: 72px; font-weight: 300; line-height: 1;
+  color: var(--dark); margin-bottom: 4px;
+  transition: all 0.4s ease;
+}
+.tl-detail-period {
+  font-size: 11px; letter-spacing: 0.14em;
+  color: var(--blue); margin-bottom: 24px;
+  transition: all 0.35s ease;
+}
+.tl-detail-name {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 400; line-height: 1.22; color: var(--dark);
+  margin-bottom: 20px; transition: all 0.35s ease;
+}
+.tl-detail-desc {
+  font-size: 14px; font-weight: 300; line-height: 1.82;
+  color: var(--muted); flex: 1; transition: all 0.35s ease;
+}
+.tl-detail-counter {
+  font-size: 10px; letter-spacing: 0.14em;
+  color: rgba(26,23,20,0.25); margin-top: 28px;
+}
+
+.tl-nav-col {
+  display: flex; flex-direction: column;
+  max-height: 360px; overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26,23,20,0.1) transparent;
+}
+.tl-nav-col::-webkit-scrollbar { width: 3px; }
+.tl-nav-col::-webkit-scrollbar-thumb { background: rgba(26,23,20,0.12); border-radius: 2px; }
+
+.tl-item {
+  padding: 20px 28px;
+  border-bottom: 1px solid rgba(26,23,20,0.06);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 16px;
+  transition: background 0.2s;
+  position: relative;
+}
+.tl-item:last-child { border-bottom: none; }
+.tl-item:hover { background: rgba(26,23,20,0.025); }
+.tl-item.active {
+  background: var(--dark);
+}
+.tl-item-year {
+  font-size: 11px; letter-spacing: 0.1em;
+  color: var(--blue); min-width: 40px;
+  transition: color 0.2s;
+}
+.tl-item.active .tl-item-year { color: rgba(255,255,255,0.5); }
+.tl-item-name {
+  font-size: 13px; font-weight: 400; color: var(--dark);
+  line-height: 1.35; transition: color 0.2s;
+}
+.tl-item.active .tl-item-name { color: var(--white); }
+.tl-item-dot {
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 0; background: var(--blue);
+  transition: height 0.3s ease;
+}
+.tl-item.active .tl-item-dot { height: 100%; }
+
+/* Scrubber */
+.tl-scrubber {
+  padding: 28px 56px;
+  border-top: 1px solid rgba(26,23,20,0.08);
+  background: var(--cream);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.tl-scrubber-label {
+  font-size: 9px; letter-spacing: 0.2em;
+  color: rgba(26,23,20,0.35);
+  display: flex; justify-content: space-between;
+}
+.tl-track-wrap {
+  position: relative; height: 2px;
+  background: rgba(26,23,20,0.12);
+  cursor: pointer; border-radius: 1px;
+}
+.tl-track-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--blue); border-radius: 1px;
+  transition: width 0.15s ease;
+  pointer-events: none;
+}
+.tl-thumb {
+  position: absolute; top: 50%;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--white); border: 2px solid var(--blue);
+  box-shadow: 0 0 0 3px rgba(74,142,194,0.18);
+  transform: translate(-50%, -50%);
+  cursor: grab; transition: left 0.15s ease;
+  z-index: 2;
+}
+.tl-thumb:active { cursor: grabbing; transform: translate(-50%, -50%) scale(1.2); }
+.tl-year-markers {
+  display: flex; justify-content: space-between;
+}
+.tl-year-mark {
+  font-size: 9px; letter-spacing: 0.08em;
+  color: rgba(26,23,20,0.28);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VOICES
+═══════════════════════════════════════════════════════════════ */
+#voices {
+  position: relative; background: var(--dark);
+  padding: var(--sp-section) 88px; overflow: hidden;
+}
+.voices-grain {
+  position: absolute; inset: 0;
+  background-image: var(--grain);
+  background-size: 220px; opacity: 0.45; pointer-events: none;
+}
+.voices-hdr {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 40px; align-items: end; margin-bottom: 48px;
+}
+.voices-title {
+  font-family: var(--serif);
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 300; color: var(--white); line-height: 1.08;
+}
+.voices-sub {
+  font-size: 14px; font-weight: 300; line-height: 1.82;
+  color: var(--text-on-dark-secondary);   /* was rgba(255,255,255,0.48) — below AA */
+}
+.gallery-grid {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px;
+}
+.gallery-cell {
+  position: relative; overflow: hidden; background: var(--dark-soft);
+  cursor: pointer;
+}
+.gallery-cell-main { aspect-ratio: 3/4; }
+.gallery-cell-sm { aspect-ratio: 3/4; }
+.gallery-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+.gallery-cell:hover img { transform: scale(1.07); }
+/* artwork cells: full color (no grayscale — the paintings ARE the color) */
+.gallery-cell.is-artwork img { filter: none; }
+/* photo cells keep grayscale documentary treatment */
+.gallery-cell.is-photo img { filter: grayscale(100%); }
+.gallery-ph {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; letter-spacing: 0.12em; color: rgba(255,255,255,0.14);
+}
+.gallery-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 32px 16px 16px;
+  background: linear-gradient(to top, rgba(26,23,20,0.88), transparent);
+  font-size: 10px; letter-spacing: 0.1em; color: var(--text-on-dark-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VIDEO
+═══════════════════════════════════════════════════════════════ */
+#video-section {
+  background: var(--cream); padding: var(--sp-section) 88px; text-align: center;
+  border-top: 1px solid rgba(26,23,20,0.06);
+}
+.video-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 400; color: var(--dark); margin-bottom: 10px;
+}
+.video-sub { font-size: 14px; font-weight: 300; color: var(--muted); margin-bottom: 48px; }
+.video-wrap {
+  max-width: 680px; margin: 0 auto; aspect-ratio: 16/9;
+  background: var(--dark-soft); overflow: hidden;
+  box-shadow: 0 40px 80px rgba(26,23,20,0.14);
+}
+.video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+/* ═══════════════════════════════════════════════════════════════
+   CTA — FIXED: all text now passes WCAG AA on --blue-deep bg
+═══════════════════════════════════════════════════════════════ */
+#cta {
+  position: relative; background: var(--blue-deep);
+  padding: var(--sp-section-y) 88px; text-align: center; overflow: hidden;
+  border-top: 1px solid rgba(74,142,194,0.16);
+}
+/* Artwork texture layer — purple/blue painting at near-invisible opacity */
+#cta::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background-image: url('assets/design elements - kids drawings - my eyes project (2).jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.09;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.cta-ghost {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--serif);
+  font-size: clamp(56px, 10.5vw, 148px);
+  font-weight: 600; letter-spacing: -0.02em;
+  color: rgba(74,142,194,0.04);   /* reduced — was competing with heading */
+  white-space: nowrap; pointer-events: none; user-select: none;
+}
+.cta-eyebrow {
+  position: relative; z-index: 2;
+  font-size: 10px; letter-spacing: 0.24em;
+  color: var(--text-on-dark-tertiary);   /* was failing contrast */
+  margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+}
+.cta-eyebrow::before, .cta-eyebrow::after {
+  content: ''; width: 30px; height: 1px;
+  background: rgba(255,255,255,0.14);
+}
+.cta-title {
+  position: relative; z-index: 2;
+  font-family: var(--serif);
+  font-size: clamp(42px, 5.5vw, 76px);
+  font-weight: 300; color: var(--white);  /* full white for heading */
+  margin-bottom: 22px; line-height: 1.05;
+}
+.cta-body {
+  position: relative; z-index: 2;
+  font-size: 15px; font-weight: 300; line-height: 1.86;
+  color: var(--text-on-dark-secondary);  /* was rgba(255,255,255,0.58) — same value, now via variable */
+  max-width: 480px; margin: 0 auto 52px;
+}
+.cta-btn {
+  position: relative; z-index: 2;
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
+  color: var(--text-on-dark-primary);    /* was: rgba(255,255,255,0.84) on deep blue — was failing */
+  border: 1px solid rgba(255,255,255,0.38);
+  padding: 17px 38px; background: transparent; cursor: pointer;
+  transition: all 0.3s;
+}
+.cta-btn:hover { background: var(--blue); color: var(--white); border-color: var(--blue); }
+.cta-btn svg { width: 13px; height: 13px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════════════ */
+footer {
+  background: var(--dark); padding: 40px 88px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.055);
+}
+.footer-left { display: flex; align-items: center; gap: 18px; }
+.footer-ring {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.18);
+  display: flex; align-items: center; justify-content: center;
+}
+.footer-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.28); }
+.footer-copy { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.28); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a {
+  font-size: 10px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35); transition: color 0.2s;
+}
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+/* ═══════════════════════════════════════════════════════════════
+   FILM LAB — Program 04 expanded
+═══════════════════════════════════════════════════════════════ */
+.prog2-film-header {
+  padding-bottom: 52px;
+  border-bottom: 1px solid rgba(26,23,20,0.09);
+  margin-bottom: 52px;
+  max-width: 640px;
+}
+.film-lab-section {
+  /* inherits #prog-2col padding */
+}
+.film-lab-label {
+  display: flex; align-items: center; gap: 20px;
+  margin-bottom: 32px;
+}
+.film-lab-eyebrow {
+  font-size: 10px; letter-spacing: 0.22em;
+  color: var(--blue); white-space: nowrap; flex-shrink: 0;
+}
+.film-lab-rule {
+  flex: 1; height: 1px; background: rgba(26,23,20,0.1);
+}
+
+/* Film grid — 3 col desktop */
+.film-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 8px;
+}
+.film-card {
+  display: flex; flex-direction: column;
+  cursor: pointer;
+}
+.film-thumb {
+  position: relative; overflow: hidden;
+  aspect-ratio: 16/9;
+  background: var(--dark-soft);
+  margin-bottom: 14px;
+}
+.film-thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(100%) contrast(1.05);
+  transition: transform 6s ease, filter 0.3s ease;
+}
+.film-card:hover .film-thumb img {
+  transform: scale(1.04);
+  filter: grayscale(80%) contrast(1.05);
+}
+.film-thumb-ph {
+  width: 100%; height: 100%;
+  background: var(--dark-soft);
+  min-height: 140px;
+}
+.film-play {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.32);
+  color: var(--white); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.25s, border-color 0.25s;
+  backdrop-filter: blur(4px);
+}
+.film-play svg { width: 14px; height: 14px; margin-left: 2px; }
+.film-card:hover .film-play {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+.film-info { padding: 0 4px; }
+.film-num {
+  font-size: 9px; letter-spacing: 0.2em;
+  color: var(--blue); display: block; margin-bottom: 6px;
+}
+.film-title {
+  font-family: var(--serif);
+  font-size: 17px; font-weight: 400; line-height: 1.3;
+  color: var(--dark); margin-bottom: 5px;
+}
+.film-meta {
+  font-size: 11px; letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* Podcast grid — 3 col desktop */
+.podcast-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.podcast-card {
+  display: flex; flex-direction: column;
+  border: 0.5px solid rgba(26,23,20,0.1);
+  background: var(--white);
+}
+.podcast-art {
+  position: relative; overflow: hidden;
+  aspect-ratio: 16/9;
+  background: var(--dark-soft);
+  flex-shrink: 0;
+}
+.podcast-art img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(100%) contrast(1.05);
+  transition: transform 6s ease;
+}
+.podcast-card:hover .podcast-art img { transform: scale(1.03); }
+.podcast-art-ph {
+  width: 100%; height: 100%; min-height: 130px;
+  background: var(--dark-soft);
+}
+.podcast-body { padding: 20px 22px 22px; flex: 1; }
+.podcast-ep {
+  font-size: 9px; letter-spacing: 0.2em;
+  color: var(--blue); display: block; margin-bottom: 8px;
+}
+.podcast-title {
+  font-family: var(--serif);
+  font-size: 18px; font-weight: 400; line-height: 1.25;
+  color: var(--dark); margin-bottom: 10px;
+}
+.podcast-desc {
+  font-size: 13px; font-weight: 300; line-height: 1.72;
+  color: #5a5450; margin-bottom: 16px;
+}
+.podcast-player { margin-top: auto; }
+.podcast-player iframe {
+  width: 100%; border: none; display: block;
+  border-radius: 0;
+}
+.podcast-player-ph {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+  background: var(--cream-mid);
+  border: 0.5px dashed rgba(26,23,20,0.2);
+  font-size: 11px; color: var(--muted); line-height: 1.5;
+}
+.podcast-player-ph svg { flex-shrink: 0; color: var(--blue); }
+
+/* Separator between film lab and prog 05 */
+.prog2-sep {
+  height: 1px;
+  background: rgba(26,23,20,0.09);
+  margin: 64px 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FILM LIGHTBOX
+═══════════════════════════════════════════════════════════════ */
+#film-lightbox {
+  position: fixed; inset: 0; z-index: 2000;
+  display: flex; align-items: center; justify-content: center;
+}
+#film-lightbox[hidden] { display: none; }
+.lightbox-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(10,9,8,0.92);
+  backdrop-filter: blur(4px);
+}
+.lightbox-inner {
+  position: relative; z-index: 1;
+  width: min(820px, 94vw);
+}
+.lightbox-close {
+  position: absolute; top: -40px; right: 0;
+  background: transparent; border: none;
+  color: rgba(255,255,255,0.6); cursor: pointer;
+  padding: 6px; transition: color 0.2s;
+}
+.lightbox-close:hover { color: var(--white); }
+.lightbox-frame {
+  aspect-ratio: 16/9;
+  background: var(--dark);
+}
+.lightbox-frame iframe {
+  width: 100%; height: 100%; border: none; display: block;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ARTWORK DIVIDER — My Eyes paintings as chapter breaks
+═══════════════════════════════════════════════════════════════ */
+.artwork-divider {
+  position: relative;
+  height: 140px;
+  background-color: var(--dark);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  /* parallax-ready: JS will shift background-position on scroll */
+}
+.artwork-divider::before {
+  /* painting sits at ~70% opacity over ink background */
+  content: '';
+  position: absolute; inset: 0;
+  background: inherit;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.72;
+  transform: scale(1.04);   /* slight overbleed prevents edge gap on parallax shift */
+  transition: transform 0.1s linear;
+}
+.artwork-divider::after {
+  /* thin vignette on top and bottom edges for smooth blending */
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(26,23,20,0.62) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(26,23,20,0.62) 100%
+  );
+  z-index: 1;
+}
+/* Specific painting variants — paths to My Eyes artwork */
+.artwork-divider--purple {
+  background-image: url('assets/design elements - kids drawings - my eyes project (8).jpg');
+}
+.artwork-divider--blue {
+  background-image: url('assets/design elements - kids drawings - my eyes project (6).jpg');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  #nav { padding: 0 24px; }
+  .nav-links a:not(.nav-donate) { display: none; }
+  #hero { padding: 0 0 64px 32px; cursor: auto; }
+  #hero-cursor { display: none; }
+  .hero-title { font-size: 54px; }
+  #about, .prog-block { grid-template-columns: 1fr; }
+  .about-text { padding: 72px 32px; }
+  .about-photo { min-height: 300px; }
+  #stats { grid-template-columns: 1fr 1fr; }
+  .stat { border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .prog-text { padding: 56px 32px; }
+  .prog-photo { min-height: 280px; }
+  #prog-2col, #past-projects, #voices, #video-section, #cta { padding: 72px 24px; }
+  .prog2-grid { grid-template-columns: 1fr; gap: 48px; }
+  .tl-top { grid-template-columns: 1fr; }
+  .tl-nav-col { max-height: 220px; border-top: 1px solid rgba(26,23,20,0.08); }
+  .tl-detail { padding: 36px 28px; }
+  .tl-scrubber { padding: 22px 28px; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-cell-main { grid-column: 1 / -1; aspect-ratio: 16/9; }
+  .voices-hdr { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 22px; padding: 36px 24px; text-align: center; }
+  .artwork-divider { height: 100px; }
+  .film-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .podcast-grid { grid-template-columns: 1fr; gap: 24px; }
+  .prog2-film-header { padding-bottom: 36px; margin-bottom: 36px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ██ NAV ████████████████████████████████████████████████████ -->
+<nav id="nav" class="on-dark">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-ring"><div class="nav-logo-dot"></div></div>
+    <span class="nav-logo-name">Syrian Eyes</span>
+  </a>
+  <div class="nav-links">
+    <a href="#about">Our Work</a>
+    <a href="#prog-emergency">Programs</a>
+    <a href="#past-projects">Archive</a>
+    <a href="#contact">Contact</a>
+    <a href="https://www.syrianeyes.org/donate" class="nav-donate" target="_blank">Donate</a>
+  </div>
+</nav>
+
+<!-- ██ HERO — CURSOR PARALLAX █████████████████████████████████ -->
+<section id="hero">
+  <div id="hero-cursor"></div>
+
+  <div class="hero-panels" id="hero-panels">
+    <div class="hero-panel" id="panel-1">
+      <div class="hero-panel-inner" id="panel-inner-1"></div>
+      <div class="hero-panel-dim"></div>
+    </div>
+    <div class="hero-panel" id="panel-2">
+      <div class="hero-panel-inner" id="panel-inner-2"></div>
+      <div class="hero-panel-dim"></div>
+    </div>
+    <div class="hero-panel" id="panel-3">
+      <div class="hero-panel-inner" id="panel-inner-3"></div>
+      <div class="hero-panel-dim"></div>
+    </div>
+  </div>
+
+  <div class="hero-vignette"></div>
+  <div class="hero-vignette-left"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-col-lines">
+    <div class="hero-col-line"></div>
+    <div class="hero-col-line"></div>
+    <div class="hero-col-line"></div>
+  </div>
+  <div class="hero-side">
+    <span>LEBANON</span>
+    <span>EST. OCTOBER 2013</span>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">SYRIAN EYES — SINCE 2013</div>
+    <h1 class="hero-title">
+      Our human<br>
+      <span class="accent">values</span><br>
+      define who<br>
+      we are.
+    </h1>
+    <p class="hero-body">
+      Investing in the future of our societies. Founded in 2013, we champion the belief that people in need are not beneficiaries, but rights holders deserving dignity and compassion.
+    </p>
+    <a href="#about" class="hero-cta">
+      STAND WITH US
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="hero-scroll-hint" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    <div class="hero-scroll-line"></div>
+    <div class="hero-scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ██ ABOUT ██████████████████████████████████████████████████ -->
+<section id="about">
+  <div class="about-text">
+    <div class="eyebrow reveal">OUR STORY</div>
+    <h2 class="section-title reveal d1">A vision of universal respect and fundamental rights.</h2>
+    <p class="body-text reveal d2">Syrian Eyes is a voluntary team founded on October 27, 2013, in Lebanon by a group of motivated youth. We emerged from the urgent need to support Syrian refugees and marginalized communities during times of crisis.</p>
+    <p class="body-text reveal d3">We believe in a world where everyone, regardless of background or circumstance, is treated with respect and granted their fundamental rights. Our work spans emergency response, art and education, medical support, and livelihood development.</p>
+  </div>
+  <div class="about-photo reveal d2">
+    <img src="assets/IMG_2643.jpg" alt="Syrian Eyes — activity space">
+  </div>
+</section>
+
+<!-- ██ STATS ██████████████████████████████████████████████████ -->
+<section id="stats">
+  <div class="stat reveal">
+    <div class="stat-num" data-target="10" data-suffix="+">0</div>
+    <div class="stat-lbl">Years of Impact</div>
+    <div class="stat-bar"><div class="stat-fill" data-width="80"></div></div>
+  </div>
+  <div class="stat reveal d1">
+    <div class="stat-num" data-target="740">0</div>
+    <div class="stat-lbl">Families Annually</div>
+    <div class="stat-bar"><div class="stat-fill" data-width="74"></div></div>
+  </div>
+  <div class="stat reveal d2">
+    <div class="stat-num" data-target="5000" data-display="5K+">0</div>
+    <div class="stat-lbl">Surgeries Facilitated</div>
+    <div class="stat-bar"><div class="stat-fill" data-width="92"></div></div>
+  </div>
+  <div class="stat reveal d3">
+    <div class="stat-num" data-target="3">0</div>
+    <div class="stat-lbl">Medical Clinics</div>
+    <div class="stat-bar"><div class="stat-fill" data-width="30"></div></div>
+  </div>
+</section>
+
+<!-- ██ ARTWORK DIVIDER 1 — between Stats and Programs ████████ -->
+<!-- asset: assets/design_elements_-_kids_drawings_-_my_eyes_project__8_.png -->
+<div class="artwork-divider artwork-divider--purple" aria-hidden="true"></div>
+
+<!-- ██ PROGRAM 01 — DARK ██████████████████████████████████████ -->
+<div class="prog-block is-dark" id="prog-emergency">
+  <div class="prog-grain"></div>
+  <div class="prog-text">
+    <div class="prog-tag reveal">01 / SINCE 2013 · ONGOING</div>
+    <h2 class="prog-title reveal d1">Emergency &amp; Relief Program</h2>
+    <p class="prog-body reveal d2">Our longest-running and most adaptive program. We distribute food aid, hygiene kits, clothing, and essential non-food items; deliver winterization support — heating fuel, firewood, blankets, tent rehabilitation; and run community kitchens. We currently support more than 740 families annually across the Bekaa, Beirut, Tripoli, North Lebanon, and Mount Lebanon, with a permanent community kitchen in Tripoli.</p>
+  </div>
+  <div class="prog-photo">
+    <div class="prog-photo-overlay"></div>
+    <img src="assets/emergency relief (1).jpg" alt="Syrian Eyes — material delivery for settlement rehabilitation">
+  </div>
+</div>
+
+<!-- ██ PROGRAM 02 — LIGHT ████████████████████████████████████ -->
+<div class="prog-block is-light">
+  <div class="prog-photo" style="order:-1;">
+    <div class="prog-photo-overlay" style="background:linear-gradient(225deg,rgba(26,23,20,0.18),transparent 55%);"></div>
+    <img src="assets/kids activities and carnivals (1).jpg" alt="Syrian Eyes — children gathered at the activity space, Magic for Smiles program">
+  </div>
+  <div class="prog-text">
+    <div class="prog-tag reveal">02 / SINCE 2014 · ONGOING</div>
+    <h2 class="prog-title reveal d1">Children's Activities &amp; Psychosocial Support</h2>
+    <p class="prog-body reveal d2">Year-round recreational activities, seasonal Eid carnivals, art therapy, music, and safe spaces for play in informal settlements such as Al Shaher, Dalhamiya, and Al Rawda. Our focus is the mental and emotional well-being of refugee children — restoring normalcy, dignity, and joy.</p>
+  </div>
+</div>
+
+<!-- ██ PROGRAM 03 — DARK ██████████████████████████████████████ -->
+<div class="prog-block is-dark">
+  <div class="prog-grain"></div>
+  <div class="prog-text">
+    <div class="prog-tag reveal">03 / SINCE 2014 · ONGOING</div>
+    <h2 class="prog-title reveal d1">Emergency Medical Cases</h2>
+    <p class="prog-body reveal d2">A last-resort safety net for cases excluded from regular NGO mandates — life-saving surgeries (oncology, cardiology, ophthalmology), specialized medication, and diagnostics. Over ten years we have facilitated more than 5,000 surgeries in hospitals across Lebanon, for refugees and Lebanese citizens of every nationality and background.</p>
+  </div>
+  <div class="prog-photo">
+    <div class="prog-photo-overlay"></div>
+    <img src="assets/medical clinic old project (1).jpg" alt="Syrian Eyes — music and theatre activities for children at the activity space">
+  </div>
+</div>
+
+<!-- ██ PROGRAMS 04 — FILM LAB (expanded) ██████████████████████ -->
+<section id="prog-2col">
+  <div class="eyebrow reveal">ONGOING PROGRAMS</div>
+
+  <!-- Program 04 header -->
+  <div class="prog2-film-header reveal d1">
+    <div>
+      <div class="prog2-tag">04 / SINCE 2023 · ONGOING</div>
+      <h3 class="prog2-title">Youth Documentary Filmmaking<br>&amp; Storytelling</h3>
+      <p class="prog2-body">A media-education initiative training refugee and migrant youth — from Sudan, Egypt, Syria, Palestine and beyond — in filmmaking and podcasting. The aim: challenge media tropes that frame refugees as threats or passive victims, and give young people political agency over their own narratives.</p>
+    </div>
+  </div>
+
+  <!-- 6 Films grid -->
+  <div class="film-lab-section reveal d2">
+    <div class="film-lab-label">
+      <span class="film-lab-eyebrow">6 FILMS</span>
+      <div class="film-lab-rule"></div>
+    </div>
+    <div class="film-grid">
+      <!-- Film 1 — lighting workshop -->
+      <div class="film-card">
+        <div class="film-thumb">
+          <img src="assets/film workshop activities (1).jpg" alt="Film workshop — lighting session">
+          <button class="film-play" aria-label="Play film" onclick="openFilm('FILM_1_VIDEO_ID')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+        <div class="film-info">
+          <span class="film-num">01</span>
+          <h4 class="film-title">Film Title One</h4>
+          <p class="film-meta">Dir. Name · 00:00 min</p>
+        </div>
+      </div>
+      <!-- Film 2 — student filmmaker -->
+      <div class="film-card">
+        <div class="film-thumb">
+          <img src="assets/film workshop activities (2).jpg" alt="Film workshop — student filmmaker">
+          <button class="film-play" aria-label="Play film" onclick="openFilm('FILM_2_VIDEO_ID')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+        <div class="film-info">
+          <span class="film-num">02</span>
+          <h4 class="film-title">Film Title Two</h4>
+          <p class="film-meta">Dir. Name · 00:00 min</p>
+        </div>
+      </div>
+      <!-- Film 3 — gallery visit -->
+      <div class="film-card">
+        <div class="film-thumb">
+          <img src="assets/film workshop activities (5).jpg" alt="Film workshop — gallery visit">
+          <button class="film-play" aria-label="Play film" onclick="openFilm('FILM_3_VIDEO_ID')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+        <div class="film-info">
+          <span class="film-num">03</span>
+          <h4 class="film-title">Film Title Three</h4>
+          <p class="film-meta">Dir. Name · 00:00 min</p>
+        </div>
+      </div>
+      <!-- Film 4 — screening event -->
+      <div class="film-card">
+        <div class="film-thumb">
+          <img src="assets/films screening event (1).jpg" alt="Film screening event — As We Are">
+          <button class="film-play" aria-label="Play film" onclick="openFilm('FILM_4_VIDEO_ID')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+        <div class="film-info">
+          <span class="film-num">04</span>
+          <h4 class="film-title">As We Are</h4>
+          <p class="film-meta">Dir. Gabriella Khawaja · 00:00 min</p>
+        </div>
+      </div>
+      <!-- Film 5 — Bakery / Wheat House -->
+      <div class="film-card">
+        <div class="film-thumb">
+          <img src="assets/Bakery (2).jpg" alt="Wheat House — Saj Bakery in Jarrahieh Camp">
+          <button class="film-play" aria-label="Play film" onclick="openFilm('FILM_5_VIDEO_ID')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+        <div class="film-info">
+          <span class="film-num">05</span>
+          <h4 class="film-title">Wheat House</h4>
+          <p class="film-meta">Saj Bakery, Jarrahieh Camp · 00:00 min</p>
+        </div>
+      </div>
+      <!-- Film 6 — a__10_ gallery -->
+      <div class="film-card">
+        <div class="film-thumb">
+          <img src="assets/films screening event (5).jpg" alt="Youth filmmakers at a gallery visit during the workshop">
+          <button class="film-play" aria-label="Play film" onclick="openFilm('FILM_6_VIDEO_ID')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+        <div class="film-info">
+          <span class="film-num">06</span>
+          <h4 class="film-title">Film Title Six</h4>
+          <p class="film-meta">Dir. Name · 00:00 min</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 Podcasts -->
+    <div class="film-lab-label" style="margin-top: 56px;">
+      <span class="film-lab-eyebrow">3 PODCASTS</span>
+      <div class="film-lab-rule"></div>
+    </div>
+    <div class="podcast-grid">
+      <!-- Podcast 1 — recording session -->
+      <div class="podcast-card reveal">
+        <div class="podcast-art">
+          <img src="assets/podcast (1).jpg" alt="Podcast recording — participants at microphones in the studio">
+        </div>
+        <div class="podcast-body">
+          <span class="podcast-ep">EPISODE 01</span>
+          <h4 class="podcast-title">Podcast Episode Title One</h4>
+          <p class="podcast-desc">A short description of what this episode explores — the narrator's perspective, the community it centers, the question it asks.</p>
+          <div class="podcast-player">
+            <!-- REPLACE: paste iframe from Spotify or SoundCloud embed here -->
+            <div class="podcast-player-ph">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
+              <span>Add podcast embed — Spotify or SoundCloud iframe</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Podcast 2 — studio group -->
+      <div class="podcast-card reveal d1">
+        <div class="podcast-art">
+          <img src="assets/podcast (1)-2.jpg" alt="Podcast studio — participants standing at recording desk">
+        </div>
+        <div class="podcast-body">
+          <span class="podcast-ep">EPISODE 02</span>
+          <h4 class="podcast-title">Podcast Episode Title Two</h4>
+          <p class="podcast-desc">A short description of what this episode explores — the narrator's perspective, the community it centers, the question it asks.</p>
+          <div class="podcast-player">
+            <div class="podcast-player-ph">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
+              <span>Add podcast embed — Spotify or SoundCloud iframe</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Podcast 3 — film workshop participant -->
+      <div class="podcast-card reveal d2">
+        <div class="podcast-art">
+          <img src="assets/podcast (2).jpg" alt="Podcast workshop — recording session">
+        </div>
+        <div class="podcast-body">
+          <span class="podcast-ep">EPISODE 03</span>
+          <h4 class="podcast-title">Podcast Episode Title Three</h4>
+          <p class="podcast-desc">A short description of what this episode explores — the narrator's perspective, the community it centers, the question it asks.</p>
+          <div class="podcast-player">
+            <div class="podcast-player-ph">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
+              <span>Add podcast embed — Spotify or SoundCloud iframe</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Program 05 separator -->
+  <div class="prog2-sep"></div>
+
+  <!-- Program 05 -->
+  <div class="prog2-grid">
+    <div>
+      <div class="prog2-tag reveal d1">05 / SINCE 2018 · ONGOING</div>
+      <h3 class="prog2-title reveal d2">Support to Grassroots Initiatives</h3>
+      <p class="prog2-body reveal d3">Technical assistance, logistics, and backing for migrant-led and local grassroots groups — including Nehna Hon, REMAN, Alya's Kitchen, Great Oven, Basmeh wa Zeitooneh, SAWA, Mulham Team, and MCC. Cross-community solidarity is the work itself.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ██ FILM LIGHTBOX ██████████████████████████████████████████ -->
+<div id="film-lightbox" role="dialog" aria-modal="true" aria-label="Film player" hidden>
+  <div class="lightbox-backdrop" onclick="closeFilm()"></div>
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeFilm()" aria-label="Close film">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="lightbox-frame">
+      <iframe id="film-iframe" src="" title="Film" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ██ ARTWORK DIVIDER 2 — between Programs and Archive █████ -->
+<!-- asset: assets/design_elements_-_kids_drawings_-_my_eyes_project__6_.png -->
+<div class="artwork-divider artwork-divider--blue" aria-hidden="true"></div>
+
+<!-- ██ PAST PROJECTS — INTERACTIVE TIMELINE ████████████████████ -->
+<section id="past-projects">
+  <div class="archive-hdr">
+    <div class="eyebrow reveal">ARCHIVE</div>
+    <h2 class="archive-title reveal d1">A decade of work.</h2>
+    <p class="archive-sub reveal d2">Drag the timeline or click any project to explore ten years of initiatives — from our founding days to the present.</p>
+  </div>
+
+  <div id="timeline-wrap" class="reveal d1">
+    <div class="tl-top">
+
+      <!-- Left: detail panel -->
+      <div class="tl-detail">
+        <div>
+          <div class="tl-detail-year" id="tl-year">2013</div>
+          <div class="tl-detail-period" id="tl-period">OCT 27, 2013 – 2014</div>
+          <h3 class="tl-detail-name" id="tl-name">Foundation &amp; Immediate Emergency Relief</h3>
+          <p class="tl-detail-desc" id="tl-desc">Emergency relief in informal tented settlements across the Bekaa — food, clothing, and winter assistance. Established the civilian-only, non-sectarian approach that defines Syrian Eyes today.</p>
+        </div>
+        <div class="tl-detail-counter" id="tl-counter">01 / 13</div>
+      </div>
+
+      <!-- Right: scrollable project list -->
+      <div class="tl-nav-col" id="tl-nav">
+        <!-- Items injected by JS -->
+      </div>
+    </div>
+
+    <!-- Scrubber -->
+    <div class="tl-scrubber">
+      <div class="tl-scrubber-label">
+        <span>DRAG TO EXPLORE HISTORY</span>
+        <span id="tl-scrubber-year">2013</span>
+      </div>
+      <div class="tl-track-wrap" id="tl-track">
+        <div class="tl-track-fill" id="tl-fill"></div>
+        <div class="tl-thumb" id="tl-thumb"></div>
+      </div>
+      <div class="tl-year-markers">
+        <span class="tl-year-mark">2013</span>
+        <span class="tl-year-mark">2015</span>
+        <span class="tl-year-mark">2017</span>
+        <span class="tl-year-mark">2019</span>
+        <span class="tl-year-mark">2021</span>
+        <span class="tl-year-mark">2023</span>
+        <span class="tl-year-mark">2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ VOICES IN COLOR ████████████████████████████████████████ -->
+<section id="voices">
+  <div class="voices-grain"></div>
+  <div class="voices-hdr">
+    <div>
+      <div class="eyebrow reveal" style="color:rgba(255,255,255,0.32);">THE MY EYES PROJECT</div>
+      <h2 class="voices-title reveal d1">Voices<br>in Color</h2>
+    </div>
+    <p class="voices-sub reveal d2">Through the "My Eyes" project, children painted their stories, hopes, and memories over black-and-white portraits of themselves — transforming reportage into vibrant personal narrative.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-cell gallery-cell-main is-artwork reveal">
+      <img src="assets/design elements - kids drawings - my eyes project (5).jpg"
+           alt="My Eyes Project — painted self-portrait, magenta and purple brushstrokes">
+      <div class="gallery-caption">Painted self-portrait — My Eyes Project</div>
+    </div>
+    <div class="gallery-cell gallery-cell-sm is-artwork reveal d1">
+      <img src="assets/design elements - kids drawings - my eyes project (7).jpg"
+           alt="My Eyes Project — painted self-portrait, forest green and purple">
+      <div class="gallery-caption">Al Shaher settlement</div>
+    </div>
+    <div class="gallery-cell gallery-cell-sm is-artwork reveal d2">
+      <img src="assets/design elements - kids drawings - my eyes project (9).jpg"
+           alt="My Eyes Project — painted self-portrait, deep blue brushstrokes">
+      <div class="gallery-caption">Community gathering</div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ VIDEO ██████████████████████████████████████████████████ -->
+<section id="video-section">
+  <div class="eyebrow reveal" style="justify-content:center;">WITNESS OUR WORK</div>
+  <h2 class="video-title reveal d1">On the ground.</h2>
+  <p class="video-sub reveal d2">With the communities we serve.</p>
+  <div class="video-wrap reveal d2">
+    <!-- Replace YOUR_YOUTUBE_VIDEO_ID with the ID from your YouTube URL -->
+    <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID"
+      title="Syrian Eyes — our work"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
+</section>
+
+<!-- ██ CTA ████████████████████████████████████████████████████ -->
+<section id="cta">
+  <div class="cta-ghost">STAND WITH US</div>
+  <div class="cta-eyebrow reveal">JOIN US</div>
+  <h2 class="cta-title reveal d1">Stand with us.</h2>
+  <p class="cta-body reveal d2">Your support translates directly into heat for the winter, bread for families, medicine for the sick, and colors for children to paint their future.</p>
+  <a href="https://www.syrianeyes.org/donate" class="cta-btn reveal d3" target="_blank">
+    MAKE A DONATION
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+    </svg>
+  </a>
+</section>
+
+<!-- ██ FOOTER ██████████████████████████████████████████████████ -->
+<footer id="contact">
+  <div class="footer-left">
+    <div class="footer-ring"><div class="footer-dot"></div></div>
+    <span class="footer-copy">© 2026 Syrian Eyes · Based in Lebanon</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://www.syrianeyes.org" target="_blank">Website</a>
+    <a href="https://www.facebook.com/syrianeyes" target="_blank">Facebook</a>
+    <a href="mailto:info@syrianeyes.org">Contact</a>
+  </div>
+</footer>
+
+<!-- ██ SCRIPTS █████████████████████████████████████████████████ -->
+<script>
+/* ── Timeline data ─────────────────────────────────────────── */
+const PROJECTS = [
+  { year:'2013', period:'Oct 2013 – 2014', name:'Foundation & Immediate Emergency Relief', desc:'Emergency relief in informal tented settlements across the Bekaa — food, clothing, and winter assistance. Established the civilian-only, non-sectarian approach that defines Syrian Eyes today.' },
+  { year:'2014', period:'2014 – 2019', name:'Future Together Now! I', desc:'Social inclusion, joint decision making, conflict transformation, and a recycling project across North and Central Beqaa. With Basmeh & Zeitooneh and forumZFD.' },
+  { year:'2015', period:'2015', name:'Mobile Clinic Program', desc:'A doctor-led mobile unit serving isolated camps and villages — Al Amniye, Al Sweiri, Al Karoun. 812 cases served in the first half of 2015 alone, in partnership with Oxfam GB and volunteer doctors.' },
+  { year:'2015', period:'2015 – 2018', name:'Syria in My Mind — Heritage Project', desc:'Heritage education for ~2,000 Syrian refugee children (ages 4–15) through archaeological reconstruction, geography games, and visual storytelling. With Biladi, AVSI, UNICEF.' },
+  { year:'2015', period:'2015 – 2018', name:'Agricultural & Cultivation Projects', desc:'Small-scale organic farming, agricultural basins, and skills transfer in informal settlements like Al Fares Camp — strengthening food self-sufficiency against hyperinflation.' },
+  { year:'2015', period:'2015 – Ongoing', name:'Jarrahieh Community Bakery', desc:'A community bakery producing fresh saj bread for 100–500 families daily, creating four full-time vocational jobs for refugee women. With Jasmin-Hilfe (Germany).' },
+  { year:'2016', period:'2016 – 2019', name:'Art & Creative Expression Programs', desc:'Drawing, painting, and storytelling workshops in Lebanon, with local and international art exhibitions. Fifty drawings exhibited in Toronto to support educational activities.' },
+  { year:'2019', period:'2019 – 2020', name:'Wildfire Response', desc:'Supported the Lebanese Civil Defence with food, water, equipment, and volunteers during wildfire emergencies in Chouf and Moftaka al Nahreen — cross-community solidarity in environmental crisis.' },
+  { year:'2020', period:'August 2020', name:'Beirut Port Explosion Response', desc:'Community kitchens delivering 400+ dishes daily across Gemmayze, Jeiteawi, Mar Mikhayel and Karantina; rubble cleanup; medication delivery to the elderly; safe houses for abandoned migrant domestic workers.' },
+  { year:'2020', period:'2020 – 2021', name:'COVID-19 Pandemic Response', desc:'Hygiene kits, masks, sanitation supplies, and food aid distributed to refugees and high-risk groups across Lebanon during lockdown and economic collapse.' },
+  { year:'2020', period:'2020 – 2022', name:'Safe Houses for Migrant Communities', desc:'Shelter, rent assistance, food, and healthcare access for African migrant workers and domestic workers abandoned during Lebanon\'s collapse. With Migrant Workers\' Action.' },
+  { year:'2022', period:'2022 – 2023', name:'Syria Earthquake Emergency Response', desc:'Cross-border aid to Latakia, Aleppo, Hama and Turkey: house rehabilitation, solar system repairs, medical supplies, heating, and infant formula. Team members traveled in person.' },
+  { year:'2023', period:'2023', name:'Voices of the Unseen — New Displacement Response', desc:'Emergency evacuations, community kitchens serving 500 families daily in Tripoli, medical assistance, hygiene supplies, shelter and rent support for those excluded from state aid.' },
+];
+
+/* ── Build timeline nav list ──────────────────────────────── */
+const navCol = document.getElementById('tl-nav');
+PROJECTS.forEach((p, i) => {
+  const item = document.createElement('div');
+  item.className = 'tl-item' + (i === 0 ? ' active' : '');
+  item.dataset.idx = i;
+  item.innerHTML = `
+    <div class="tl-item-dot"></div>
+    <span class="tl-item-year">${p.year}</span>
+    <span class="tl-item-name">${p.name}</span>
+  `;
+  item.addEventListener('click', () => setActive(i));
+  navCol.appendChild(item);
+});
+
+/* ── Set active project ────────────────────────────────────── */
+function setActive(idx) {
+  const p = PROJECTS[idx];
+  // Fade out
+  ['tl-year','tl-period','tl-name','tl-desc'].forEach(id => {
+    document.getElementById(id).style.opacity = '0';
+    document.getElementById(id).style.transform = 'translateY(8px)';
+  });
+  setTimeout(() => {
+    document.getElementById('tl-year').textContent   = p.year;
+    document.getElementById('tl-period').textContent = p.period;
+    document.getElementById('tl-name').innerHTML     = p.name;
+    document.getElementById('tl-desc').textContent   = p.desc;
+    document.getElementById('tl-counter').textContent = String(idx+1).padStart(2,'0') + ' / ' + PROJECTS.length;
+    ['tl-year','tl-period','tl-name','tl-desc'].forEach(id => {
+      document.getElementById(id).style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      document.getElementById(id).style.opacity = '1';
+      document.getElementById(id).style.transform = 'translateY(0)';
+    });
+  }, 200);
+  // Nav items
+  document.querySelectorAll('.tl-item').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  // Scroll item into view
+  const activeItem = navCol.querySelector('.tl-item.active');
+  if (activeItem) activeItem.scrollIntoView({ block:'nearest', behavior:'smooth' });
+  // Scrubber
+  const pct = idx / (PROJECTS.length - 1) * 100;
+  updateScrubberUI(pct);
+}
+
+/* ── Scrubber ──────────────────────────────────────────────── */
+const track = document.getElementById('tl-track');
+const fill  = document.getElementById('tl-fill');
+const thumb = document.getElementById('tl-thumb');
+const scrubYear = document.getElementById('tl-scrubber-year');
+let dragging = false;
+
+function updateScrubberUI(pct) {
+  pct = Math.max(0, Math.min(100, pct));
+  fill.style.width  = pct + '%';
+  thumb.style.left  = pct + '%';
+  const idx = Math.round(pct / 100 * (PROJECTS.length - 1));
+  scrubYear.textContent = PROJECTS[idx].year;
+}
+
+function scrubTo(clientX) {
+  const rect = track.getBoundingClientRect();
+  const pct  = Math.max(0, Math.min(100, (clientX - rect.left) / rect.width * 100));
+  const idx  = Math.round(pct / 100 * (PROJECTS.length - 1));
+  setActive(idx);
+}
+
+track.addEventListener('mousedown', e => { dragging = true; scrubTo(e.clientX); });
+track.addEventListener('touchstart', e => { dragging = true; scrubTo(e.touches[0].clientX); }, { passive: true });
+document.addEventListener('mousemove', e => { if (dragging) scrubTo(e.clientX); });
+document.addEventListener('touchmove', e => { if (dragging) scrubTo(e.touches[0].clientX); }, { passive: true });
+document.addEventListener('mouseup',  () => dragging = false);
+document.addEventListener('touchend', () => dragging = false);
+track.addEventListener('click', e => scrubTo(e.clientX));
+
+// Init
+setActive(0);
+
+/* ── Cursor parallax ───────────────────────────────────────── */
+const heroEl   = document.getElementById('hero');
+const cursor   = document.getElementById('hero-cursor');
+const panels   = [
+  document.getElementById('panel-inner-1'),
+  document.getElementById('panel-inner-2'),
+  document.getElementById('panel-inner-3'),
+];
+// Depth multipliers — each panel moves at different speed
+const depths = [18, 10, 24];
+
+let cursorX = 0, cursorY = 0;
+let targetX = 0, targetY = 0;
+let panelTargets = panels.map(() => ({ x: 0, y: 0 }));
+let panelCurrent = panels.map(() => ({ x: 0, y: 0 }));
+let rafId;
+
+heroEl.addEventListener('mousemove', e => {
+  const rect = heroEl.getBoundingClientRect();
+  const nx = (e.clientX - rect.left) / rect.width  - 0.5; // -0.5 to 0.5
+  const ny = (e.clientY - rect.top)  / rect.height - 0.5;
+
+  targetX = e.clientX - rect.left;
+  targetY = e.clientY - rect.top;
+
+  panels.forEach((_, i) => {
+    panelTargets[i].x = nx * depths[i];
+    panelTargets[i].y = ny * depths[i] * 0.6;
+  });
+});
+
+heroEl.addEventListener('mouseenter', () => {
+  cursor.style.opacity = '1';
+  cancelAnimationFrame(rafId);
+  animateParallax();
+});
+
+heroEl.addEventListener('mouseleave', () => {
+  cursor.style.opacity = '0';
+  panels.forEach(p => { p.style.transform = 'translate(0px, 0px)'; });
+  panelTargets = panels.map(() => ({ x: 0, y: 0 }));
+  cancelAnimationFrame(rafId);
+});
+
+heroEl.addEventListener('click', () => cursor.classList.toggle('expanded'));
+
+function animateParallax() {
+  // Smooth cursor
+  cursorX += (targetX - cursorX) * 0.12;
+  cursorY += (targetY - cursorY) * 0.12;
+  cursor.style.left = cursorX + 'px';
+  cursor.style.top  = cursorY + 'px';
+
+  // Smooth panels with lerp
+  panels.forEach((panel, i) => {
+    panelCurrent[i].x += (panelTargets[i].x - panelCurrent[i].x) * 0.07;
+    panelCurrent[i].y += (panelTargets[i].y - panelCurrent[i].y) * 0.07;
+    panel.style.transform = `translate(${panelCurrent[i].x}px, ${panelCurrent[i].y}px)`;
+  });
+
+  rafId = requestAnimationFrame(animateParallax);
+}
+
+/* ── Nav switch ────────────────────────────────────────────── */
+const nav = document.getElementById('nav');
+function updateNav() {
+  const h = heroEl.getBoundingClientRect().bottom;
+  nav.className = h <= 64 ? 'on-light' : 'on-dark';
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+
+/* ── Scroll reveal ─────────────────────────────────────────── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ── Counting stats ────────────────────────────────────────── */
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting || e.target.dataset.done) return;
+    e.target.dataset.done = '1';
+    e.target.querySelectorAll('[data-target]').forEach(el => {
+      const target  = +el.dataset.target;
+      const display = el.dataset.display || null;
+      const suffix  = el.dataset.suffix  || '';
+      const dur = 1800, step = 16;
+      let cur = 0;
+      const inc = target / (dur / step);
+      const t = setInterval(() => {
+        cur += inc;
+        if (cur >= target) {
+          clearInterval(t);
+          el.textContent = display || (target.toLocaleString() + suffix);
+        } else {
+          el.textContent = display
+            ? Math.floor(cur / target * 100) + '%'
+            : Math.floor(cur).toLocaleString() + suffix;
+        }
+      }, step);
+    });
+    // Animate bars
+    e.target.querySelectorAll('.stat-fill').forEach(bar => {
+      const w = bar.dataset.width;
+      setTimeout(() => { bar.style.width = w + '%'; }, 200);
+    });
+  });
+}, { threshold: 0.5 });
+const statsSection = document.getElementById('stats');
+if (statsSection) statsObs.observe(statsSection);
+
+/* ── Smooth anchor scroll ──────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+/* ── Artwork divider parallax ──────────────────────────────── */
+const artDividers = document.querySelectorAll('.artwork-divider');
+if (artDividers.length) {
+  const shiftDividers = () => {
+    artDividers.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const vhCenter = window.innerHeight / 2;
+      const progress = (vhCenter - rect.top) / (rect.height + vhCenter);
+      const shift = progress * 10;
+      el.style.backgroundPositionY = `calc(50% + ${shift.toFixed(2)}px)`;
+    });
+  };
+  window.addEventListener('scroll', shiftDividers, { passive: true });
+  shiftDividers();
+}
+
+/* ── Film lightbox ─────────────────────────────────────────── */
+const lightbox  = document.getElementById('film-lightbox');
+const filmFrame = document.getElementById('film-iframe');
+
+function openFilm(videoId) {
+  if (!videoId || videoId.includes('FILM_')) {
+    // No ID yet — show a note instead of a broken embed
+    filmFrame.src = '';
+    lightbox.removeAttribute('hidden');
+    lightbox.querySelector('.lightbox-frame').innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:rgba(255,255,255,0.5);font-size:13px;letter-spacing:0.08em;font-family:var(--sans);">REPLACE VIDEO ID IN HTML</div>';
+    return;
+  }
+  filmFrame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+  lightbox.removeAttribute('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFilm() {
+  lightbox.setAttribute('hidden', '');
+  filmFrame.src = '';
+  document.body.style.overflow = '';
+}
+
+// Close on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !lightbox.hasAttribute('hidden')) closeFilm();
+});
+</script>
+</body>
+</html>

@@ -20,6 +20,7 @@ body {
   color: #1a1714;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  font-size: 16px; /* base size bump — all em/rem scale accordingly */
 }
 a { text-decoration: none; color: inherit; }
 
@@ -270,7 +271,7 @@ a { text-decoration: none; color: inherit; }
 }
 .hero-title .accent { color: var(--blue); font-style: italic; }
 .hero-body {
-  font-size: 14px; font-weight: 300; line-height: 1.82;
+  font-size: 16px; font-weight: 300; line-height: 1.82;
   color: var(--text-on-dark-secondary); max-width: 400px;
   margin-bottom: 46px;
 }
@@ -353,7 +354,7 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 30px;
 }
 .body-text {
-  font-size: 15px; font-weight: 300; line-height: 1.86;
+  font-size: 16px; font-weight: 300; line-height: 1.86;
   color: #5a5450; margin-bottom: 18px;
 }
 .about-photo {
@@ -446,7 +447,7 @@ a { text-decoration: none; color: inherit; }
 .is-dark .prog-title { color: var(--white); }
 .is-light .prog-title { color: var(--dark); }
 .prog-body {
-  font-size: 14px; font-weight: 300; line-height: 1.86;
+  font-size: 15px; font-weight: 300; line-height: 1.86;
 }
 .is-dark .prog-body { color: var(--text-on-dark-secondary); }  /* was rgba(255,255,255,0.58) */
 .is-light .prog-body { color: #5a5450; }
@@ -1060,13 +1061,7 @@ footer {
 .fc-poster:nth-child(4) { transform: rotate(1.8deg) translateY(3px); z-index: 2; }
 .fc-poster:nth-child(5) { transform: rotate(3.2deg) translateY(7px); z-index: 1; }
 
-/* When container is hovered — all posters go soft and dim */
-.film-collage:hover .fc-poster {
-  opacity: 0.28;
-  filter: blur(2px) brightness(0.55);
-}
-
-/* The hovered poster rises sharp and forward — no !important conflicts */
+/* The hovered poster rises sharp and forward — others stay solid */
 .film-collage .fc-poster:hover {
   opacity: 1 !important;
   filter: none !important;
@@ -1252,20 +1247,12 @@ footer {
   background: #f0ede8;
 }
 
-/* Dimmed state — when another card is hovered */
-.portrait-mosaic:hover .pm-cell {
-  opacity: 0.35;
-  filter: blur(1.8px) brightness(0.6);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-}
-/* Focused card — comes forward */
+/* Focused card — rises forward, others stay solid */
 .portrait-mosaic:hover .pm-cell:hover {
-  opacity: 1 !important;
-  filter: blur(0) brightness(1) !important;
   z-index: 20 !important;
   box-shadow:
-    0 20px 48px rgba(0,0,0,0.42),
-    0 4px 12px rgba(0,0,0,0.22) !important;
+    0 24px 56px rgba(0,0,0,0.52),
+    0 4px 12px rgba(0,0,0,0.24) !important;
 }
 
 /* Polaroid number label */
@@ -2875,36 +2862,29 @@ if (statsSection) statsObs.observe(statsSection);
   }
 
   const SCENES = [
-    // 0 — drip from top
+    // 0 — drip from top-left corner, small, stays at edge
     {layers:[
-      {i:1,x:-5, y:-12,w:80,rot:-3, a:0.92,dur:800,delay:0,  enter:'top'  },
-      {i:0,x:-10,y:42, w:44,rot:14, a:0.82,dur:650,delay:280,enter:'left' },
+      {i:1,x:-8,  y:-6,  w:38, rot:-4,  a:0.88, dur:800, delay:0, enter:'top'   },
     ]},
-    // 1 — center explosion
+    // 1 — splash from top-right corner
     {layers:[
-      {i:3,x:3, y:2,  w:94,rot:6,  a:0.94,dur:800,delay:0,  enter:'center'},
-      {i:4,x:54,y:-8, w:50,rot:-16,a:0.80,dur:650,delay:240,enter:'right' },
+      {i:3,x:62,  y:-8,  w:42, rot:6,   a:0.88, dur:800, delay:0, enter:'right' },
     ]},
-    // 2 — left throw
+    // 2 — bloom at bottom-left edge
     {layers:[
-      {i:0,x:-14,y:6, w:70,rot:10, a:0.90,dur:750,delay:0,  enter:'left' },
-      {i:4,x:36, y:30,w:54,rot:-8, a:0.82,dur:650,delay:230,enter:'left' },
+      {i:0,x:-10, y:52,  w:36, rot:10,  a:0.86, dur:780, delay:0, enter:'left'  },
     ]},
-    // 3 — full scatter
+    // 3 — drip from bottom-right corner
     {layers:[
-      {i:2,x:6, y:-2, w:90,rot:8,  a:0.92,dur:800,delay:0,  enter:'center'},
-      {i:0,x:-8,y:44, w:42,rot:-22,a:0.76,dur:600,delay:210,enter:'bottom'},
-      {i:4,x:52,y:-6, w:48,rot:15, a:0.74,dur:600,delay:360,enter:'right' },
+      {i:4,x:64,  y:48,  w:40, rot:-5,  a:0.88, dur:800, delay:0, enter:'right' },
     ]},
-    // 4 — right burst + top drip
+    // 4 — pink from top edge, centered right
     {layers:[
-      {i:3,x:20,y:4,  w:84,rot:-6, a:0.90,dur:780,delay:0,  enter:'right'},
-      {i:1,x:0, y:-14,w:60,rot:4,  a:0.76,dur:650,delay:250,enter:'top'  },
+      {i:4,x:58,  y:-10, w:38, rot:-8,  a:0.86, dur:780, delay:0, enter:'top'   },
     ]},
-    // 5 — pink bloom + brushstroke underline
+    // 5 — orange at bottom-left + brushstroke on heading only
     {layers:[
-      {i:4,x:10,y:2,  w:78,rot:-12,a:0.90,dur:780,delay:0,  enter:'center'},
-      {i:0,x:48,y:36, w:50,rot:18, a:0.76,dur:640,delay:230,enter:'right' },
+      {i:0,x:-12, y:44,  w:34, rot:12,  a:0.84, dur:760, delay:0, enter:'bottom'},
     ], brushstroke:true},
   ];
 

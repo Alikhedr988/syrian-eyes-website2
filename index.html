@@ -1021,13 +1021,13 @@ footer {
 .fc-poster {
   position: relative;
   flex: 0 0 auto;
-  width: 260px;
-  margin-left: -40px;
+  width: 300px;
+  margin-left: -44px;
   cursor: pointer;
   transition:
-    transform 0.55s cubic-bezier(0.23, 1, 0.32, 1),
-    margin 0.45s ease,
-    z-index 0s;
+    opacity 0.5s ease,
+    filter 0.5s ease,
+    transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
   transform-origin: bottom center;
   z-index: 1;
 }
@@ -1040,18 +1040,18 @@ footer {
 .fc-poster:nth-child(4) { transform: rotate(1.8deg) translateY(3px); z-index: 2; }
 .fc-poster:nth-child(5) { transform: rotate(3.2deg) translateY(7px); z-index: 1; }
 
-/* Hover — portrait-style: hovered lifts & stays sharp, others blur & recede */
+/* When container is hovered — all posters go soft and dim */
 .film-collage:hover .fc-poster {
-  opacity: 0.32;
-  filter: blur(1.5px) brightness(0.62);
-  transform: scale(0.96) !important;
+  opacity: 0.28;
+  filter: blur(2px) brightness(0.55);
 }
-.fc-poster:hover {
-  transform: rotate(0deg) translateY(-22px) scale(1.1) !important;
-  z-index: 10 !important;
+
+/* The hovered poster rises sharp and forward — no !important conflicts */
+.film-collage .fc-poster:hover {
   opacity: 1 !important;
-  filter: blur(0) brightness(1) !important;
-  margin-left: 8px;
+  filter: none !important;
+  transform: rotate(0deg) translateY(-30px) scale(1.14) !important;
+  z-index: 10 !important;
 }
 .fc-poster:hover + .fc-poster { margin-left: 8px; }
 
@@ -1187,14 +1187,14 @@ footer {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   WORKSHOP GALLERY — 5 photos horizontal strip
+   WORKSHOP GALLERY — 4 photos horizontal strip
 ═══════════════════════════════════════════════════════════════ */
 .workshop-gallery {
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr 1fr;
   gap: 3px;
   margin-bottom: 8px;
-  height: 280px;
+  height: 300px;
 }
 .wg-cell {
   position: relative; overflow: hidden;
@@ -1204,16 +1204,20 @@ footer {
 .wg-cell img {
   width: 100%; height: 100%; object-fit: cover;
   display: block;
-  transition: transform 7s ease;
+  transition: transform 7s ease, opacity 0.3s ease;
 }
+/* If image fails to load, cell stays dark — not a broken icon */
+.wg-cell img[src=""] { display: none; }
+.workshop-gallery:hover .wg-cell { filter: brightness(0.65); }
+.workshop-gallery:hover .wg-cell:hover { filter: brightness(1); }
 .wg-cell:hover img { transform: scale(1.06); }
 .wg-cell--wide { grid-column: 1; }
 .wg-caption {
   position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 24px 12px 10px;
-  background: linear-gradient(to top, rgba(20,18,16,0.8), transparent);
+  padding: 28px 12px 10px;
+  background: linear-gradient(to top, rgba(20,18,16,0.82), transparent);
   font-size: 9px; letter-spacing: 0.14em;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.5);
   opacity: 0; transition: opacity 0.3s;
 }
 .wg-cell:hover .wg-caption { opacity: 1; }
@@ -1587,9 +1591,9 @@ footer {
   .wg-cell--wide { grid-column: 1 / -1; height: 220px; }
   /* Film album wall — reduce overlap on mobile */
   .film-collage { flex-wrap: wrap; justify-content: center; gap: 8px; padding: 20px 0; }
-  .fc-poster { margin-left: 0; width: 140px; transform: none !important; }
-  .film-collage:hover .fc-poster { opacity: 1; filter: none; transform: none !important; }
-  .fc-poster:hover { transform: translateY(-10px) scale(1.05) !important; }
+  .fc-poster { margin-left: 0; width: 160px; transform: none !important; }
+  .film-collage:hover .fc-poster { opacity: 1; filter: none; }
+  .film-collage .fc-poster:hover { transform: translateY(-10px) scale(1.05) !important; }
   /* Podcast strip — stack on mobile */
   .podcast-featured { grid-template-columns: 1fr; gap: 2px; }
   /* Video */
@@ -1664,7 +1668,7 @@ footer {
     <p class="hero-body">
       Investing in the future of our societies. Founded in 2013, we champion the belief that people in need are not beneficiaries, but rights holders deserving dignity and compassion.
     </p>
-    <a href="#about" class="hero-cta">
+    <a href="#cta" class="hero-cta">
       STAND WITH US
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
@@ -1791,19 +1795,27 @@ footer {
     </div>
     <div class="workshop-gallery">
       <div class="wg-cell wg-cell--wide">
-        <img src="films%20screening%20event%20(1).jpg" alt="Film screening event — As We Are">
+        <img src="films%20screening%20event%20(1).jpg"
+             onerror="this.style.display='none'"
+             alt="Film screening event — As We Are">
         <div class="wg-caption">Screening event · Beirut</div>
       </div>
       <div class="wg-cell">
-        <img src="film%20workshop%20activities%20(1).jpg" alt="Film workshop — lighting session">
+        <img src="film%20workshop%20activities%20(1).jpg"
+             onerror="this.style.display='none'"
+             alt="Film workshop — lighting session">
         <div class="wg-caption">Lighting workshop</div>
       </div>
       <div class="wg-cell">
-        <img src="film%20workshop%20activities%20(2).jpg" alt="Film workshop — student filmmaker">
+        <img src="film%20workshop%20activities%20(2).jpg"
+             onerror="this.style.display='none'"
+             alt="Film workshop — student filmmaker">
         <div class="wg-caption">Filmmaking session</div>
       </div>
       <div class="wg-cell">
-        <img src="film%20workshop%20activities%20(5).jpg" alt="Film workshop — gallery visit">
+        <img src="film%20workshop%20activities%20(5).jpg"
+             onerror="this.style.display='none'"
+             alt="Film workshop — gallery visit">
         <div class="wg-caption">Gallery visit</div>
       </div>
     </div>

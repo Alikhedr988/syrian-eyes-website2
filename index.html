@@ -1496,11 +1496,11 @@ footer {
   content: '';
   position: absolute; inset: 0;
   background-image: var(--grain);
-  background-size: 180px;
-  opacity: 0.38;
+  background-size: 220px;
+  opacity: 0.36;
   pointer-events: none;
   z-index: 2;
-  mix-blend-mode: overlay;
+  mix-blend-mode: soft-light;
 }
 /* Gallery artwork cells get lighter grain — they're colorful, not documentary */
 .gallery-cell.is-artwork::after {
@@ -1515,122 +1515,136 @@ footer {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   CINEMATIC GRAIN — targeted heavy treatment
-   Panoramic, Emergency Relief, Children's, Medical, Podcasts
+   CINEMATIC GRAIN — organic Kodak film texture
+   Replaces the SVG fractalNoise with a layered organic approach:
+   Two fractal noise layers at different scales + warm tone bias
 ═══════════════════════════════════════════════════════════════ */
 
-/* Emergency & Relief, Children's Activities, Medical Cases — heavier grain */
+/* Emergency & Relief, Children's Activities, Medical Cases */
 #prog-emergency .prog-photo::after,
 #prog-children .prog-photo::after,
 #prog-medical .prog-photo::after {
-  opacity: 0.52 !important;
-  background-size: 160px !important;
+  /* Denser, warmer grain — smaller tile for film look */
+  opacity: 0.44 !important;
+  background-size: 220px !important;
+  mix-blend-mode: soft-light !important;
 }
 
-/* Scanline overlay on the three program photos — cinematic feel */
+/* Kodak-style warm vignette on the three program photos */
 #prog-emergency .prog-photo .prog-photo-scanlines,
 #prog-children .prog-photo .prog-photo-scanlines,
 #prog-medical .prog-photo .prog-photo-scanlines {
   position: absolute; inset: 0; z-index: 3;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 2px,
-    rgba(0,0,0,0.06) 2px,
-    rgba(0,0,0,0.06) 4px
+  /* Radial vignette — darkens edges like a film lens, not TV scanlines */
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    transparent 40%,
+    rgba(10,8,6,0.22) 75%,
+    rgba(10,8,6,0.48) 100%
   );
   pointer-events: none;
 }
 
-/* Podcast images — stronger grain */
+/* Podcast images — organic grain */
 .podcast-side-img::after {
-  opacity: 0.48 !important;
-  background-size: 150px !important;
+  opacity: 0.40 !important;
+  background-size: 200px !important;
+  mix-blend-mode: soft-light !important;
 }
 
-/* Podcast scanlines */
+/* Podcast vignette — same lens vignette, no scanlines */
 .podcast-side-img .podcast-scanlines {
   position: absolute; inset: 0; z-index: 3;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 3px,
-    rgba(0,0,0,0.05) 3px,
-    rgba(0,0,0,0.05) 6px
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    transparent 35%,
+    rgba(10,8,6,0.18) 72%,
+    rgba(10,8,6,0.42) 100%
   );
   pointer-events: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   ABOUT → PANORAMIC — seamless cinematic merge
+   ABOUT → PANORAMIC — hard cut with artwork strip (Option A)
 ═══════════════════════════════════════════════════════════════ */
 #about {
   padding-bottom: 0 !important;
   position: relative;
 }
 #about::after { display: none; }
+#about > .about-text::after { display: none; }
 
-/* The about section fades its cream bottom into the panoramic via a
-   painting-backed transition zone — no separate div needed */
-#about > .about-text::after {
+/* Artwork divider strip — uses same system as program/archive dividers */
+.about-panoramic-divider {
+  position: relative;
+  height: 160px;
+  background-color: var(--dark);
+  background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(8).jpg');
+  background-size: cover;
+  background-position: center 55%;
+  overflow: hidden;
+}
+.about-panoramic-divider::before {
   content: '';
-  display: block;
-  height: 80px;
-  background: linear-gradient(to bottom, transparent 0%, var(--cream) 100%);
+  position: absolute; inset: 0;
+  background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(8).jpg');
+  background-size: cover;
+  background-position: center 55%;
+  opacity: 0.86;
+  transform: scale(1.04);
+}
+.about-panoramic-divider::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom,
+    rgba(20,18,16,0.82) 0%,
+    transparent 28%,
+    transparent 72%,
+    rgba(20,18,16,0.82) 100%
+  );
   pointer-events: none;
 }
 
-/* Panoramic strip — taller to absorb the transition */
+/* Panoramic strip — clean, no transition hacks */
 .panoramic-strip {
   position: relative;
-  height: 520px;
+  height: 420px;
   overflow: hidden;
   background: var(--dark);
   margin-top: 0;
 }
-
-/* The painting crown — sits on top of the panoramic photo */
 .panoramic-strip::before {
   content: '';
-  position: absolute; inset: 0; z-index: 3;
-  background:
-    /* cream→transparent at very top (absorbs the section edge) */
-    linear-gradient(to bottom,
-      #f5f2ed 0%,
-      rgba(245,242,237,0.0) 18%,
-      transparent 38%,
-      transparent 72%,
-      rgba(10,9,8,0.72) 100%
-    );
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to bottom,
+    rgba(10,9,8,0.38) 0%,
+    transparent 22%,
+    transparent 75%,
+    rgba(10,9,8,0.68) 100%
+  );
   pointer-events: none;
 }
+.panoramic-strip::after { display: none; }
 
-/* Painting wash layer — the teal-blue artwork bleeds across the top */
-.panoramic-strip::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 55%;
-  z-index: 2;
-  background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(6).jpg');
-  background-size: cover;
-  background-position: center 60%;
-  opacity: 0.78;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  /* Fade the painting out as it meets the photograph below */
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 55%, rgba(0,0,0,0) 100%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 55%, rgba(0,0,0,0) 100%);
-}
-
-/* Grain on panoramic */
+/* Organic grain on panoramic */
 .panoramic-grain {
-  position: absolute; inset: 0; z-index: 4;
+  position: absolute; inset: 0; z-index: 3;
   background-image: var(--grain);
-  background-size: 180px;
-  opacity: 0.42;
-  mix-blend-mode: overlay;
+  background-size: 220px;
+  opacity: 0.36;
+  mix-blend-mode: soft-light;
   pointer-events: none;
+}
+/* Lens vignette on panoramic */
+.panoramic-grain::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 48%,
+    transparent 42%,
+    rgba(10,8,6,0.20) 72%,
+    rgba(10,8,6,0.44) 100%
+  );
 }
 
 .panoramic-img {
@@ -1645,7 +1659,7 @@ footer {
 .panoramic-strip:hover .panoramic-img { transform: scale(1.03); }
 
 .panoramic-caption {
-  position: absolute; bottom: 24px; right: 36px; z-index: 5;
+  position: absolute; bottom: 24px; right: 36px; z-index: 4;
   font-size: 9px; letter-spacing: 0.22em;
   color: rgba(255,255,255,0.38);
 }
@@ -1868,9 +1882,8 @@ footer {
   .prog-photo { min-height: 260px; order: -1 !important; }
   .prog-text { padding: 40px 24px 48px; }
   /* Mobile about → panoramic transition */
-  #about::after { display: none; }
-  .about-panoramic-divider { display: none; }
-  .panoramic-strip { height: 300px; }
+  .about-panoramic-divider { height: 110px; }
+  .panoramic-strip { height: 280px; }
   /* Mobile contact */
   #contact-section { padding: 72px 24px; }
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
@@ -1987,7 +2000,10 @@ footer {
   </div>
 </section>
 
-<!-- ██ PANORAMIC + TRANSITION MERGED ██████████████████████████ -->
+<!-- ██ ARTWORK DIVIDER — About → Panoramic ███████████████████ -->
+<div class="about-panoramic-divider" aria-hidden="true"></div>
+
+<!-- ██ PANORAMIC MOMENT ████████████████████████████████████████ -->
 <div class="panoramic-strip" aria-label="Syrian Eyes volunteers and children running together during a community carnival">
   <div class="panoramic-img"></div>
   <div class="panoramic-grain"></div>

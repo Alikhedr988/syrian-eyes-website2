@@ -1214,85 +1214,102 @@ footer {
 .wg-cell:hover .wg-caption { opacity: 1; }
 
 /* ═══════════════════════════════════════════════════════════════
-   PORTRAIT GALLERY — 8-column grid
+   POLAROID SCATTER — Voices in Color
+   Organic stacked layout, full image visible, hover focus
 ═══════════════════════════════════════════════════════════════ */
 .portrait-mosaic {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 3px;
-  position: relative; z-index: 2;
+  position: relative;
+  z-index: 2;
+  /* Height set by JS based on content */
+  min-height: 480px;
 }
-/* Each portrait cell — all equal size */
+
+/* Each polaroid card */
 .pm-cell {
-  position: relative; overflow: hidden;
-  background: var(--dark-soft);
-  aspect-ratio: 2/3;
+  position: absolute;
   cursor: pointer;
+  background: var(--white);
+  /* Polaroid border — thicker on bottom */
+  padding: 10px 10px 32px;
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.28),
+    0 1px 4px rgba(0,0,0,0.14);
   transition:
-    opacity 0.5s ease,
-    filter 0.5s ease,
-    transform 0.5s cubic-bezier(0.23,1,0.32,1);
+    transform 0.55s cubic-bezier(0.23,1,0.32,1),
+    filter 0.55s ease,
+    opacity 0.55s ease,
+    box-shadow 0.45s ease,
+    z-index 0s;
+  transform-origin: center center;
+  will-change: transform, filter, opacity;
 }
 .pm-cell img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+  display: block;
+  width: 100%;
+  /* Show full image — no cropping */
+  height: auto;
+  object-fit: contain;
+  background: #f0ede8;
 }
 
-/* When mosaic is hovered, dim all cells */
+/* Dimmed state — when another card is hovered */
 .portrait-mosaic:hover .pm-cell {
-  opacity: 0.32;
-  filter: blur(1.5px) brightness(0.65);
-  transform: scale(0.97);
+  opacity: 0.35;
+  filter: blur(1.8px) brightness(0.6);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
-/* Un-dim and lift the hovered cell */
+/* Focused card — comes forward */
 .portrait-mosaic:hover .pm-cell:hover {
-  opacity: 1;
-  filter: blur(0) brightness(1.05);
-  transform: scale(1.04);
-  z-index: 5;
-}
-.pm-cell:hover img { transform: scale(1.08); }
-
-/* Remove old size variants — all equal now */
-.pm-cell--anchor,
-.pm-cell--offset-down,
-.pm-cell--sm,
-.pm-cell--wide,
-.pm-cell--raised {
-  flex: unset; min-height: unset; transform: none; margin-bottom: 0;
+  opacity: 1 !important;
+  filter: blur(0) brightness(1) !important;
+  z-index: 20 !important;
+  box-shadow:
+    0 20px 48px rgba(0,0,0,0.42),
+    0 4px 12px rgba(0,0,0,0.22) !important;
 }
 
-/* Columns and rows no longer needed — flat grid */
-.pm-col, .pm-row { display: contents; }
-
-/* Caption — slides up on hover */
+/* Polaroid number label */
 .pm-caption {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 32px 10px 10px;
-  background: linear-gradient(to top, rgba(20,18,16,0.85), transparent);
-  display: flex; align-items: flex-end; gap: 8px;
-  font-size: 9px; letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.0);
-  transition: color 0.4s ease;
+  position: absolute;
+  bottom: 8px; left: 0; right: 0;
+  text-align: center;
+  font-size: 9px; letter-spacing: 0.16em;
+  color: rgba(26,22,20,0.35);
   pointer-events: none;
 }
-.pm-cell:hover .pm-caption { color: rgba(255,255,255,0.55); }
-.pm-num {
-  font-size: 9px; letter-spacing: 0.18em;
-  color: var(--blue); flex-shrink: 0;
-}
+.pm-num { color: var(--blue); }
 
 /* Voices footer */
 .voices-foot {
   position: relative; z-index: 2;
   display: flex; align-items: center; gap: 24px;
-  margin-top: 24px;
+  margin-top: 32px;
 }
 .voices-foot-line { width: 28px; height: 1px; background: rgba(255,255,255,0.18); flex-shrink: 0; }
 .voices-foot p {
   font-size: 11px; font-weight: 300; line-height: 1.65;
   color: rgba(255,255,255,0.32); letter-spacing: 0.04em;
 }
+
+/* Mobile: stack vertically */
+@media (max-width: 900px) {
+  .portrait-mosaic {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-height: unset;
+    align-items: center;
+  }
+  .pm-cell {
+    position: relative !important;
+    left: auto !important; top: auto !important;
+    width: 72% !important;
+    transform: none !important;
+  }
+  .portrait-mosaic:hover .pm-cell { opacity: 1; filter: none; }
+  .portrait-mosaic:hover .pm-cell:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important; }
+}
+
 
 /* ═══════════════════════════════════════════════════════════════
    VIDEO SCREENING SECTION
@@ -1582,36 +1599,10 @@ footer {
 }
 .paint-img {
   position: absolute;
-  mix-blend-mode: multiply;
   pointer-events: none;
-  opacity: 0;
   user-select: none;
-  will-change: transform, opacity, clip-path;
-}
-/* Entrance animations */
-@keyframes pGrow {
-  from { clip-path: circle(0% at 50% 50%); opacity: 0; transform: scale(0.7) var(--pRot); }
-  to   { clip-path: circle(160% at 50% 50%); opacity: var(--pA); transform: scale(1) var(--pRot); }
-}
-@keyframes pSlideLeft {
-  from { opacity: 0; transform: translateX(-55%) scale(0.85) var(--pRot); }
-  to   { opacity: var(--pA); transform: translateX(0) scale(1) var(--pRot); }
-}
-@keyframes pSlideRight {
-  from { opacity: 0; transform: translateX(55%) scale(0.85) var(--pRot); }
-  to   { opacity: var(--pA); transform: translateX(0) scale(1) var(--pRot); }
-}
-@keyframes pSlideTop {
-  from { opacity: 0; transform: translateY(-60%) scale(0.85) var(--pRot); }
-  to   { opacity: var(--pA); transform: translateY(0) scale(1) var(--pRot); }
-}
-@keyframes pSlideBottom {
-  from { opacity: 0; transform: translateY(50%) scale(0.85) var(--pRot); }
-  to   { opacity: var(--pA); transform: translateY(0) scale(1) var(--pRot); }
-}
-@keyframes pFade {
-  from { opacity: 0; transform: scale(0.6) var(--pRot); }
-  to   { opacity: var(--pA); transform: scale(1) var(--pRot); }
+  opacity: 0;
+  will-change: opacity, transform;
 }
 /* Brushstroke underline */
 .paint-underline { display: inline-block; position: relative; }
@@ -1622,7 +1613,6 @@ footer {
 .paint-underline path {
   stroke-dasharray: 600; stroke-dashoffset: 600; transition: none;
 }
-═══════════════════════════════════════════════════════════════ */
 #about {
   padding-bottom: 0 !important;
   position: relative;
@@ -1921,8 +1911,7 @@ footer {
   .donate-form-wrap { padding: 22px; }
   /* Artwork divider */
   .artwork-divider { height: 110px; }
-  /* Portrait gallery — 4 cols on mobile */
-  .portrait-mosaic { grid-template-columns: repeat(4, 1fr); }
+  /* Portrait — mobile handled by component CSS */
   /* Workshop gallery — stack on mobile */
   .workshop-gallery { grid-template-columns: 1fr 1fr; height: auto; }
   .wg-cell { height: 180px; }
@@ -1949,6 +1938,20 @@ footer {
 </style>
 </head>
 <body>
+<!-- SVG filter: luminance-to-alpha removes black bg from paint PNGs -->
+<svg id="psvg" width="0" height="0" aria-hidden="true" focusable="false"
+     style="position:absolute;overflow:hidden;width:0;height:0;">
+  <defs>
+    <filter id="paint-extract" color-interpolation-filters="sRGB"
+            x="-20%" y="-20%" width="140%" height="140%">
+      <feColorMatrix type="luminanceToAlpha" result="lum"/>
+      <feComponentTransfer in="lum" result="boosted">
+        <feFuncA type="gamma" amplitude="1.8" exponent="0.55" offset="-0.08"/>
+      </feComponentTransfer>
+      <feComposite in="SourceGraphic" in2="boosted" operator="in"/>
+    </filter>
+  </defs>
+</svg>
 
 <!-- ██ NAV ████████████████████████████████████████████████████ -->
 <nav id="nav" class="on-dark">
@@ -2382,38 +2385,38 @@ footer {
     <p class="voices-sub reveal d2">Through the "My Eyes" project, children painted their stories, hopes, and memories over black-and-white portraits of themselves — transforming reportage into vibrant personal narrative.</p>
   </div>
 
-  <!-- Equal-grid portrait gallery — hover focuses one, others recede -->
-  <div class="portrait-mosaic reveal">
-    <div class="pm-cell">
-      <img src="my%20eyes%20project%20malak_sketch%20(1).jpg" alt="My Eyes — Malak sketch 1">
+  <!-- Polaroid scatter — positioned organically by JS on load -->
+  <div class="portrait-mosaic reveal" id="polaroid-wall">
+    <div class="pm-cell" id="pol-1">
+      <img src="my%20eyes%20project%20malak_sketch%20(1).jpg" alt="My Eyes — Malak sketch 1" loading="lazy">
       <div class="pm-caption"><span class="pm-num">01</span></div>
     </div>
-    <div class="pm-cell">
-      <img src="my%20eyes%20project%20malak_sketch%20(2).jpg" alt="My Eyes — Malak sketch 2">
+    <div class="pm-cell" id="pol-2">
+      <img src="my%20eyes%20project%20malak_sketch%20(2).jpg" alt="My Eyes — Malak sketch 2" loading="lazy">
       <div class="pm-caption"><span class="pm-num">02</span></div>
     </div>
-    <div class="pm-cell">
-      <img src="my%20eyes%20project%20malak_sketch%20(3).jpg" alt="My Eyes — Malak sketch 3">
+    <div class="pm-cell" id="pol-3">
+      <img src="my%20eyes%20project%20malak_sketch%20(3).jpg" alt="My Eyes — Malak sketch 3" loading="lazy">
       <div class="pm-caption"><span class="pm-num">03</span></div>
     </div>
-    <div class="pm-cell">
-      <img src="my%20eyes%20project%20malak_sketch%20(4).jpg" alt="My Eyes — Malak sketch 4">
+    <div class="pm-cell" id="pol-4">
+      <img src="my%20eyes%20project%20malak_sketch%20(4).jpg" alt="My Eyes — Malak sketch 4" loading="lazy">
       <div class="pm-caption"><span class="pm-num">04</span></div>
     </div>
-    <div class="pm-cell">
-      <img src="my%20eyes%20project%20malak_sketch%20(5).jpg" alt="My Eyes — Malak sketch 5">
+    <div class="pm-cell" id="pol-5">
+      <img src="my%20eyes%20project%20malak_sketch%20(5).jpg" alt="My Eyes — Malak sketch 5" loading="lazy">
       <div class="pm-caption"><span class="pm-num">05</span></div>
     </div>
-    <div class="pm-cell">
-      <img src="my%20eyes%20project%20malak_sketch%20(7).jpg" alt="My Eyes — Malak sketch 7">
+    <div class="pm-cell" id="pol-6">
+      <img src="my%20eyes%20project%20malak_sketch%20(7).jpg" alt="My Eyes — Malak sketch 7" loading="lazy">
       <div class="pm-caption"><span class="pm-num">06</span></div>
     </div>
-    <div class="pm-cell">
-      <img src="my%20eyes%20project%20malak_sketch%20(8).jpg" alt="My Eyes — Malak sketch 8">
+    <div class="pm-cell" id="pol-7">
+      <img src="my%20eyes%20project%20malak_sketch%20(8).jpg" alt="My Eyes — Malak sketch 8" loading="lazy">
       <div class="pm-caption"><span class="pm-num">07</span></div>
     </div>
-    <div class="pm-cell">
-      <img src="my%20eyes%20project%20malak_sketch%20(9).jpg" alt="My Eyes — Malak sketch 9">
+    <div class="pm-cell" id="pol-8">
+      <img src="my%20eyes%20project%20malak_sketch%20(9).jpg" alt="My Eyes — Malak sketch 9" loading="lazy">
       <div class="pm-caption"><span class="pm-num">08</span></div>
     </div>
   </div>
@@ -2848,9 +2851,9 @@ const statsSection = document.getElementById('stats');
 if (statsSection) statsObs.observe(statsSection);
 
 /* ── PNG paint effects — Children's Activities ───────────────
-   Uses real paint PNGs: pnj(1)–pnj(5).png
-   mix-blend-mode:multiply removes black background automatically
-   Shuffled playlist: 6 scenes, all 5 PNGs, no repeats
+   pnj(1)–pnj(5).png in GitHub root
+   SVG #paint-extract filter removes black background
+   Pure JS transitions — no CSS keyframes, no var() issues
 ──────────────────────────────────────────────────────────────── */
 (function() {
   const panel   = document.getElementById('children-text-panel');
@@ -2858,159 +2861,194 @@ if (statsSection) statsObs.observe(statsSection);
   const heading = document.querySelector('.paint-underline');
   if (!panel || !layer) return;
 
-  // ── 5 real paint PNGs uploaded to GitHub root ─────────────
-  // pnj(1) = orange watercolor blob
-  // pnj(2) = magenta/yellow/purple drip
-  // pnj(3) = colorful multi-blob scatter
-  // pnj(4) = blue/red/yellow triple splatter
-  // pnj(5) = pink/magenta watercolor burst
-  const IMGS = [
-    'pnj(1).png', // 0 orange
-    'pnj(2).png', // 1 drip
-    'pnj(3).png', // 2 multi-blob
-    'pnj(4).png', // 3 triple splatter
-    'pnj(5).png', // 4 pink
-  ];
+  const IMGS = ['pnj%20(1).png','pnj%20(2).png','pnj%20(3).png','pnj%20(4).png','pnj%20(5).png'];
+  const EASE = 'cubic-bezier(0.15,0.85,0.35,1.05)';
 
-  // ── Animations: grow, slide-left, slide-right, slide-top, slide-bottom, fade
-  // ── Position: % from top-left of panel
-  // ── w: width as % of panel width
-  // ── a: opacity (0–1)
-  // ── rot: rotation in deg
-  // ── dur: animation duration ms
+  // Where the image starts before animating in
+  function startTransform(enter, rot) {
+    const r = `rotate(${rot}deg)`;
+    if (enter==='left')   return `translateX(-65%) scale(0.88) ${r}`;
+    if (enter==='right')  return `translateX(65%)  scale(0.88) ${r}`;
+    if (enter==='top')    return `translateY(-70%) scale(0.88) ${r}`;
+    if (enter==='bottom') return `translateY(55%)  scale(0.88) ${r}`;
+    return `scale(0.28) ${r}`; // center = grow from small
+  }
 
   const SCENES = [
-    // 0 — Drip from top: pnj(2) slides down, pnj(1) bottom-left corner
-    { layers: [
-        { i:1, x:-5,  y:-8,  w:78, rot:-3, a:0.88, anim:'slide-top',    dur:700, delay:0   },
-        { i:0, x:-12, y:48,  w:44, rot:12, a:0.75, anim:'slide-left',   dur:600, delay:260 },
+    // 0 — drip from top
+    {layers:[
+      {i:1,x:-5, y:-12,w:80,rot:-3, a:0.92,dur:800,delay:0,  enter:'top'  },
+      {i:0,x:-10,y:42, w:44,rot:14, a:0.82,dur:650,delay:280,enter:'left' },
     ]},
-    // 1 — Central explosion: pnj(4) grows from center
-    { layers: [
-        { i:3, x:5,   y:5,   w:90, rot:5,  a:0.90, anim:'grow',         dur:750, delay:0   },
-        { i:4, x:52,  y:-10, w:48, rot:-18,a:0.72, anim:'slide-right',  dur:600, delay:230 },
+    // 1 — center explosion
+    {layers:[
+      {i:3,x:3, y:2,  w:94,rot:6,  a:0.94,dur:800,delay:0,  enter:'center'},
+      {i:4,x:54,y:-8, w:50,rot:-16,a:0.80,dur:650,delay:240,enter:'right' },
     ]},
-    // 2 — Left side throw: pnj(1) + pnj(5) enter from left
-    { layers: [
-        { i:0, x:-14, y:8,   w:68, rot:10, a:0.88, anim:'slide-left',   dur:680, delay:0   },
-        { i:4, x:38,  y:32,  w:52, rot:-8, a:0.78, anim:'slide-left',   dur:620, delay:220 },
+    // 2 — left throw
+    {layers:[
+      {i:0,x:-14,y:6, w:70,rot:10, a:0.90,dur:750,delay:0,  enter:'left' },
+      {i:4,x:36, y:30,w:54,rot:-8, a:0.82,dur:650,delay:230,enter:'left' },
     ]},
-    // 3 — Full scatter: pnj(3) center, pnj(1) bottom corner
-    { layers: [
-        { i:2, x:8,   y:2,   w:88, rot:8,  a:0.90, anim:'grow',         dur:780, delay:0   },
-        { i:0, x:-8,  y:42,  w:42, rot:-22,a:0.70, anim:'slide-bottom', dur:580, delay:200 },
-        { i:4, x:54,  y:-6,  w:46, rot:15, a:0.68, anim:'slide-right',  dur:600, delay:350 },
+    // 3 — full scatter
+    {layers:[
+      {i:2,x:6, y:-2, w:90,rot:8,  a:0.92,dur:800,delay:0,  enter:'center'},
+      {i:0,x:-8,y:44, w:42,rot:-22,a:0.76,dur:600,delay:210,enter:'bottom'},
+      {i:4,x:52,y:-6, w:48,rot:15, a:0.74,dur:600,delay:360,enter:'right' },
     ]},
-    // 4 — Right burst + top drip
-    { layers: [
-        { i:3, x:22,  y:6,   w:82, rot:-6, a:0.88, anim:'slide-right',  dur:720, delay:0   },
-        { i:1, x:2,   y:-12, w:58, rot:4,  a:0.72, anim:'slide-top',    dur:640, delay:240 },
+    // 4 — right burst + top drip
+    {layers:[
+      {i:3,x:20,y:4,  w:84,rot:-6, a:0.90,dur:780,delay:0,  enter:'right'},
+      {i:1,x:0, y:-14,w:60,rot:4,  a:0.76,dur:650,delay:250,enter:'top'  },
     ]},
-    // 5 — Pink bloom + orange corner + brushstroke heading
-    { layers: [
-        { i:4, x:12,  y:4,   w:75, rot:-12,a:0.88, anim:'grow',         dur:750, delay:0   },
-        { i:0, x:50,  y:38,  w:48, rot:18, a:0.72, anim:'fade',         dur:600, delay:220 },
-    ], brushstroke: true },
+    // 5 — pink bloom + brushstroke underline
+    {layers:[
+      {i:4,x:10,y:2,  w:78,rot:-12,a:0.90,dur:780,delay:0,  enter:'center'},
+      {i:0,x:48,y:36, w:50,rot:18, a:0.76,dur:640,delay:230,enter:'right' },
+    ], brushstroke:true},
   ];
 
-  // ── Shuffled playlist ──────────────────────────────────────
   let playlist = [];
   function nextScene() {
-    if (!playlist.length) {
-      playlist = SCENES.map((_,i)=>i).sort(()=>Math.random()-0.5);
-    }
+    if (!playlist.length) playlist = SCENES.map((_,i)=>i).sort(()=>Math.random()-0.5);
     return playlist.shift();
   }
 
-  // ── Build & animate one scene ──────────────────────────────
   function runScene(idx) {
     layer.innerHTML = '';
-    const scene = SCENES[idx];
+    const scene = SCENES[idx]; if (!scene) return;
 
     scene.layers.forEach(cfg => {
       const img = new Image();
       img.src = IMGS[cfg.i];
-      img.alt = '';
-      img.draggable = false;
-      img.className = 'paint-img';
-
-      const rot = `rotate(${cfg.rot}deg)`;
+      img.alt = ''; img.draggable = false; img.className = 'paint-img';
+      // Set initial (off-screen) state
       img.style.cssText = `
-        left:${cfg.x}%;
-        top:${cfg.y}%;
-        width:${cfg.w}%;
-        --pA:${cfg.a};
-        --pRot:${rot};
-        animation-name: p${capitalize(cfg.anim)};
-        animation-duration: ${cfg.dur}ms;
-        animation-delay: ${cfg.delay}ms;
-        animation-fill-mode: both;
-        animation-timing-function: cubic-bezier(0.15, 0.85, 0.35, 1.02);
-      `;
+        position:absolute;left:${cfg.x}%;top:${cfg.y}%;width:${cfg.w}%;
+        opacity:0;transform:${startTransform(cfg.enter,cfg.rot)};
+        transition:none;filter:url(#paint-extract);pointer-events:none;`;
       layer.appendChild(img);
+
+      // Trigger after a frame so the browser registers the start state
+      setTimeout(() => {
+        img.style.transition = `opacity ${cfg.dur}ms ${EASE}, transform ${cfg.dur}ms ${EASE}`;
+        img.style.opacity    = cfg.a;
+        img.style.transform  = `rotate(${cfg.rot}deg) scale(1)`;
+      }, cfg.delay + 50);
     });
 
-    // Brushstroke underline on heading (scene 5)
+    // Brushstroke underline
     if (scene.brushstroke && heading) {
-      const svgNS = 'http://www.w3.org/2000/svg';
-      const svg = document.createElementNS(svgNS, 'svg');
-      svg.setAttribute('viewBox', '0 0 400 18');
-      svg.setAttribute('preserveAspectRatio', 'none');
-      svg.style.cssText = 'position:absolute;bottom:-10px;left:0;width:100%;height:18px;overflow:visible;pointer-events:none;';
-      const defs = document.createElementNS(svgNS, 'defs');
-      const filt = document.createElementNS(svgNS, 'filter');
-      filt.setAttribute('id', 'pb2'); 
-      const blur = document.createElementNS(svgNS, 'feGaussianBlur');
-      blur.setAttribute('stdDeviation', '0.9');
-      filt.appendChild(blur); defs.appendChild(filt); svg.appendChild(defs);
-      [
-        ['M2,11 C70,3 160,17 240,8 C310,1 360,14 398,9', 8, 'rgba(232,98,20,0.72)'],
-        ['M4,10 C72,5 162,14 242,7 C312,2 362,13 396,8',  3, 'rgba(232,98,20,0.38)'],
-      ].forEach(([d, sw, color]) => {
-        const p = document.createElementNS(svgNS, 'path');
-        p.setAttribute('d', d);
-        p.setAttribute('stroke', color);
-        p.setAttribute('stroke-width', sw);
-        p.setAttribute('stroke-linecap', 'round');
-        p.setAttribute('fill', 'none');
-        p.setAttribute('filter', 'url(#pb2)');
-        p.style.strokeDasharray = '600';
-        p.style.strokeDashoffset = '600';
+      const ns = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns,'svg');
+      svg.setAttribute('viewBox','0 0 400 18');
+      svg.setAttribute('preserveAspectRatio','none');
+      svg.style.cssText='position:absolute;bottom:-10px;left:0;width:100%;height:18px;overflow:visible;pointer-events:none;';
+      const ex = heading.querySelector('svg'); if (ex) ex.remove();
+      [['M2,11 C70,3 160,17 240,8 C310,1 360,14 398,9',8,'rgba(232,98,20,0.82)'],
+       ['M4,10 C72,5 162,14 242,7 C312,2 362,13 396,8',3,'rgba(232,98,20,0.42)']
+      ].forEach(([d,sw,col])=>{
+        const p=document.createElementNS(ns,'path');
+        p.setAttribute('d',d); p.setAttribute('stroke',col);
+        p.setAttribute('stroke-width',sw); p.setAttribute('stroke-linecap','round');
+        p.setAttribute('fill','none');
+        p.style.strokeDasharray='600'; p.style.strokeDashoffset='600';
         svg.appendChild(p);
-        setTimeout(() => {
-          p.style.transition = 'stroke-dashoffset 0.95s cubic-bezier(0.4,0,0.2,1)';
-          p.style.strokeDashoffset = '0';
-        }, 350);
+        setTimeout(()=>{ p.style.transition='stroke-dashoffset 0.95s cubic-bezier(0.4,0,0.2,1)'; p.style.strokeDashoffset='0'; },380);
       });
-      const existing = heading.querySelector('svg');
-      if (existing) existing.remove();
       heading.appendChild(svg);
     }
   }
 
-  function capitalize(s) { return s.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(''); }
-
   function clearAll() {
-    layer.innerHTML = '';
-    if (heading) { const s = heading.querySelector('svg'); if (s) s.remove(); }
+    layer.innerHTML='';
+    if (heading){const s=heading.querySelector('svg');if(s)s.remove();}
   }
 
-  // ── Intersection observer — fire on enter, reset on leave ──
   let hasRun = false;
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting && !hasRun) {
-        hasRun = true;
-        setTimeout(() => runScene(nextScene()), 160);
-      }
-      if (!e.isIntersecting && hasRun) {
-        hasRun = false;
-        clearAll();
-      }
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting && !hasRun) { hasRun=true; setTimeout(()=>runScene(nextScene()),200); }
+      if (!e.isIntersecting && hasRun) { hasRun=false; clearAll(); }
     });
-  }, { threshold: 0.25 });
-
+  },{threshold:0.25});
   obs.observe(panel);
+})();
+
+/* ── Polaroid scatter — Voices in Color ───────────────────────
+   Positions each .pm-cell card absolutely within the container
+   in an organic, slightly-imperfect scattered layout.
+   Hover is pure CSS (see .portrait-mosaic:hover .pm-cell rules).
+──────────────────────────────────────────────────────────────── */
+(function() {
+  const wall = document.getElementById('polaroid-wall');
+  if (!wall) return;
+
+  // Fixed scatter layout — feels hand-placed, not algorithmic
+  // Each: { left%, top%, width%, rotation(deg), zIndex }
+  const LAYOUT = [
+    { l:  1, t:  0, w: 26, r: -4,  z: 3 },  // 01 — top-left, slight tilt left
+    { l: 26, t:  3, w: 24, r:  2,  z: 5 },  // 02 — top-center, slight tilt right
+    { l: 50, t:  1, w: 22, r: -2,  z: 4 },  // 03 — top-right area
+    { l: 72, t:  5, w: 25, r:  5,  z: 2 },  // 04 — far right, more tilted
+    { l:  4, t: 44, w: 23, r:  3,  z: 6 },  // 05 — bottom-left
+    { l: 27, t: 40, w: 26, r: -3,  z: 7 },  // 06 — bottom-center (on top)
+    { l: 53, t: 42, w: 24, r:  6,  z: 4 },  // 07 — bottom-right area
+    { l: 74, t: 38, w: 22, r: -5,  z: 3 },  // 08 — far right bottom
+  ];
+
+  const cards = wall.querySelectorAll('.pm-cell');
+
+  function layoutCards() {
+    // On mobile the CSS handles stacking — skip JS layout
+    if (window.innerWidth <= 900) {
+      cards.forEach(c => {
+        c.style.position = '';
+        c.style.left = '';
+        c.style.top = '';
+        c.style.width = '';
+        c.style.transform = '';
+        c.style.zIndex = '';
+      });
+      wall.style.minHeight = '';
+      return;
+    }
+
+    const W = wall.offsetWidth;
+    // Estimate height needed: roughly 2 rows of polaroids
+    const cardW = W * 0.26; // approx largest card
+    const cardH = cardW * 1.28; // polaroid aspect + label
+    wall.style.minHeight = (cardH * 2 + 60) + 'px';
+
+    cards.forEach((card, i) => {
+      const cfg = LAYOUT[i] || LAYOUT[i % LAYOUT.length];
+      card.style.left      = cfg.l + '%';
+      card.style.top       = cfg.t + '%';
+      card.style.width     = cfg.w + '%';
+      card.style.transform = `rotate(${cfg.r}deg)`;
+      card.style.zIndex    = cfg.z;
+      card.style.position  = 'absolute';
+    });
+  }
+
+  // Run on load and resize
+  layoutCards();
+  window.addEventListener('resize', layoutCards, { passive: true });
+
+  // Hover: lift the hovered card above all others
+  cards.forEach(card => {
+    const baseZ = parseInt(card.style.zIndex) || 1;
+    const baseRot = LAYOUT[Array.from(cards).indexOf(card)]?.r || 0;
+
+    card.addEventListener('mouseenter', () => {
+      card.style.zIndex = '20';
+      card.style.transform = `rotate(${baseRot * 0.3}deg) scale(1.06) translateY(-8px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.zIndex = baseZ;
+      card.style.transform = `rotate(${baseRot}deg)`;
+    });
+  });
 })();
 
 /* ── Smooth anchor scroll ──────────────────────────────────── */

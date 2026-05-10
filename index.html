@@ -144,7 +144,19 @@ a { text-decoration: none; color: inherit; }
   display: flex; align-items: flex-end;
   padding: 0 0 88px 88px;
   overflow: hidden;
-  cursor: default;
+  cursor: pointer;
+}
+/* Subtle click-to-advance hint — fades out after first interaction */
+#hero-click-hint {
+  position: absolute; bottom: 96px; left: 50%; transform: translateX(-50%);
+  z-index: 7; display: flex; flex-direction: column; align-items: center; gap: 5px;
+  opacity: 0.45; transition: opacity 0.6s;
+  pointer-events: none;
+}
+#hero-click-hint.hidden { opacity: 0; }
+#hero-click-hint span {
+  font-size: 8px; letter-spacing: 0.24em;
+  color: rgba(255,255,255,0.5);
 }
 
 /* Each slide — stacked fullscreen layers */
@@ -1158,36 +1170,7 @@ footer {
 /* Hide old featured hero classes if present */
 /* .podcast-hero removed — all three are now podcast-side */
 
-/* ═══════════════════════════════════════════════════════════════
-   PANORAMIC STRIP — Hero carnival moment
-═══════════════════════════════════════════════════════════════ */
-.panoramic-strip {
-  position: relative;
-  height: 380px;
-  overflow: hidden;
-  background: var(--dark);
-}
-.panoramic-img {
-  position: absolute; inset: -2px;
-  background-image: url('Hero%20image%20kids%20activities%20and%20carnivals%20(3).jpg');
-  background-size: cover;
-  background-position: center 38%;
-  filter: none;
-  transition: transform 12s ease;
-}
-.panoramic-strip:hover .panoramic-img { transform: scale(1.03); }
-/* Top and bottom vignette */
-.panoramic-strip::before {
-  content: '';
-  position: absolute; inset: 0; z-index: 2;
-  background: linear-gradient(to bottom,
-    rgba(20,18,16,0.55) 0%,
-    transparent 22%,
-    transparent 78%,
-    rgba(20,18,16,0.65) 100%
-  );
-  pointer-events: none;
-}
+/* .panoramic-strip and .panoramic-img — defined in ABOUT→PANORAMIC section below */
 .panoramic-caption {
   position: absolute; bottom: 24px; right: 36px; z-index: 3;
   font-size: 9px; letter-spacing: 0.22em;
@@ -1506,7 +1489,6 @@ footer {
 ═══════════════════════════════════════════════════════════════ */
 .about-photo::after,
 .prog-photo::after,
-.panoramic-strip::after,
 .wg-cell::after,
 .pm-cell::after,
 .podcast-side-img::after,
@@ -1533,37 +1515,139 @@ footer {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   ABOUT → PANORAMIC TRANSITION — chapter separation
+   CINEMATIC GRAIN — targeted heavy treatment
+   Panoramic, Emergency Relief, Children's, Medical, Podcasts
 ═══════════════════════════════════════════════════════════════ */
-/* Dark fade strip between About and Panoramic */
+
+/* Emergency & Relief, Children's Activities, Medical Cases — heavier grain */
+#prog-emergency .prog-photo::after,
+#prog-children .prog-photo::after,
+#prog-medical .prog-photo::after {
+  opacity: 0.52 !important;
+  background-size: 160px !important;
+}
+
+/* Scanline overlay on the three program photos — cinematic feel */
+#prog-emergency .prog-photo .prog-photo-scanlines,
+#prog-children .prog-photo .prog-photo-scanlines,
+#prog-medical .prog-photo .prog-photo-scanlines {
+  position: absolute; inset: 0; z-index: 3;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.06) 2px,
+    rgba(0,0,0,0.06) 4px
+  );
+  pointer-events: none;
+}
+
+/* Podcast images — stronger grain */
+.podcast-side-img::after {
+  opacity: 0.48 !important;
+  background-size: 150px !important;
+}
+
+/* Podcast scanlines */
+.podcast-side-img .podcast-scanlines {
+  position: absolute; inset: 0; z-index: 3;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.05) 3px,
+    rgba(0,0,0,0.05) 6px
+  );
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ABOUT → PANORAMIC — seamless cinematic merge
+═══════════════════════════════════════════════════════════════ */
 #about {
   padding-bottom: 0 !important;
+  position: relative;
 }
-#about::after {
+#about::after { display: none; }
+
+/* The about section fades its cream bottom into the panoramic via a
+   painting-backed transition zone — no separate div needed */
+#about > .about-text::after {
   content: '';
   display: block;
-  height: 64px;
-  background: linear-gradient(to bottom, var(--cream) 0%, var(--dark) 100%);
-  position: relative; z-index: 2;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent 0%, var(--cream) 100%);
+  pointer-events: none;
 }
+
+/* Panoramic strip — taller to absorb the transition */
 .panoramic-strip {
   position: relative;
-  height: 380px;
+  height: 520px;
   overflow: hidden;
   background: var(--dark);
   margin-top: 0;
 }
-/* Top fade — blends seamlessly from the dark gradient above */
+
+/* The painting crown — sits on top of the panoramic photo */
 .panoramic-strip::before {
   content: '';
-  position: absolute; inset: 0; z-index: 2;
-  background: linear-gradient(to bottom,
-    rgba(10,9,8,0.72) 0%,
-    transparent 18%,
-    transparent 75%,
-    rgba(10,9,8,0.72) 100%
-  );
+  position: absolute; inset: 0; z-index: 3;
+  background:
+    /* cream→transparent at very top (absorbs the section edge) */
+    linear-gradient(to bottom,
+      #f5f2ed 0%,
+      rgba(245,242,237,0.0) 18%,
+      transparent 38%,
+      transparent 72%,
+      rgba(10,9,8,0.72) 100%
+    );
   pointer-events: none;
+}
+
+/* Painting wash layer — the teal-blue artwork bleeds across the top */
+.panoramic-strip::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 55%;
+  z-index: 2;
+  background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(6).jpg');
+  background-size: cover;
+  background-position: center 60%;
+  opacity: 0.78;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  /* Fade the painting out as it meets the photograph below */
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 55%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 55%, rgba(0,0,0,0) 100%);
+}
+
+/* Grain on panoramic */
+.panoramic-grain {
+  position: absolute; inset: 0; z-index: 4;
+  background-image: var(--grain);
+  background-size: 180px;
+  opacity: 0.42;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.panoramic-img {
+  position: absolute;
+  inset: -2px;
+  background-image: url('Hero%20image%20kids%20activities%20and%20carnivals%20(3).jpg');
+  background-size: cover;
+  background-position: center 38%;
+  filter: none;
+  transition: transform 12s ease;
+}
+.panoramic-strip:hover .panoramic-img { transform: scale(1.03); }
+
+.panoramic-caption {
+  position: absolute; bottom: 24px; right: 36px; z-index: 5;
+  font-size: 9px; letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.38);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1784,8 +1868,9 @@ footer {
   .prog-photo { min-height: 260px; order: -1 !important; }
   .prog-text { padding: 40px 24px 48px; }
   /* Mobile about → panoramic transition */
-  #about::after { height: 40px; }
-  .panoramic-strip { height: 260px; }
+  #about::after { display: none; }
+  .about-panoramic-divider { display: none; }
+  .panoramic-strip { height: 300px; }
   /* Mobile contact */
   #contact-section { padding: 72px 24px; }
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
@@ -1882,6 +1967,11 @@ footer {
     <div class="hero-scroll-dot"></div>
   </div>
 
+  <!-- Click to advance hint -->
+  <div id="hero-click-hint">
+    <span>CLICK TO ADVANCE</span>
+  </div>
+
 </section>
 
 <!-- ██ ABOUT ██████████████████████████████████████████████████ -->
@@ -1897,9 +1987,10 @@ footer {
   </div>
 </section>
 
-<!-- ██ PANORAMIC MOMENT ████████████████████████████████████████ -->
+<!-- ██ PANORAMIC + TRANSITION MERGED ██████████████████████████ -->
 <div class="panoramic-strip" aria-label="Syrian Eyes volunteers and children running together during a community carnival">
   <div class="panoramic-img"></div>
+  <div class="panoramic-grain"></div>
   <div class="panoramic-caption">
     <span>The team in the field — Bekaa Valley</span>
   </div>
@@ -1943,14 +2034,16 @@ footer {
   </div>
   <div class="prog-photo">
     <div class="prog-photo-overlay"></div>
+    <div class="prog-photo-scanlines"></div>
     <img src="relief%20(2).jpg" alt="Syrian Eyes — emergency relief distribution">
   </div>
 </div>
 
 <!-- ██ PROGRAM 02 — LIGHT ████████████████████████████████████ -->
-<div class="prog-block is-light">
+<div class="prog-block is-light" id="prog-children">
   <div class="prog-photo" style="order:-1;">
     <div class="prog-photo-overlay" style="background:linear-gradient(225deg,rgba(26,23,20,0.18),transparent 55%);"></div>
+    <div class="prog-photo-scanlines"></div>
     <img src="my%20eyes%20project%20Jarrahieh%20burned%20centre.jpg" alt="Syrian Eyes — Jarrahieh activity centre" style="filter:none;">
   </div>
   <div class="prog-text">
@@ -1961,7 +2054,7 @@ footer {
 </div>
 
 <!-- ██ PROGRAM 03 — DARK ██████████████████████████████████████ -->
-<div class="prog-block is-dark">
+<div class="prog-block is-dark" id="prog-medical">
   <div class="prog-grain"></div>
   <div class="prog-text">
     <div class="prog-tag reveal">03 / SINCE 2014 · ONGOING</div>
@@ -1970,6 +2063,7 @@ footer {
   </div>
   <div class="prog-photo">
     <div class="prog-photo-overlay"></div>
+    <div class="prog-photo-scanlines"></div>
     <img src="Medical%20support%20COVID%20(5).jpeg" alt="Syrian Eyes — medical support, COVID response">
   </div>
 </div>
@@ -2064,6 +2158,7 @@ footer {
       <div class="podcast-side reveal">
         <div class="podcast-side-img">
           <img src="podcast%20(1).jpg" alt="Podcast recording session">
+          <div class="podcast-scanlines"></div>
         </div>
         <div class="podcast-side-body">
           <span class="podcast-ep">EPISODE 01</span>
@@ -2082,6 +2177,7 @@ footer {
       <div class="podcast-side reveal d1">
         <div class="podcast-side-img">
           <img src="podcast%20(2).jpg" alt="Podcast studio — participants at microphones">
+          <div class="podcast-scanlines"></div>
         </div>
         <div class="podcast-side-body">
           <span class="podcast-ep">EPISODE 02</span>
@@ -2100,6 +2196,7 @@ footer {
       <div class="podcast-side reveal d2">
         <div class="podcast-side-img">
           <img src="podcast%20(1)-2.jpg" alt="Podcast workshop participants">
+          <div class="podcast-scanlines"></div>
         </div>
         <div class="podcast-side-body">
           <span class="podcast-ep">EPISODE 03</span>
@@ -2612,6 +2709,16 @@ window.scrollTo(0, 0);
     }
     rafId = requestAnimationFrame(tick);
   }
+
+  // Click anywhere on hero → next slide (with cursor hint)
+  heroEl.style.cursor = 'pointer';
+  const clickHint = document.getElementById('hero-click-hint');
+  heroEl.addEventListener('click', e => {
+    if (e.target.closest('.hero-cta') || e.target.closest('.hero-scroll-hint') || e.target.closest('.hero-progress')) return;
+    next();
+    startTimer();
+    if (clickHint) { clickHint.classList.add('hidden'); }
+  });
 
   // Boot
   startTimer();

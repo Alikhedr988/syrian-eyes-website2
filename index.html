@@ -200,8 +200,8 @@ a { text-decoration: none; color: inherit; }
 }
 /* ↓ Hero panel photos — per-panel position for best subject framing */
 .hero-panel:nth-child(1) .hero-panel-inner {
-  background-image: url('cover%20photo(1).jpg');
-  background-position: 30% center;
+  background-image: url('film%20workshop%20activities%20(5).jpg');
+  background-position: 68% center;
   background-size: cover;
 }
 .hero-panel:nth-child(2) .hero-panel-inner {
@@ -209,9 +209,9 @@ a { text-decoration: none; color: inherit; }
   background-position: center center;
 }
 .hero-panel:nth-child(3) .hero-panel-inner {
-  background-image: url('film%20workshop%20activities%20(5).jpg');
-  background-position: center 30%;
-  background-size: 110% auto;
+  background-image: url('cover%20photo(1).jpg');
+  background-position: 35% center;
+  background-size: cover;
 }
 
 .hero-panel-dim {
@@ -451,9 +451,9 @@ a { text-decoration: none; color: inherit; }
 
 /* Two-col programs */
 #prog-2col {
-  background: var(--cream);
+  background: #0f0d0b;
   padding: var(--sp-section) 88px;
-  border-top: 1px solid rgba(26,23,20,0.07);
+  border-top: 1px solid rgba(74,142,194,0.1);
   position: relative;
 }
 #prog-2col::before {
@@ -461,10 +461,20 @@ a { text-decoration: none; color: inherit; }
   position: absolute; inset: 0; z-index: 0;
   background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(5).jpg');
   background-size: cover; background-position: center;
-  opacity: 0.05;
+  opacity: 0.07;
   pointer-events: none;
 }
 #prog-2col > * { position: relative; z-index: 1; }
+/* Text colours for dark prog-2col */
+#prog-2col .eyebrow { color: var(--blue); }
+#prog-2col .eyebrow::before { background: var(--blue); }
+#prog-2col .prog2-tag { color: var(--blue); }
+#prog-2col .prog2-title { color: var(--white); }
+#prog-2col .prog2-body { color: var(--text-on-dark-secondary); }
+#prog-2col .prog2-film-header { border-bottom-color: rgba(255,255,255,0.08); }
+#prog-2col .film-lab-rule { background: rgba(255,255,255,0.1); }
+#prog-2col .film-lab-eyebrow { color: var(--blue); }
+#prog-2col .prog2-sep { background: rgba(255,255,255,0.07); }
 .prog2-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
   border-top: 1px solid rgba(26,23,20,0.09); padding-top: 56px; margin-top: 8px;
@@ -481,9 +491,9 @@ a { text-decoration: none; color: inherit; }
    PAST PROJECTS — painting seeps in at edges
 ═══════════════════════════════════════════════════════════════ */
 #past-projects {
-  background: var(--cream-mid);
+  background: #1a1614;
   padding: var(--sp-section) 88px;
-  border-top: 1px solid rgba(26,23,20,0.06);
+  border-top: 1px solid rgba(255,255,255,0.05);
   position: relative; overflow: hidden;
 }
 /* Left-edge painting wash */
@@ -494,7 +504,7 @@ a { text-decoration: none; color: inherit; }
   width: 340px; z-index: 0;
   background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(7).jpg');
   background-size: cover; background-position: right center;
-  opacity: 0.07;
+  opacity: 0.10;
   pointer-events: none;
 }
 /* Right-edge painting wash */
@@ -505,7 +515,7 @@ a { text-decoration: none; color: inherit; }
   width: 280px; z-index: 0;
   background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(4).jpg');
   background-size: cover; background-position: left center;
-  opacity: 0.06;
+  opacity: 0.09;
   pointer-events: none;
 }
 #past-projects > * { position: relative; z-index: 1; }
@@ -513,12 +523,12 @@ a { text-decoration: none; color: inherit; }
 .archive-title {
   font-family: var(--serif);
   font-size: clamp(40px, 4.5vw, 62px);
-  font-weight: 400; color: var(--dark);
+  font-weight: 400; color: var(--white);
   margin-bottom: 14px; line-height: 1.1;
 }
 .archive-sub {
   font-size: 14px; font-weight: 300; line-height: 1.8;
-  color: var(--muted); max-width: 520px;
+  color: var(--text-on-dark-secondary); max-width: 520px;
 }
 
 /* ── Timeline component ── */
@@ -1137,13 +1147,80 @@ footer {
 /* .podcast-hero removed — all three are now podcast-side */
 
 /* ═══════════════════════════════════════════════════════════════
-   PORTRAIT GALLERY — Voices in Color
-   Equal-size grid, hover = focus, others recede
+   PANORAMIC STRIP — Hero carnival moment
+═══════════════════════════════════════════════════════════════ */
+.panoramic-strip {
+  position: relative;
+  height: 380px;
+  overflow: hidden;
+  background: var(--dark);
+}
+.panoramic-img {
+  position: absolute; inset: -2px;
+  background-image: url('Hero%20image%20kids%20activities%20and%20carnivals%20(3).jpg');
+  background-size: cover;
+  background-position: center 38%;
+  filter: none;
+  transition: transform 12s ease;
+}
+.panoramic-strip:hover .panoramic-img { transform: scale(1.03); }
+/* Top and bottom vignette */
+.panoramic-strip::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to bottom,
+    rgba(20,18,16,0.55) 0%,
+    transparent 22%,
+    transparent 78%,
+    rgba(20,18,16,0.65) 100%
+  );
+  pointer-events: none;
+}
+.panoramic-caption {
+  position: absolute; bottom: 24px; right: 36px; z-index: 3;
+  font-size: 9px; letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.38);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   WORKSHOP GALLERY — 5 photos horizontal strip
+═══════════════════════════════════════════════════════════════ */
+.workshop-gallery {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 3px;
+  margin-bottom: 8px;
+  height: 280px;
+}
+.wg-cell {
+  position: relative; overflow: hidden;
+  background: var(--dark-soft);
+  cursor: pointer;
+}
+.wg-cell img {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block;
+  transition: transform 7s ease;
+}
+.wg-cell:hover img { transform: scale(1.06); }
+.wg-cell--wide { grid-column: 1; }
+.wg-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 24px 12px 10px;
+  background: linear-gradient(to top, rgba(20,18,16,0.8), transparent);
+  font-size: 9px; letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.45);
+  opacity: 0; transition: opacity 0.3s;
+}
+.wg-cell:hover .wg-caption { opacity: 1; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PORTRAIT GALLERY — 8-column grid
 ═══════════════════════════════════════════════════════════════ */
 .portrait-mosaic {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 4px;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 3px;
   position: relative; z-index: 2;
 }
 /* Each portrait cell — all equal size */
@@ -1498,8 +1575,12 @@ footer {
   /* Podcast featured — stack on mobile */
   .podcast-featured { grid-template-columns: 1fr; gap: 20px; }
   .podcast-side { margin-top: 0; }
-  /* Portrait gallery — 3 cols on mobile */
-  .portrait-mosaic { grid-template-columns: repeat(3, 1fr); }
+  /* Portrait gallery — 4 cols on mobile */
+  .portrait-mosaic { grid-template-columns: repeat(4, 1fr); }
+  /* Workshop gallery — stack on mobile */
+  .workshop-gallery { grid-template-columns: 1fr 1fr; height: auto; }
+  .wg-cell { height: 180px; }
+  .wg-cell--wide { grid-column: 1 / -1; height: 220px; }
   /* Film album wall — reduce overlap on mobile */
   .film-collage { flex-wrap: wrap; justify-content: center; gap: 8px; padding: 20px 0; }
   .fc-poster { margin-left: 0; width: 140px; transform: none !important; }
@@ -1606,6 +1687,14 @@ footer {
   </div>
 </section>
 
+<!-- ██ PANORAMIC MOMENT ████████████████████████████████████████ -->
+<div class="panoramic-strip" aria-label="Syrian Eyes volunteers and children running together during a community carnival">
+  <div class="panoramic-img"></div>
+  <div class="panoramic-caption">
+    <span>The team in the field — Bekaa Valley</span>
+  </div>
+</div>
+
 <!-- ██ STATS ██████████████████████████████████████████████████ -->
 <section id="stats">
   <div class="stat reveal">
@@ -1671,7 +1760,7 @@ footer {
   </div>
   <div class="prog-photo">
     <div class="prog-photo-overlay"></div>
-    <img src="medical%20clinic%20old%20project%20(5).jpg" alt="Syrian Eyes — emergency medical support, COVID response">
+    <img src="Medical%20support%20COVID%20(5).jpg" alt="Syrian Eyes — medical support, COVID response">
   </div>
 </div>
 
@@ -1690,12 +1779,36 @@ footer {
 
   <!-- Film poster collage -->
   <div class="film-lab-section reveal d2">
+
+    <!-- Workshop photo gallery — 5 images -->
     <div class="film-lab-label">
-      <span class="film-lab-eyebrow">6 FILMS</span>
+      <span class="film-lab-eyebrow">WORKSHOP · SCREENING · FIELDWORK</span>
       <div class="film-lab-rule"></div>
     </div>
+    <div class="workshop-gallery">
+      <div class="wg-cell wg-cell--wide">
+        <img src="films%20screening%20event%20(1).jpg" alt="Film screening event — As We Are">
+        <div class="wg-caption">Screening event · Beirut</div>
+      </div>
+      <div class="wg-cell">
+        <img src="film%20workshop%20activities%20(1).jpg" alt="Film workshop — lighting session">
+        <div class="wg-caption">Lighting workshop</div>
+      </div>
+      <div class="wg-cell">
+        <img src="film%20workshop%20activities%20(2).jpg" alt="Film workshop — student filmmaker">
+        <div class="wg-caption">Filmmaking session</div>
+      </div>
+      <div class="wg-cell">
+        <img src="films%20screening%20event%20(5).jpg" alt="Film screening event 5">
+        <div class="wg-caption">Community screening</div>
+      </div>
+    </div>
 
-    <!-- Film archive wall -->
+    <!-- Film archive wall — posters enlarged -->
+    <div class="film-lab-label" style="margin-top: 64px;">
+      <span class="film-lab-eyebrow">5 FILMS · FILM LAB 2023–2024</span>
+      <div class="film-lab-rule"></div>
+    </div>
     <div class="film-collage">
       <div class="fc-poster">
         <img class="fc-poster-img" src="Film%20posters%20(1).jpg" alt="Film poster 1">
@@ -1885,27 +1998,35 @@ footer {
   <div class="portrait-mosaic reveal">
     <div class="pm-cell">
       <img src="my%20eyes%20project%20malak_sketch%20(1).jpg" alt="My Eyes — Malak sketch 1">
-      <div class="pm-caption"><span class="pm-num">01</span><span>Malak</span></div>
+      <div class="pm-caption"><span class="pm-num">01</span></div>
+    </div>
+    <div class="pm-cell">
+      <img src="my%20eyes%20project%20malak_sketch%20(2).jpg" alt="My Eyes — Malak sketch 2">
+      <div class="pm-caption"><span class="pm-num">02</span></div>
     </div>
     <div class="pm-cell">
       <img src="my%20eyes%20project%20malak_sketch%20(3).jpg" alt="My Eyes — Malak sketch 3">
-      <div class="pm-caption"><span class="pm-num">02</span><span>Malak</span></div>
+      <div class="pm-caption"><span class="pm-num">03</span></div>
+    </div>
+    <div class="pm-cell">
+      <img src="my%20eyes%20project%20malak_sketch%20(4).jpg" alt="My Eyes — Malak sketch 4">
+      <div class="pm-caption"><span class="pm-num">04</span></div>
     </div>
     <div class="pm-cell">
       <img src="my%20eyes%20project%20malak_sketch%20(5).jpg" alt="My Eyes — Malak sketch 5">
-      <div class="pm-caption"><span class="pm-num">03</span><span>Malak</span></div>
+      <div class="pm-caption"><span class="pm-num">05</span></div>
+    </div>
+    <div class="pm-cell">
+      <img src="my%20eyes%20project%20malak_sketch%20(7).jpg" alt="My Eyes — Malak sketch 7">
+      <div class="pm-caption"><span class="pm-num">06</span></div>
     </div>
     <div class="pm-cell">
       <img src="my%20eyes%20project%20malak_sketch%20(8).jpg" alt="My Eyes — Malak sketch 8">
-      <div class="pm-caption"><span class="pm-num">04</span><span>Malak</span></div>
+      <div class="pm-caption"><span class="pm-num">07</span></div>
     </div>
     <div class="pm-cell">
-      <img src="my%20eyes%20project%20malak_sketch%20(12).jpg" alt="My Eyes — Malak sketch 12">
-      <div class="pm-caption"><span class="pm-num">05</span><span>Malak</span></div>
-    </div>
-    <div class="pm-cell">
-      <img src="my%20eyes%20project%20malak_sketch%20(17).jpg" alt="My Eyes — Malak sketch 17">
-      <div class="pm-caption"><span class="pm-num">06</span><span>Malak</span></div>
+      <img src="my%20eyes%20project%20malak_sketch%20(9).jpg" alt="My Eyes — Malak sketch 9">
+      <div class="pm-caption"><span class="pm-num">08</span></div>
     </div>
   </div>
 

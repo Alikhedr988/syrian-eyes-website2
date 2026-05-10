@@ -135,7 +135,7 @@ a { text-decoration: none; color: inherit; }
 .nav-donate:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
 
 /* ═══════════════════════════════════════════════════════════════
-   HERO — PARALLAX
+   HERO — FULLSCREEN SLOW DISSOLVE
 ═══════════════════════════════════════════════════════════════ */
 #hero {
   position: relative;
@@ -144,110 +144,90 @@ a { text-decoration: none; color: inherit; }
   display: flex; align-items: flex-end;
   padding: 0 0 88px 88px;
   overflow: hidden;
-  cursor: none;
+  cursor: default;
 }
-/* Artwork texture layer — warm painting, stronger presence */
-#hero::before {
-  content: '';
-  position: absolute; inset: 0; z-index: 1;
-  background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(1).jpg');
+
+/* Each slide — stacked fullscreen layers */
+.hero-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 1.8s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+.hero-slide.leaving {
+  opacity: 0;
+  z-index: 3; /* sits on top while fading out */
+}
+
+/* The photo — fills the entire frame */
+.hero-slide-img {
+  position: absolute;
+  inset: -4%;   /* bleed prevents edge gap during parallax */
   background-size: cover;
   background-position: center;
-  opacity: 0.13;
-  pointer-events: none;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+/* Per-image framing */
+.hero-slide-img.img-workshop  { background-image: url('film%20workshop%20activities%20%20(5).jpg'); background-position: 68% center; }
+.hero-slide-img.img-activity  { background-image: url('activity%20space%20(10).jpg');               background-position: center center; }
+.hero-slide-img.img-cover     { background-image: url('cover%20photo(1).jpg');                      background-position: 35% center; }
+
+/* Painting layer per slide — screen-blended wash that shifts color temperature */
+.hero-slide-paint {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
   mix-blend-mode: screen;
-}
-
-/* Custom cursor */
-#hero-cursor {
-  position: absolute;
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.6);
+  opacity: 0.15;
   pointer-events: none;
-  z-index: 20;
-  transform: translate(-50%, -50%);
-  transition: transform 0.05s, width 0.3s, height 0.3s, background 0.3s;
-  mix-blend-mode: difference;
 }
-#hero-cursor.expanded {
-  width: 48px; height: 48px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.4);
-}
+.hero-slide-paint.paint-purple { background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(8).jpg'); }
+.hero-slide-paint.paint-blue   { background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(6).jpg'); }
+.hero-slide-paint.paint-warm   { background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(1).jpg'); }
 
-/* The three photo panels — each moves independently */
-.hero-panels {
+/* Dark overlay per slide */
+.hero-slide-dim {
   position: absolute; inset: 0;
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 2px;
-}
-.hero-panel {
-  position: relative; overflow: hidden;
-  background: var(--dark-mid);
-  will-change: transform;
-}
-/* Hero panels — photographic panels desaturated via CSS filter on inner */
-.hero-panel-inner {
-  position: absolute;
-  inset: -8%;
-  background-size: cover;
-  background-position: center;
-  background-color: var(--dark-soft);
-  will-change: transform;
-  transition: transform 0.08s linear;
-  filter: grayscale(85%) contrast(1.08);
-}
-/* ↓ Hero panel photos — per-panel position for best subject framing */
-.hero-panel:nth-child(1) .hero-panel-inner {
-  background-image: url('film%20workshop%20activities%20(5).jpg');
-  background-position: 68% center;
-  background-size: cover;
-}
-.hero-panel:nth-child(2) .hero-panel-inner {
-  background-image: url('activity%20space%20(10).jpg');
-  background-position: center center;
-}
-.hero-panel:nth-child(3) .hero-panel-inner {
-  background-image: url('cover%20photo(1).jpg');
-  background-position: 35% center;
-  background-size: cover;
+  background: rgba(10,9,8,0.38);
 }
 
-.hero-panel-dim {
-  position: absolute; inset: 0;
-  background: rgba(26,23,20,0.42);
-}
-
+/* Vignettes — always on top */
 .hero-vignette {
-  position: absolute; inset: 0; z-index: 2;
+  position: absolute; inset: 0; z-index: 4;
   background: linear-gradient(
     to top,
-    rgba(26,23,20,0.97) 0%,
-    rgba(26,23,20,0.42) 52%,
-    rgba(26,23,20,0.12) 100%
+    rgba(10,9,8,0.95) 0%,
+    rgba(10,9,8,0.38) 44%,
+    rgba(10,9,8,0.08) 100%
   );
+  pointer-events: none;
 }
 .hero-vignette-left {
-  position: absolute; inset: 0; z-index: 2;
-  background: linear-gradient(to right, rgba(26,23,20,0.72) 0%, transparent 58%);
+  position: absolute; inset: 0; z-index: 4;
+  background: linear-gradient(to right, rgba(10,9,8,0.80) 0%, rgba(10,9,8,0.22) 42%, transparent 68%);
+  pointer-events: none;
 }
-.hero-grain {
-  position: absolute; inset: 0; z-index: 3;
-  background-image: var(--grain);
-  background-size: 220px; opacity: 0.5; pointer-events: none;
-}
-.hero-col-lines {
-  position: absolute; inset: 0; z-index: 3;
-  display: grid; grid-template-columns: 1fr 1fr 1fr; pointer-events: none;
-}
-.hero-col-line { border-right: 1px solid rgba(255,255,255,0.03); }
 
+/* Film grain — static texture, always on */
+.hero-grain {
+  position: absolute; inset: 0; z-index: 4;
+  background-image: var(--grain);
+  background-size: 220px; opacity: 0.48;
+  pointer-events: none;
+}
+
+/* Side label */
 .hero-side {
   position: absolute; right: 22px; top: 50%; transform: translateY(-50%);
   writing-mode: vertical-rl;
   font-size: 9px; letter-spacing: 0.22em;
-  color: rgba(255,255,255,0.18); z-index: 5;
+  color: rgba(255,255,255,0.18); z-index: 6;
   display: flex; flex-direction: column; align-items: center; gap: 14px;
 }
 .hero-side::before, .hero-side::after {
@@ -255,7 +235,10 @@ a { text-decoration: none; color: inherit; }
   background: rgba(255,255,255,0.1);
 }
 
-.hero-content { position: relative; z-index: 5; }
+/* Content — anchored bottom-left, never moves */
+.hero-content {
+  position: relative; z-index: 6;
+}
 .hero-eyebrow {
   display: flex; align-items: center; gap: 13px;
   font-size: 10px; letter-spacing: 0.28em;
@@ -289,10 +272,35 @@ a { text-decoration: none; color: inherit; }
 .hero-cta:hover { background: var(--white); color: var(--dark); border-color: var(--white); }
 .hero-cta svg { width: 13px; height: 13px; }
 
+/* Progress indicators — thin line dots */
+.hero-progress {
+  position: absolute; bottom: 88px; right: 52px;
+  display: flex; flex-direction: column; gap: 6px;
+  z-index: 6;
+}
+.hero-prog-item {
+  width: 1px; height: 22px;
+  background: rgba(255,255,255,0.18);
+  transition: background 0.4s, height 0.4s;
+  cursor: pointer;
+}
+.hero-prog-item.active {
+  background: var(--blue);
+  height: 36px;
+}
+
+/* Counter */
+.hero-counter {
+  position: absolute; top: 90px; right: 52px; z-index: 6;
+  font-size: 9px; letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.22);
+}
+
+/* Scroll hint */
 .hero-scroll-hint {
   position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 6px;
-  z-index: 5; cursor: pointer;
+  z-index: 6; cursor: pointer;
 }
 .hero-scroll-line { width: 1px; height: 26px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.22)); }
 .hero-scroll-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.22); animation: blink 2.4s ease-in-out infinite; }
@@ -1547,9 +1555,12 @@ footer {
 @media (max-width: 900px) {
   #nav { padding: 0 24px; }
   .nav-links a:not(.nav-donate) { display: none; }
-  #hero { padding: 0 0 64px 32px; cursor: auto; }
-  #hero-cursor { display: none; }
+  #hero { padding: 0 0 64px 28px; }
   .hero-title { font-size: 54px; }
+  .hero-body { display: none; }
+  .hero-progress { right: 16px; bottom: 72px; }
+  .hero-counter { right: 16px; top: 80px; }
+  .hero-side { display: none; }
   #about, .prog-block { grid-template-columns: 1fr; }
   .about-text { padding: 72px 32px; }
   .about-photo { min-height: 300px; }
@@ -1625,38 +1636,52 @@ footer {
   </div>
 </nav>
 
-<!-- ██ HERO — CURSOR PARALLAX █████████████████████████████████ -->
+<!-- ██ HERO — FULLSCREEN SLOW DISSOLVE ██████████████████████████ -->
 <section id="hero">
-  <div id="hero-cursor"></div>
 
-  <div class="hero-panels" id="hero-panels">
-    <div class="hero-panel" id="panel-1">
-      <div class="hero-panel-inner" id="panel-inner-1"></div>
-      <div class="hero-panel-dim"></div>
-    </div>
-    <div class="hero-panel" id="panel-2">
-      <div class="hero-panel-inner" id="panel-inner-2"></div>
-      <div class="hero-panel-dim"></div>
-    </div>
-    <div class="hero-panel" id="panel-3">
-      <div class="hero-panel-inner" id="panel-inner-3"></div>
-      <div class="hero-panel-dim"></div>
-    </div>
+  <!-- Slide 0 — Film workshop (purple painting) -->
+  <div class="hero-slide active" id="slide-0">
+    <div class="hero-slide-img img-workshop"></div>
+    <div class="hero-slide-paint paint-purple"></div>
+    <div class="hero-slide-dim"></div>
   </div>
 
+  <!-- Slide 1 — Activity space (blue painting) -->
+  <div class="hero-slide" id="slide-1">
+    <div class="hero-slide-img img-activity"></div>
+    <div class="hero-slide-paint paint-blue"></div>
+    <div class="hero-slide-dim"></div>
+  </div>
+
+  <!-- Slide 2 — Cover photo (warm painting) -->
+  <div class="hero-slide" id="slide-2">
+    <div class="hero-slide-img img-cover"></div>
+    <div class="hero-slide-paint paint-warm"></div>
+    <div class="hero-slide-dim"></div>
+  </div>
+
+  <!-- Fixed overlays -->
   <div class="hero-vignette"></div>
   <div class="hero-vignette-left"></div>
   <div class="hero-grain"></div>
-  <div class="hero-col-lines">
-    <div class="hero-col-line"></div>
-    <div class="hero-col-line"></div>
-    <div class="hero-col-line"></div>
-  </div>
+
+  <!-- Side label -->
   <div class="hero-side">
     <span>LEBANON</span>
     <span>EST. OCTOBER 2013</span>
   </div>
 
+  <!-- Counter -->
+  <div class="hero-counter" id="hero-counter">01 / 03</div>
+
+  <!-- Progress indicators -->
+  <div class="hero-progress" id="hero-progress">
+    <div class="hero-prog-item active" data-idx="0"></div>
+    <div class="hero-prog-item" data-idx="1"></div>
+    <div class="hero-prog-item" data-idx="2"></div>
+  </div>
+
+  <!-- Content — never moves -->
   <div class="hero-content">
     <div class="hero-eyebrow">SYRIAN EYES — SINCE 2013</div>
     <h1 class="hero-title">
@@ -1676,10 +1701,12 @@ footer {
     </a>
   </div>
 
+  <!-- Scroll hint -->
   <div class="hero-scroll-hint" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
     <div class="hero-scroll-line"></div>
     <div class="hero-scroll-dot"></div>
   </div>
+
 </section>
 
 <!-- ██ ABOUT ██████████████████████████████████████████████████ -->
@@ -2263,70 +2290,95 @@ track.addEventListener('click', e => scrubTo(e.clientX));
 // Init
 setActive(0);
 
-/* ── Cursor parallax ───────────────────────────────────────── */
-const heroEl   = document.getElementById('hero');
-const cursor   = document.getElementById('hero-cursor');
-const panels   = [
-  document.getElementById('panel-inner-1'),
-  document.getElementById('panel-inner-2'),
-  document.getElementById('panel-inner-3'),
-];
-// Depth multipliers — each panel moves at different speed
-const depths = [18, 10, 24];
+/* ── Hero dissolve system ──────────────────────────────────── */
+(function() {
+  const heroEl    = document.getElementById('hero');
+  const slides    = Array.from(document.querySelectorAll('.hero-slide'));
+  const progItems = Array.from(document.querySelectorAll('.hero-prog-item'));
+  const counter   = document.getElementById('hero-counter');
+  const HOLD      = 8000;   // ms per image
+  const FADE      = 1800;   // ms crossfade (matches CSS transition)
 
-let cursorX = 0, cursorY = 0;
-let targetX = 0, targetY = 0;
-let panelTargets = panels.map(() => ({ x: 0, y: 0 }));
-let panelCurrent = panels.map(() => ({ x: 0, y: 0 }));
-let rafId;
+  let current  = 0;
+  let timer    = null;
+  let paused   = false;
+  let rafId    = null;
 
-heroEl.addEventListener('mousemove', e => {
-  const rect = heroEl.getBoundingClientRect();
-  const nx = (e.clientX - rect.left) / rect.width  - 0.5; // -0.5 to 0.5
-  const ny = (e.clientY - rect.top)  / rect.height - 0.5;
+  // Parallax state
+  let targetX  = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
 
-  targetX = e.clientX - rect.left;
-  targetY = e.clientY - rect.top;
+  function goTo(idx) {
+    const prev = current;
+    current = idx;
 
-  panels.forEach((_, i) => {
-    panelTargets[i].x = nx * depths[i];
-    panelTargets[i].y = ny * depths[i] * 0.6;
+    // Mark leaving slide — it fades out above the incoming one
+    slides[prev].classList.add('leaving');
+    slides[prev].classList.remove('active');
+
+    // Activate next slide
+    slides[current].classList.add('active');
+    slides[current].classList.remove('leaving');
+
+    // Clean up leaving class after fade completes
+    setTimeout(() => {
+      slides[prev].classList.remove('leaving');
+    }, FADE + 50);
+
+    // Update progress indicators
+    progItems.forEach((p, i) => p.classList.toggle('active', i === current));
+
+    // Update counter
+    counter.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(slides.length).padStart(2,'0');
+  }
+
+  function next() {
+    goTo((current + 1) % slides.length);
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => { if (!paused) next(); }, HOLD);
+  }
+
+  // Click progress dots to jump
+  progItems.forEach(p => {
+    p.addEventListener('click', () => {
+      goTo(parseInt(p.dataset.idx));
+      startTimer(); // reset hold timer on manual jump
+    });
   });
-});
 
-heroEl.addEventListener('mouseenter', () => {
-  cursor.style.opacity = '1';
-  cancelAnimationFrame(rafId);
-  animateParallax();
-});
+  // Pause on hover — let the visitor stay with an image
+  heroEl.addEventListener('mouseenter', () => { paused = true; });
+  heroEl.addEventListener('mouseleave', () => { paused = false; });
 
-heroEl.addEventListener('mouseleave', () => {
-  cursor.style.opacity = '0';
-  panels.forEach(p => { p.style.transform = 'translate(0px, 0px)'; });
-  panelTargets = panels.map(() => ({ x: 0, y: 0 }));
-  cancelAnimationFrame(rafId);
-});
-
-heroEl.addEventListener('click', () => cursor.classList.toggle('expanded'));
-
-function animateParallax() {
-  // Smooth cursor
-  cursorX += (targetX - cursorX) * 0.12;
-  cursorY += (targetY - cursorY) * 0.12;
-  cursor.style.left = cursorX + 'px';
-  cursor.style.top  = cursorY + 'px';
-
-  // Smooth panels with lerp
-  panels.forEach((panel, i) => {
-    panelCurrent[i].x += (panelTargets[i].x - panelCurrent[i].x) * 0.07;
-    panelCurrent[i].y += (panelTargets[i].y - panelCurrent[i].y) * 0.07;
-    panel.style.transform = `translate(${panelCurrent[i].x}px, ${panelCurrent[i].y}px)`;
+  // Mouse parallax — image layer only, text never moves
+  heroEl.addEventListener('mousemove', e => {
+    const rect = heroEl.getBoundingClientRect();
+    targetX = ((e.clientX - rect.left) / rect.width  - 0.5) * 8;
+    targetY = ((e.clientY - rect.top)  / rect.height - 0.5) * 5;
   });
+  heroEl.addEventListener('mouseleave', () => { targetX = 0; targetY = 0; });
 
-  rafId = requestAnimationFrame(animateParallax);
-}
+  function tick() {
+    currentX += (targetX - currentX) * 0.06;
+    currentY += (targetY - currentY) * 0.06;
+    // Apply to active slide's image layer only
+    const activeImg = slides[current].querySelector('.hero-slide-img');
+    if (activeImg) {
+      activeImg.style.transform = `translate(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px)`;
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+
+  // Boot
+  startTimer();
+  rafId = requestAnimationFrame(tick);
+})();
 
 /* ── Nav switch ────────────────────────────────────────────── */
+const heroEl = document.getElementById('hero');
 const nav = document.getElementById('nav');
 function updateNav() {
   const h = heroEl.getBoundingClientRect().bottom;

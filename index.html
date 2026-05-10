@@ -24,35 +24,36 @@ body {
 a { text-decoration: none; color: inherit; }
 
 :root {
-  /* ── Base ── */
-  --dark:      #1a1714;
-  --dark-mid:  #241f1b;
-  --dark-soft: #2e2824;
-  --cream:     #faf8f4;
-  --cream-mid: #f2f0ea;
+  /* ── Base — pushed darker for cinematic depth ── */
+  --dark:      #141210;
+  --dark-mid:  #1e1a17;
+  --dark-soft: #27221e;
+  --cream:     #f5f2ed;
+  --cream-mid: #ede9e2;
   --white:     #ffffff;
-  --muted:     #7a7570;
+  --muted:     #6e6a65;
 
   /* ── Blue ── */
   --blue:      #4a8ec2;
   --blue-dark: #3578ac;
-  --blue-deep: #0e2238;
+  --blue-deep: #091929;
 
-  /* ── Paint palette (from My Eyes artwork) ── */
-  --paint-red:    #c85a32;
-  --paint-teal:   #2d6b5e;
-  --paint-purple: #4a2d66;
+  /* ── Paint palette — strengthened presence ── */
+  --paint-red:    #b84e2a;
+  --paint-teal:   #275f53;
+  --paint-purple: #3d2459;
+  --paint-warm:   #8c3a1e;
 
-  /* ── Text on dark backgrounds — all must meet WCAG AA ── */
-  --text-on-dark-primary:   rgba(255,255,255,0.88);
-  --text-on-dark-secondary: rgba(255,255,255,0.58);
-  --text-on-dark-tertiary:  rgba(255,255,255,0.36);
-  --text-on-dark-muted:     rgba(255,255,255,0.28);
+  /* ── Text on dark backgrounds ── */
+  --text-on-dark-primary:   rgba(255,255,255,0.90);
+  --text-on-dark-secondary: rgba(255,255,255,0.60);
+  --text-on-dark-tertiary:  rgba(255,255,255,0.38);
+  --text-on-dark-muted:     rgba(255,255,255,0.26);
 
   /* ── Spacing scale ── */
-  --sp-section:   100px;   /* desktop section padding */
-  --sp-section-y: 120px;   /* hero-adjacent sections  */
-  --sp-inner:      64px;   /* within-section gap      */
+  --sp-section:   100px;
+  --sp-section-y: 120px;
+  --sp-inner:      64px;
 
   /* ── Type ── */
   --serif: 'Cormorant Garamond', Georgia, serif;
@@ -197,10 +198,20 @@ a { text-decoration: none; color: inherit; }
   transition: transform 0.08s linear;
   filter: grayscale(85%) contrast(1.08);
 }
-/* ↓ Hero panel photos — grayscale treatment via hero-panel-dim overlay */
-.hero-panel:nth-child(1) .hero-panel-inner { background-image: url('cover%20photo(1).jpg'); }
-.hero-panel:nth-child(2) .hero-panel-inner { background-image: url('activity%20space%20(10).jpg'); }
-.hero-panel:nth-child(3) .hero-panel-inner { background-image: url('film%20workshop%20activities%20(5).jpg'); }
+/* ↓ Hero panel photos — per-panel position for best subject framing */
+.hero-panel:nth-child(1) .hero-panel-inner {
+  background-image: url('cover%20photo(1).jpg');
+  background-position: center top;
+}
+.hero-panel:nth-child(2) .hero-panel-inner {
+  background-image: url('activity%20space%20(10).jpg');
+  background-position: center center;
+}
+.hero-panel:nth-child(3) .hero-panel-inner {
+  background-image: url('film%20workshop%20activities%20(5).jpg');
+  background-position: center 30%;
+  background-size: 110% auto;
+}
 
 .hero-panel-dim {
   position: absolute; inset: 0;
@@ -293,7 +304,18 @@ a { text-decoration: none; color: inherit; }
   background: var(--cream);
   display: grid; grid-template-columns: 1fr 1fr;
   min-height: 620px;
+  position: relative;
 }
+/* Subtle paint texture behind the about text */
+#about::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(4).jpg');
+  background-size: cover; background-position: center;
+  opacity: 0.04;
+  pointer-events: none;
+}
+#about > * { position: relative; z-index: 1; }
 .about-text {
   padding: var(--sp-section-y) 72px var(--sp-section-y) 88px;
   display: flex; flex-direction: column; justify-content: center;
@@ -408,7 +430,17 @@ a { text-decoration: none; color: inherit; }
   background: var(--cream);
   padding: var(--sp-section) 88px;
   border-top: 1px solid rgba(26,23,20,0.07);
+  position: relative;
 }
+#prog-2col::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(5).jpg');
+  background-size: cover; background-position: center;
+  opacity: 0.05;
+  pointer-events: none;
+}
+#prog-2col > * { position: relative; z-index: 1; }
 .prog2-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
   border-top: 1px solid rgba(26,23,20,0.09); padding-top: 56px; margin-top: 8px;
@@ -906,199 +938,211 @@ footer {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   FILM POSTER COLLAGE
+   FILM ARCHIVE WALL — interactive album layout
 ═══════════════════════════════════════════════════════════════ */
 .film-collage {
-  display: grid;
-  grid-template-columns: 2fr 1.4fr 0.9fr;
-  grid-template-rows: auto;
-  gap: 6px;
-  align-items: stretch;
-  min-height: 520px;
+  position: relative;
+  display: flex;
+  gap: 0;
+  align-items: center;
+  justify-content: center;
+  min-height: 480px;
+  padding: 40px 0 48px;
 }
-/* Main large poster — left column, full height */
-.fc-main {
-  position: relative; overflow: hidden;
-  grid-row: 1;
+/* Each poster is a card that lifts on hover */
+.fc-poster {
+  position: relative;
+  flex: 0 0 auto;
+  width: 200px;
+  margin-left: -28px; /* overlap — archive/stack feel */
+  cursor: pointer;
+  transition:
+    transform 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+    margin 0.45s ease,
+    z-index 0s;
+  transform-origin: bottom center;
+  z-index: 1;
 }
-.fc-main img {
-  width: 100%; height: 100%; object-fit: cover;
+.fc-poster:first-child { margin-left: 0; }
+
+/* Default state — slight natural tilt per card */
+.fc-poster:nth-child(1) { transform: rotate(-3deg) translateY(6px); }
+.fc-poster:nth-child(2) { transform: rotate(-1.2deg) translateY(2px); z-index: 2; }
+.fc-poster:nth-child(3) { transform: rotate(0.5deg) translateY(0px); z-index: 3; }
+.fc-poster:nth-child(4) { transform: rotate(1.8deg) translateY(3px); z-index: 2; }
+.fc-poster:nth-child(5) { transform: rotate(3.2deg) translateY(7px); z-index: 1; }
+
+/* Hover — card rises, straightens, expands */
+.film-collage:hover .fc-poster { opacity: 0.45; filter: brightness(0.7); }
+.fc-poster:hover {
+  transform: rotate(0deg) translateY(-22px) scale(1.1) !important;
+  z-index: 10 !important;
+  opacity: 1 !important;
+  filter: brightness(1) !important;
+  margin-left: 8px;
+}
+.fc-poster:hover + .fc-poster { margin-left: 8px; }
+
+.fc-poster-img {
   display: block;
-  filter: grayscale(15%) contrast(1.05);
-  transition: transform 8s ease;
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.3);
+  transition: box-shadow 0.55s ease;
 }
-.fc-main:hover img { transform: scale(1.03); }
-
-/* Right stacked column */
-.fc-stack {
-  display: flex; flex-direction: column; gap: 6px;
-}
-.fc-item {
-  position: relative; overflow: hidden; flex: 1;
-}
-.fc-item img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: grayscale(25%) contrast(1.04);
-  transition: transform 7s ease;
-}
-.fc-item:hover img { transform: scale(1.04); }
-.fc-item--tall { flex: 1.6; }
-.fc-row { display: flex; gap: 6px; flex: 1; }
-.fc-row .fc-item { flex: 1; }
-.fc-item--raised { transform: translateY(-8px); }
-
-/* Accent poster — far right, offset down */
-.fc-accent {
-  position: relative; overflow: hidden;
-  margin-top: 32px;
-  margin-bottom: -32px;
-  border-left: 2px solid var(--blue);
-}
-.fc-accent img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: grayscale(10%) contrast(1.06);
-  transition: transform 7s ease;
-}
-.fc-accent:hover img { transform: scale(1.04); }
-.fc-accent-label {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 28px 14px 12px;
-  background: linear-gradient(to top, rgba(26,23,20,0.85), transparent);
-  font-size: 9px; letter-spacing: 0.22em;
-  color: rgba(255,255,255,0.52);
-  writing-mode: horizontal-tb;
+.fc-poster:hover .fc-poster-img {
+  box-shadow: 0 28px 64px rgba(0,0,0,0.7), 0 4px 12px rgba(0,0,0,0.4);
 }
 
-/* Shared overlay on all collage cells */
-.fc-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(26,23,20,0.18) 0%, transparent 60%);
+/* Caption appears on hover */
+.fc-poster-cap {
+  position: absolute;
+  bottom: -32px; left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 9px; letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.0);
+  transition: color 0.3s ease 0.1s;
   pointer-events: none;
+}
+.fc-poster:hover .fc-poster-cap { color: rgba(255,255,255,0.5); }
+
+/* Archive label */
+.fc-archive-label {
+  position: absolute;
+  bottom: 0; right: 0;
+  font-size: 9px; letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.2);
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   PODCAST FEATURED LAYOUT
+   PODCAST CINEMATIC STRIP — equal treatment, full color
 ═══════════════════════════════════════════════════════════════ */
 .podcast-featured {
   display: grid;
-  grid-template-columns: 1fr 1.45fr 1fr;
-  gap: 24px;
-  align-items: start;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--dark-mid);
 }
-
-/* Side cards */
 .podcast-side {
   display: flex; flex-direction: column;
-  border: 0.5px solid rgba(26,23,20,0.1);
-  background: var(--white);
-  margin-top: 28px; /* visually lower than center */
-}
-.podcast-side-img {
-  position: relative; overflow: hidden;
-  aspect-ratio: 4/3;
-  background: var(--dark-soft);
-}
-.podcast-side-img img {
-  width: 100%; height: 100%; object-fit: cover;
-  filter: grayscale(100%) contrast(1.05);
-  transition: transform 6s ease;
-}
-.podcast-side:hover .podcast-side-img img { transform: scale(1.03); }
-.podcast-side-body { padding: 18px 20px 20px; }
-
-/* Featured center card */
-.podcast-hero {
-  display: flex; flex-direction: column;
+  margin-top: 0;
   background: var(--dark);
-  position: relative;
-  box-shadow: 0 24px 56px rgba(26,23,20,0.22);
+  border: none;
+  overflow: hidden;
+  transition: background 0.4s;
 }
-.podcast-hero-img {
+.podcast-side:hover { background: #1e1a17; }
+.podcast-side-img {
   position: relative; overflow: hidden;
   aspect-ratio: 3/2;
   background: var(--dark-soft);
+  flex-shrink: 0;
 }
-.podcast-hero-img img {
+.podcast-side-img img {
   width: 100%; height: 100%; object-fit: cover;
-  filter: grayscale(60%) contrast(1.08);
+  filter: none;
   transition: transform 7s ease;
 }
-.podcast-hero:hover .podcast-hero-img img { transform: scale(1.03); }
-.podcast-hero-badge {
-  position: absolute; top: 16px; left: 16px;
-  font-size: 9px; letter-spacing: 0.2em;
-  color: var(--white);
-  background: var(--blue);
-  padding: 5px 10px;
-  z-index: 2;
+.podcast-side:hover .podcast-side-img img { transform: scale(1.04); }
+.podcast-side-img::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(20,18,16,0.72) 0%,
+    rgba(20,18,16,0.14) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
-.podcast-hero-body {
-  padding: 24px 26px 26px;
+.podcast-side-body { padding: 20px 22px 24px; }
+.podcast-side-body .podcast-ep {
+  color: var(--blue); font-size: 9px; letter-spacing: 0.22em;
+  display: block; margin-bottom: 8px;
 }
-.podcast-hero-body .podcast-ep { color: var(--blue); }
-.podcast-hero-body .podcast-desc { color: var(--text-on-dark-secondary); }
-.podcast-hero-body .podcast-player-ph {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.45);
+.podcast-side-body .podcast-title {
+  font-family: var(--serif); font-size: 18px; font-weight: 400;
+  color: var(--white); line-height: 1.25; margin-bottom: 10px;
 }
-.podcast-title--lg {
-  font-size: clamp(20px, 2.2vw, 26px);
-  color: var(--white);
-  margin-bottom: 12px;
+.podcast-side-body .podcast-desc {
+  font-size: 12px; font-weight: 300; line-height: 1.72;
+  color: var(--text-on-dark-secondary); margin-bottom: 14px;
 }
-.podcast-hero-body .podcast-ep,
-.podcast-hero-body .podcast-title { color: var(--white); }
+.podcast-side-body .podcast-player-ph {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.09);
+  color: rgba(255,255,255,0.38);
+  font-size: 10px;
+}
+/* Hide old featured hero classes if present */
+.podcast-hero { display: none !important; }
 
 /* ═══════════════════════════════════════════════════════════════
-   PORTRAIT MOSAIC — Voices in Color
+   PORTRAIT GALLERY — Voices in Color
+   Equal-size grid, hover = focus, others recede
 ═══════════════════════════════════════════════════════════════ */
 .portrait-mosaic {
   display: grid;
-  grid-template-columns: 1fr 0.85fr 1.3fr;
-  gap: 6px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
   position: relative; z-index: 2;
-  min-height: 580px;
 }
-.pm-col { display: flex; flex-direction: column; gap: 6px; }
-.pm-col-a { justify-content: stretch; }
-.pm-col-b { padding-top: 40px; }
-.pm-col-c { gap: 6px; }
-
+/* Each portrait cell — all equal size */
 .pm-cell {
   position: relative; overflow: hidden;
   background: var(--dark-soft);
-  flex: 1;
+  aspect-ratio: 2/3;
   cursor: pointer;
+  transition:
+    opacity 0.5s ease,
+    filter 0.5s ease,
+    transform 0.5s cubic-bezier(0.23,1,0.32,1);
 }
 .pm-cell img {
   width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+  transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
 }
-.pm-cell:hover img { transform: scale(1.06); }
 
-/* Size variants */
-.pm-cell--anchor { flex: 1; min-height: 520px; }
-.pm-cell--offset-down { flex: 1.4; }
-.pm-cell--sm { flex: 0.8; }
-.pm-cell--wide { flex: 1.2; }
-.pm-cell--raised { transform: translateY(-12px); margin-bottom: -12px; }
+/* When mosaic is hovered, dim all cells */
+.portrait-mosaic:hover .pm-cell {
+  opacity: 0.32;
+  filter: blur(1.5px) brightness(0.65);
+  transform: scale(0.97);
+}
+/* Un-dim and lift the hovered cell */
+.portrait-mosaic:hover .pm-cell:hover {
+  opacity: 1;
+  filter: blur(0) brightness(1.05);
+  transform: scale(1.04);
+  z-index: 5;
+}
+.pm-cell:hover img { transform: scale(1.08); }
 
-.pm-row { display: flex; gap: 6px; flex: 1; }
-.pm-row .pm-cell { flex: 1; }
+/* Remove old size variants — all equal now */
+.pm-cell--anchor,
+.pm-cell--offset-down,
+.pm-cell--sm,
+.pm-cell--wide,
+.pm-cell--raised {
+  flex: unset; min-height: unset; transform: none; margin-bottom: 0;
+}
+
+/* Columns and rows no longer needed — flat grid */
+.pm-col, .pm-row { display: contents; }
 
 /* Caption — slides up on hover */
 .pm-caption {
   position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 32px 14px 12px;
-  background: linear-gradient(to top, rgba(26,23,20,0.78), transparent);
-  display: flex; align-items: flex-end; gap: 10px;
-  font-size: 10px; letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.52);
-  transform: translateY(4px);
-  opacity: 0; transition: opacity 0.35s ease, transform 0.35s ease;
+  padding: 32px 10px 10px;
+  background: linear-gradient(to top, rgba(20,18,16,0.85), transparent);
+  display: flex; align-items: flex-end; gap: 8px;
+  font-size: 9px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.0);
+  transition: color 0.4s ease;
+  pointer-events: none;
 }
-.pm-cell:hover .pm-caption { opacity: 1; transform: translateY(0); }
+.pm-cell:hover .pm-caption { color: rgba(255,255,255,0.55); }
 .pm-num {
   font-size: 9px; letter-spacing: 0.18em;
   color: var(--blue); flex-shrink: 0;
@@ -1108,7 +1152,7 @@ footer {
 .voices-foot {
   position: relative; z-index: 2;
   display: flex; align-items: center; gap: 24px;
-  margin-top: 28px;
+  margin-top: 24px;
 }
 .voices-foot-line { width: 28px; height: 1px; background: rgba(255,255,255,0.18); flex-shrink: 0; }
 .voices-foot p {
@@ -1310,43 +1354,48 @@ footer {
 ═══════════════════════════════════════════════════════════════ */
 .artwork-divider {
   position: relative;
-  height: 140px;
+  height: 160px;
   background-color: var(--dark);
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  /* parallax-ready: JS will shift background-position on scroll */
 }
 .artwork-divider::before {
-  /* painting sits at ~70% opacity over ink background */
   content: '';
   position: absolute; inset: 0;
   background: inherit;
   background-size: cover;
   background-position: center;
-  opacity: 0.72;
-  transform: scale(1.04);   /* slight overbleed prevents edge gap on parallax shift */
+  opacity: 0.88;
+  transform: scale(1.04);
   transition: transform 0.1s linear;
 }
 .artwork-divider::after {
-  /* thin vignette on top and bottom edges for smooth blending */
   content: '';
   position: absolute; inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(26,23,20,0.62) 0%,
-    transparent 30%,
-    transparent 70%,
-    rgba(26,23,20,0.62) 100%
+    rgba(20,18,16,0.75) 0%,
+    transparent 28%,
+    transparent 72%,
+    rgba(20,18,16,0.75) 100%
   );
   z-index: 1;
 }
-/* Specific painting variants — paths to My Eyes artwork */
+.artwork-divider--warm {
+  background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(1).jpg');
+  border-top: 1px solid rgba(184,78,42,0.4);
+  border-bottom: 1px solid rgba(184,78,42,0.4);
+}
 .artwork-divider--purple {
   background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(8).jpg');
+  border-top: 1px solid rgba(61,36,89,0.5);
+  border-bottom: 1px solid rgba(61,36,89,0.5);
 }
 .artwork-divider--blue {
   background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(6).jpg');
+  border-top: 1px solid rgba(39,95,83,0.5);
+  border-bottom: 1px solid rgba(39,95,83,0.5);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1391,18 +1440,24 @@ footer {
   /* Podcast featured — stack on mobile */
   .podcast-featured { grid-template-columns: 1fr; gap: 20px; }
   .podcast-side { margin-top: 0; }
-  /* Portrait mosaic — stack on mobile */
-  .portrait-mosaic { grid-template-columns: 1fr 1fr; min-height: unset; }
-  .pm-col-a { grid-column: 1 / -1; }
-  .pm-cell--anchor { min-height: 240px; }
-  .pm-col-b { padding-top: 0; }
-  .pm-cell--raised { transform: none; margin-bottom: 0; }
+  /* Portrait gallery — 3 cols on mobile */
+  .portrait-mosaic { grid-template-columns: repeat(3, 1fr); }
+  /* Film album wall — reduce overlap on mobile */
+  .film-collage { flex-wrap: wrap; justify-content: center; gap: 8px; padding: 20px 0; }
+  .fc-poster { margin-left: 0; width: 140px; transform: none !important; }
+  .film-collage:hover .fc-poster { opacity: 1; filter: none; transform: none !important; }
+  .fc-poster:hover { transform: translateY(-10px) scale(1.05) !important; }
+  /* Podcast strip — stack on mobile */
+  .podcast-featured { grid-template-columns: 1fr; gap: 2px; }
   /* Video */
   #video-section { padding: 72px 24px; }
   /* Donate */
   .donate-wrap { grid-template-columns: 1fr; gap: 40px; }
   .df-row { grid-template-columns: 1fr; }
   .donate-form-wrap { padding: 22px; }
+  /* Artwork divider */
+  .artwork-divider { height: 110px; }
+}
 }
 </style>
 </head>
@@ -1558,7 +1613,7 @@ footer {
   </div>
   <div class="prog-photo">
     <div class="prog-photo-overlay"></div>
-    <img src="medical%20clinic%20old%20project%20(5).jpg" alt="Syrian Eyes — emergency medical support">
+    <img src="medical%20clinic%20old%20project%20(5).jpg" alt="Syrian Eyes — emergency medical support, COVID response">
   </div>
 </div>
 
@@ -1582,35 +1637,29 @@ footer {
       <div class="film-lab-rule"></div>
     </div>
 
+    <!-- Film archive wall -->
     <div class="film-collage">
-      <!-- Large anchor poster — left -->
-      <div class="fc-main">
-        <img src="Film%20posters%20(1).jpg" alt="Film poster 1">
-        <div class="fc-overlay"></div>
+      <div class="fc-poster">
+        <img class="fc-poster-img" src="Film%20posters%20(1).jpg" alt="Film poster 1">
+        <span class="fc-poster-cap">FILM 01</span>
       </div>
-      <!-- Stacked right column -->
-      <div class="fc-stack">
-        <div class="fc-item fc-item--tall">
-          <img src="Film%20posters%20(2).jpg" alt="Film poster 2">
-          <div class="fc-overlay"></div>
-        </div>
-        <div class="fc-row">
-          <div class="fc-item">
-            <img src="Film%20posters%20(3).jpg" alt="Film poster 3">
-            <div class="fc-overlay"></div>
-          </div>
-          <div class="fc-item fc-item--raised">
-            <img src="Film%20posters%20(4).jpg" alt="Film poster 4">
-            <div class="fc-overlay"></div>
-          </div>
-        </div>
+      <div class="fc-poster">
+        <img class="fc-poster-img" src="Film%20posters%20(2).jpg" alt="Film poster 2">
+        <span class="fc-poster-cap">FILM 02</span>
       </div>
-      <!-- Offset accent poster -->
-      <div class="fc-accent">
-        <img src="Film%20posters%20(5).jpg" alt="Film poster 5">
-        <div class="fc-overlay"></div>
-        <div class="fc-accent-label">FILM LAB · 2023–2024</div>
+      <div class="fc-poster">
+        <img class="fc-poster-img" src="Film%20posters%20(3).jpg" alt="Film poster 3">
+        <span class="fc-poster-cap">FILM 03</span>
       </div>
+      <div class="fc-poster">
+        <img class="fc-poster-img" src="Film%20posters%20(4).jpg" alt="Film poster 4">
+        <span class="fc-poster-cap">FILM 04</span>
+      </div>
+      <div class="fc-poster">
+        <img class="fc-poster-img" src="Film%20posters%20(5).jpg" alt="Film poster 5">
+        <span class="fc-poster-cap">FILM 05</span>
+      </div>
+      <span class="fc-archive-label">FILM LAB · 2023–2024</span>
     </div>
 
     <!-- 3 Podcasts -->
@@ -1761,6 +1810,9 @@ footer {
   </div>
 </section>
 
+<!-- ██ ARTWORK DIVIDER 3 — between Archive and Voices ████████ -->
+<div class="artwork-divider artwork-divider--warm" aria-hidden="true"></div>
+
 <!-- ██ VOICES IN COLOR ████████████████████████████████████████ -->
 <section id="voices">
   <div class="voices-grain"></div>
@@ -1772,69 +1824,32 @@ footer {
     <p class="voices-sub reveal d2">Through the "My Eyes" project, children painted their stories, hopes, and memories over black-and-white portraits of themselves — transforming reportage into vibrant personal narrative.</p>
   </div>
 
-  <!-- Editorial portrait mosaic — asymmetric, alive -->
+  <!-- Equal-grid portrait gallery — hover focuses one, others recede -->
   <div class="portrait-mosaic reveal">
-
-    <!-- Column A — tall anchor portrait -->
-    <div class="pm-col pm-col-a">
-      <div class="pm-cell pm-cell--anchor">
-        <img src="my%20eyes%20project%20portraits%20final%20resault%20(10).jpg"
-             alt="My Eyes Project — child's painted portrait, final artwork">
-        <div class="pm-caption">
-          <span class="pm-num">01</span>
-          <span>My Eyes — painted self-portrait</span>
-        </div>
-      </div>
+    <div class="pm-cell">
+      <img src="my%20eyes%20project%20malak_sketch%20(1).jpg" alt="My Eyes Project — Malak sketch 1">
+      <div class="pm-caption"><span class="pm-num">01</span><span>Malak</span></div>
     </div>
-
-    <!-- Column B — stacked with offset -->
-    <div class="pm-col pm-col-b">
-      <div class="pm-cell pm-cell--offset-down">
-        <img src="my%20eyes%20project%20portraits%20final%20resault%20(11).jpg"
-             alt="My Eyes Project — painted portrait 11">
-        <div class="pm-caption">
-          <span class="pm-num">02</span>
-          <span>Al Shaher settlement</span>
-        </div>
-      </div>
-      <div class="pm-cell pm-cell--sm">
-        <img src="my%20eyes%20project%20portraits%20final%20resault%20(18).jpg"
-             alt="My Eyes Project — painted portrait 18">
-        <div class="pm-caption">
-          <span class="pm-num">03</span>
-          <span>Dalhamiya</span>
-        </div>
-      </div>
+    <div class="pm-cell">
+      <img src="my%20eyes%20project%20portraits%20final%20resault%20(10).jpg" alt="My Eyes Project — portrait 10">
+      <div class="pm-caption"><span class="pm-num">02</span><span>My Eyes</span></div>
     </div>
-
-    <!-- Column C — wide feature + small -->
-    <div class="pm-col pm-col-c">
-      <div class="pm-cell pm-cell--wide">
-        <img src="my%20eyes%20project%20portraits%20final%20resault%20(17).jpg"
-             alt="My Eyes Project — painted portrait 17">
-        <div class="pm-caption">
-          <span class="pm-num">04</span>
-          <span>Al Rawda</span>
-        </div>
-      </div>
-      <div class="pm-row">
-        <div class="pm-cell">
-          <img src="my%20eyes%20project%20portraits%20final%20resault%20(12).jpg"
-               alt="My Eyes Project — painted portrait 12">
-          <div class="pm-caption">
-            <span class="pm-num">05</span>
-          </div>
-        </div>
-        <div class="pm-cell pm-cell--raised">
-          <img src="my%20eyes%20project%20portraits%20final%20resault%20(13).jpg"
-               alt="My Eyes Project — painted portrait 13">
-          <div class="pm-caption">
-            <span class="pm-num">06</span>
-          </div>
-        </div>
-      </div>
+    <div class="pm-cell">
+      <img src="my%20eyes%20project%20portraits%20final%20resault%20(11).jpg" alt="My Eyes Project — portrait 11">
+      <div class="pm-caption"><span class="pm-num">03</span><span>Al Shaher</span></div>
     </div>
-
+    <div class="pm-cell">
+      <img src="my%20eyes%20project%20portraits%20final%20resault%20(17).jpg" alt="My Eyes Project — portrait 17">
+      <div class="pm-caption"><span class="pm-num">04</span><span>Al Rawda</span></div>
+    </div>
+    <div class="pm-cell">
+      <img src="my%20eyes%20project%20portraits%20final%20resault%20(12).jpg" alt="My Eyes Project — portrait 12">
+      <div class="pm-caption"><span class="pm-num">05</span><span>Dalhamiya</span></div>
+    </div>
+    <div class="pm-cell">
+      <img src="my%20eyes%20project%20portraits%20final%20resault%20(13).jpg" alt="My Eyes Project — portrait 13">
+      <div class="pm-caption"><span class="pm-num">06</span><span>Bekaa</span></div>
+    </div>
   </div>
 
   <!-- Foot note -->

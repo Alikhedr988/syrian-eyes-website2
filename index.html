@@ -1565,7 +1565,63 @@ footer {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   ABOUT → PANORAMIC — hard cut with artwork strip (Option A)
+   CHILDREN'S SECTION — PNG PAINT SYSTEM
+═══════════════════════════════════════════════════════════════ */
+#children-text-panel {
+  position: relative;
+  overflow: hidden;
+}
+#children-text-panel > *:not(#paint-layer) {
+  position: relative;
+  z-index: 1;
+}
+#paint-layer {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 0;
+  overflow: hidden;
+}
+.paint-img {
+  position: absolute;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  opacity: 0;
+  user-select: none;
+  will-change: transform, opacity, clip-path;
+}
+/* Entrance animations */
+@keyframes pGrow {
+  from { clip-path: circle(0% at 50% 50%); opacity: 0; transform: scale(0.7) var(--pRot); }
+  to   { clip-path: circle(160% at 50% 50%); opacity: var(--pA); transform: scale(1) var(--pRot); }
+}
+@keyframes pSlideLeft {
+  from { opacity: 0; transform: translateX(-55%) scale(0.85) var(--pRot); }
+  to   { opacity: var(--pA); transform: translateX(0) scale(1) var(--pRot); }
+}
+@keyframes pSlideRight {
+  from { opacity: 0; transform: translateX(55%) scale(0.85) var(--pRot); }
+  to   { opacity: var(--pA); transform: translateX(0) scale(1) var(--pRot); }
+}
+@keyframes pSlideTop {
+  from { opacity: 0; transform: translateY(-60%) scale(0.85) var(--pRot); }
+  to   { opacity: var(--pA); transform: translateY(0) scale(1) var(--pRot); }
+}
+@keyframes pSlideBottom {
+  from { opacity: 0; transform: translateY(50%) scale(0.85) var(--pRot); }
+  to   { opacity: var(--pA); transform: translateY(0) scale(1) var(--pRot); }
+}
+@keyframes pFade {
+  from { opacity: 0; transform: scale(0.6) var(--pRot); }
+  to   { opacity: var(--pA); transform: scale(1) var(--pRot); }
+}
+/* Brushstroke underline */
+.paint-underline { display: inline-block; position: relative; }
+.paint-underline svg {
+  position: absolute; bottom: -8px; left: 0;
+  width: 100%; overflow: visible; pointer-events: none;
+}
+.paint-underline path {
+  stroke-dasharray: 600; stroke-dashoffset: 600; transition: none;
+}
 ═══════════════════════════════════════════════════════════════ */
 #about {
   padding-bottom: 0 !important;
@@ -2062,9 +2118,10 @@ footer {
     <div class="prog-photo-scanlines"></div>
     <img src="my%20eyes%20project%20Jarrahieh%20burned%20centre.jpg" alt="Syrian Eyes — Jarrahieh activity centre" style="filter:none;">
   </div>
-  <div class="prog-text">
+  <div class="prog-text" id="children-text-panel">
+    <div id="paint-layer" aria-hidden="true"></div>
     <div class="prog-tag reveal">02 / SINCE 2014 · ONGOING</div>
-    <h2 class="prog-title reveal d1">Children's Activities &amp; Psychosocial Support</h2>
+    <h2 class="prog-title reveal d1" id="children-heading"><span class="paint-underline">Children's Activities &amp; Psychosocial Support</span></h2>
     <p class="prog-body reveal d2">Year-round recreational activities, seasonal Eid carnivals, art therapy, music, and safe spaces for play in informal settlements such as Al Shaher, Dalhamiya, and Al Rawda. Our focus is the mental and emotional well-being of refugee children — restoring normalcy, dignity, and joy.</p>
   </div>
 </div>
@@ -2789,6 +2846,172 @@ const statsObs = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 const statsSection = document.getElementById('stats');
 if (statsSection) statsObs.observe(statsSection);
+
+/* ── PNG paint effects — Children's Activities ───────────────
+   Uses real paint PNGs: pnj(1)–pnj(5).png
+   mix-blend-mode:multiply removes black background automatically
+   Shuffled playlist: 6 scenes, all 5 PNGs, no repeats
+──────────────────────────────────────────────────────────────── */
+(function() {
+  const panel   = document.getElementById('children-text-panel');
+  const layer   = document.getElementById('paint-layer');
+  const heading = document.querySelector('.paint-underline');
+  if (!panel || !layer) return;
+
+  // ── 5 real paint PNGs uploaded to GitHub root ─────────────
+  // pnj(1) = orange watercolor blob
+  // pnj(2) = magenta/yellow/purple drip
+  // pnj(3) = colorful multi-blob scatter
+  // pnj(4) = blue/red/yellow triple splatter
+  // pnj(5) = pink/magenta watercolor burst
+  const IMGS = [
+    'pnj(1).png', // 0 orange
+    'pnj(2).png', // 1 drip
+    'pnj(3).png', // 2 multi-blob
+    'pnj(4).png', // 3 triple splatter
+    'pnj(5).png', // 4 pink
+  ];
+
+  // ── Animations: grow, slide-left, slide-right, slide-top, slide-bottom, fade
+  // ── Position: % from top-left of panel
+  // ── w: width as % of panel width
+  // ── a: opacity (0–1)
+  // ── rot: rotation in deg
+  // ── dur: animation duration ms
+
+  const SCENES = [
+    // 0 — Drip from top: pnj(2) slides down, pnj(1) bottom-left corner
+    { layers: [
+        { i:1, x:-5,  y:-8,  w:78, rot:-3, a:0.88, anim:'slide-top',    dur:700, delay:0   },
+        { i:0, x:-12, y:48,  w:44, rot:12, a:0.75, anim:'slide-left',   dur:600, delay:260 },
+    ]},
+    // 1 — Central explosion: pnj(4) grows from center
+    { layers: [
+        { i:3, x:5,   y:5,   w:90, rot:5,  a:0.90, anim:'grow',         dur:750, delay:0   },
+        { i:4, x:52,  y:-10, w:48, rot:-18,a:0.72, anim:'slide-right',  dur:600, delay:230 },
+    ]},
+    // 2 — Left side throw: pnj(1) + pnj(5) enter from left
+    { layers: [
+        { i:0, x:-14, y:8,   w:68, rot:10, a:0.88, anim:'slide-left',   dur:680, delay:0   },
+        { i:4, x:38,  y:32,  w:52, rot:-8, a:0.78, anim:'slide-left',   dur:620, delay:220 },
+    ]},
+    // 3 — Full scatter: pnj(3) center, pnj(1) bottom corner
+    { layers: [
+        { i:2, x:8,   y:2,   w:88, rot:8,  a:0.90, anim:'grow',         dur:780, delay:0   },
+        { i:0, x:-8,  y:42,  w:42, rot:-22,a:0.70, anim:'slide-bottom', dur:580, delay:200 },
+        { i:4, x:54,  y:-6,  w:46, rot:15, a:0.68, anim:'slide-right',  dur:600, delay:350 },
+    ]},
+    // 4 — Right burst + top drip
+    { layers: [
+        { i:3, x:22,  y:6,   w:82, rot:-6, a:0.88, anim:'slide-right',  dur:720, delay:0   },
+        { i:1, x:2,   y:-12, w:58, rot:4,  a:0.72, anim:'slide-top',    dur:640, delay:240 },
+    ]},
+    // 5 — Pink bloom + orange corner + brushstroke heading
+    { layers: [
+        { i:4, x:12,  y:4,   w:75, rot:-12,a:0.88, anim:'grow',         dur:750, delay:0   },
+        { i:0, x:50,  y:38,  w:48, rot:18, a:0.72, anim:'fade',         dur:600, delay:220 },
+    ], brushstroke: true },
+  ];
+
+  // ── Shuffled playlist ──────────────────────────────────────
+  let playlist = [];
+  function nextScene() {
+    if (!playlist.length) {
+      playlist = SCENES.map((_,i)=>i).sort(()=>Math.random()-0.5);
+    }
+    return playlist.shift();
+  }
+
+  // ── Build & animate one scene ──────────────────────────────
+  function runScene(idx) {
+    layer.innerHTML = '';
+    const scene = SCENES[idx];
+
+    scene.layers.forEach(cfg => {
+      const img = new Image();
+      img.src = IMGS[cfg.i];
+      img.alt = '';
+      img.draggable = false;
+      img.className = 'paint-img';
+
+      const rot = `rotate(${cfg.rot}deg)`;
+      img.style.cssText = `
+        left:${cfg.x}%;
+        top:${cfg.y}%;
+        width:${cfg.w}%;
+        --pA:${cfg.a};
+        --pRot:${rot};
+        animation-name: p${capitalize(cfg.anim)};
+        animation-duration: ${cfg.dur}ms;
+        animation-delay: ${cfg.delay}ms;
+        animation-fill-mode: both;
+        animation-timing-function: cubic-bezier(0.15, 0.85, 0.35, 1.02);
+      `;
+      layer.appendChild(img);
+    });
+
+    // Brushstroke underline on heading (scene 5)
+    if (scene.brushstroke && heading) {
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('viewBox', '0 0 400 18');
+      svg.setAttribute('preserveAspectRatio', 'none');
+      svg.style.cssText = 'position:absolute;bottom:-10px;left:0;width:100%;height:18px;overflow:visible;pointer-events:none;';
+      const defs = document.createElementNS(svgNS, 'defs');
+      const filt = document.createElementNS(svgNS, 'filter');
+      filt.setAttribute('id', 'pb2'); 
+      const blur = document.createElementNS(svgNS, 'feGaussianBlur');
+      blur.setAttribute('stdDeviation', '0.9');
+      filt.appendChild(blur); defs.appendChild(filt); svg.appendChild(defs);
+      [
+        ['M2,11 C70,3 160,17 240,8 C310,1 360,14 398,9', 8, 'rgba(232,98,20,0.72)'],
+        ['M4,10 C72,5 162,14 242,7 C312,2 362,13 396,8',  3, 'rgba(232,98,20,0.38)'],
+      ].forEach(([d, sw, color]) => {
+        const p = document.createElementNS(svgNS, 'path');
+        p.setAttribute('d', d);
+        p.setAttribute('stroke', color);
+        p.setAttribute('stroke-width', sw);
+        p.setAttribute('stroke-linecap', 'round');
+        p.setAttribute('fill', 'none');
+        p.setAttribute('filter', 'url(#pb2)');
+        p.style.strokeDasharray = '600';
+        p.style.strokeDashoffset = '600';
+        svg.appendChild(p);
+        setTimeout(() => {
+          p.style.transition = 'stroke-dashoffset 0.95s cubic-bezier(0.4,0,0.2,1)';
+          p.style.strokeDashoffset = '0';
+        }, 350);
+      });
+      const existing = heading.querySelector('svg');
+      if (existing) existing.remove();
+      heading.appendChild(svg);
+    }
+  }
+
+  function capitalize(s) { return s.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(''); }
+
+  function clearAll() {
+    layer.innerHTML = '';
+    if (heading) { const s = heading.querySelector('svg'); if (s) s.remove(); }
+  }
+
+  // ── Intersection observer — fire on enter, reset on leave ──
+  let hasRun = false;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !hasRun) {
+        hasRun = true;
+        setTimeout(() => runScene(nextScene()), 160);
+      }
+      if (!e.isIntersecting && hasRun) {
+        hasRun = false;
+        clearAll();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  obs.observe(panel);
+})();
 
 /* ── Smooth anchor scroll ──────────────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {

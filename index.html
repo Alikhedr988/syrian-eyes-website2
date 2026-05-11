@@ -1061,9 +1061,13 @@ footer {
 .fc-poster:nth-child(4) { transform: rotate(1.8deg) translateY(3px); z-index: 2; }
 .fc-poster:nth-child(5) { transform: rotate(3.2deg) translateY(7px); z-index: 1; }
 
-/* The hovered poster rises sharp and forward — others stay solid */
+/* Non-hovered posters: darken and blur, stay fully opaque */
+.film-collage:hover .fc-poster {
+  filter: blur(1.8px) brightness(0.55);
+}
+
+/* The hovered poster rises sharp and forward */
 .film-collage .fc-poster:hover {
-  opacity: 1 !important;
   filter: none !important;
   transform: rotate(0deg) translateY(-30px) scale(1.14) !important;
   z-index: 10 !important;
@@ -1247,8 +1251,14 @@ footer {
   background: #f0ede8;
 }
 
-/* Focused card — rises forward, others stay solid */
+/* Non-hovered cards: darken and blur slightly, stay fully opaque */
+.portrait-mosaic:hover .pm-cell {
+  filter: blur(1.6px) brightness(0.58);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+/* Focused card — comes forward, fully sharp */
 .portrait-mosaic:hover .pm-cell:hover {
+  filter: blur(0) brightness(1) !important;
   z-index: 20 !important;
   box-shadow:
     0 24px 56px rgba(0,0,0,0.52),
@@ -1293,7 +1303,7 @@ footer {
     width: 72% !important;
     transform: none !important;
   }
-  .portrait-mosaic:hover .pm-cell { opacity: 1; filter: none; }
+  .portrait-mosaic:hover .pm-cell { filter: none; }
   .portrait-mosaic:hover .pm-cell:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important; }
 }
 
@@ -1591,15 +1601,7 @@ footer {
   opacity: 0;
   will-change: opacity, transform;
 }
-/* Brushstroke underline */
-.paint-underline { display: inline-block; position: relative; }
-.paint-underline svg {
-  position: absolute; bottom: -8px; left: 0;
-  width: 100%; overflow: visible; pointer-events: none;
-}
-.paint-underline path {
-  stroke-dasharray: 600; stroke-dashoffset: 600; transition: none;
-}
+/* Brushstroke underline — disabled */
 #about {
   padding-bottom: 0 !important;
   position: relative;
@@ -1886,7 +1888,7 @@ footer {
   /* Film album wall — reduce overlap on mobile */
   .film-collage { flex-wrap: wrap; justify-content: center; gap: 8px; padding: 20px 0; }
   .fc-poster { margin-left: 0; width: 160px; transform: none !important; }
-  .film-collage:hover .fc-poster { opacity: 1; filter: none; }
+  .film-collage:hover .fc-poster { filter: none; }
   .film-collage .fc-poster:hover { transform: translateY(-10px) scale(1.05) !important; }
   /* Podcast strip — stack on mobile */
   .podcast-featured { grid-template-columns: 1fr; gap: 2px; }
@@ -2111,7 +2113,7 @@ footer {
   <div class="prog-text" id="children-text-panel">
     <div id="paint-layer" aria-hidden="true"></div>
     <div class="prog-tag reveal">02 / SINCE 2014 · ONGOING</div>
-    <h2 class="prog-title reveal d1" id="children-heading"><span class="paint-underline">Children's Activities &amp; Psychosocial Support</span></h2>
+    <h2 class="prog-title reveal d1" id="children-heading">Children's Activities &amp; Psychosocial Support</h2>
     <p class="prog-body reveal d2">Year-round recreational activities, seasonal Eid carnivals, art therapy, music, and safe spaces for play in informal settlements such as Al Shaher, Dalhamiya, and Al Rawda. Our focus is the mental and emotional well-being of refugee children — restoring normalcy, dignity, and joy.</p>
   </div>
 </div>
@@ -2862,30 +2864,30 @@ if (statsSection) statsObs.observe(statsSection);
   }
 
   const SCENES = [
-    // 0 — drip from top-left corner, small, stays at edge
+    // 0 — large pink drip, lower-right empty white
     {layers:[
-      {i:1,x:-8,  y:-6,  w:38, rot:-4,  a:0.88, dur:800, delay:0, enter:'top'   },
+      {i:1, x:30,  y:54,  w:68, rot:-4,  a:0.82, dur:800, delay:0, enter:'bottom'},
     ]},
-    // 1 — splash from top-right corner
+    // 1 — blue/red/yellow splash fills lower-right
     {layers:[
-      {i:3,x:62,  y:-8,  w:42, rot:6,   a:0.88, dur:800, delay:0, enter:'right' },
+      {i:3, x:35,  y:50,  w:65, rot:6,   a:0.82, dur:800, delay:0, enter:'right' },
     ]},
-    // 2 — bloom at bottom-left edge
+    // 2 — orange bloom, lower-right white space
     {layers:[
-      {i:0,x:-10, y:52,  w:36, rot:10,  a:0.86, dur:780, delay:0, enter:'left'  },
+      {i:0, x:28,  y:52,  w:70, rot:8,   a:0.80, dur:780, delay:0, enter:'bottom'},
     ]},
-    // 3 — drip from bottom-right corner
+    // 3 — pink watercolor, lower-right
     {layers:[
-      {i:4,x:64,  y:48,  w:40, rot:-5,  a:0.88, dur:800, delay:0, enter:'right' },
+      {i:4, x:32,  y:48,  w:66, rot:-5,  a:0.82, dur:800, delay:0, enter:'right' },
     ]},
-    // 4 — pink from top edge, centered right
+    // 4 — multi-blob, lower-right
     {layers:[
-      {i:4,x:58,  y:-10, w:38, rot:-8,  a:0.86, dur:780, delay:0, enter:'top'   },
+      {i:2, x:26,  y:55,  w:72, rot:-3,  a:0.80, dur:800, delay:0, enter:'bottom'},
     ]},
-    // 5 — orange at bottom-left + brushstroke on heading only
+    // 5 — teal, lower-right corner
     {layers:[
-      {i:0,x:-12, y:44,  w:34, rot:12,  a:0.84, dur:760, delay:0, enter:'bottom'},
-    ], brushstroke:true},
+      {i:0, x:38,  y:50,  w:62, rot:10,  a:0.80, dur:760, delay:0, enter:'right' },
+    ]},
   ];
 
   let playlist = [];
@@ -2917,27 +2919,7 @@ if (statsSection) statsObs.observe(statsSection);
       }, cfg.delay + 50);
     });
 
-    // Brushstroke underline
-    if (scene.brushstroke && heading) {
-      const ns = 'http://www.w3.org/2000/svg';
-      const svg = document.createElementNS(ns,'svg');
-      svg.setAttribute('viewBox','0 0 400 18');
-      svg.setAttribute('preserveAspectRatio','none');
-      svg.style.cssText='position:absolute;bottom:-10px;left:0;width:100%;height:18px;overflow:visible;pointer-events:none;';
-      const ex = heading.querySelector('svg'); if (ex) ex.remove();
-      [['M2,11 C70,3 160,17 240,8 C310,1 360,14 398,9',8,'rgba(232,98,20,0.82)'],
-       ['M4,10 C72,5 162,14 242,7 C312,2 362,13 396,8',3,'rgba(232,98,20,0.42)']
-      ].forEach(([d,sw,col])=>{
-        const p=document.createElementNS(ns,'path');
-        p.setAttribute('d',d); p.setAttribute('stroke',col);
-        p.setAttribute('stroke-width',sw); p.setAttribute('stroke-linecap','round');
-        p.setAttribute('fill','none');
-        p.style.strokeDasharray='600'; p.style.strokeDashoffset='600';
-        svg.appendChild(p);
-        setTimeout(()=>{ p.style.transition='stroke-dashoffset 0.95s cubic-bezier(0.4,0,0.2,1)'; p.style.strokeDashoffset='0'; },380);
-      });
-      heading.appendChild(svg);
-    }
+    // No brushstroke underline — removed per design decision
   }
 
   function clearAll() {

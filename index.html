@@ -1913,10 +1913,10 @@ footer {
   #contact-section { padding: 72px 24px; }
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
   .cf-row { grid-template-columns: 1fr; }
-}
-  /* ── Film archive wall — mobile horizontal scroll ─────────── */
+
+  /* ── Film archive wall — mobile: horizontal scroll strip ── */
   .film-collage {
-    flex-wrap: nowrap;
+    flex-wrap: nowrap !important;
     overflow-x: auto;
     justify-content: flex-start;
     gap: 12px;
@@ -1924,15 +1924,15 @@ footer {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     cursor: auto;
+    min-height: unset;
   }
   .film-collage::-webkit-scrollbar { display: none; }
   .fc-poster {
-    margin-left: 0;
-    width: 58vw;
-    max-width: 260px;
+    margin-left: 0 !important;
+    width: 58vw !important;
+    max-width: 240px;
     flex-shrink: 0;
     scroll-snap-align: center;
-    /* Reset desktop tilts */
     transform: none !important;
   }
   .fc-poster:nth-child(1),
@@ -1940,46 +1940,47 @@ footer {
   .fc-poster:nth-child(3),
   .fc-poster:nth-child(4),
   .fc-poster:nth-child(5) { transform: none !important; }
-  /* Touch: tapped poster rises — JS adds .fc-tapped class */
+  /* Desktop hover rules don't fire on touch — suppress them */
+  .film-collage:hover .fc-poster { filter: none; }
+  .film-collage .fc-poster:hover { transform: none !important; filter: none !important; }
+  /* Touch tap state — JS adds these classes */
   .film-collage .fc-poster.fc-tapped {
-    transform: translateY(-14px) scale(1.06) !important;
+    transform: translateY(-12px) scale(1.05) !important;
     z-index: 10 !important;
-    box-shadow: 0 24px 56px rgba(0,0,0,0.65) !important;
     filter: blur(0) brightness(1) !important;
   }
-  /* Non-tapped — blur + darken when any is tapped */
   .film-collage.has-tapped .fc-poster:not(.fc-tapped) {
-    filter: blur(2px) brightness(0.55) !important;
+    filter: blur(1.8px) brightness(0.55) !important;
   }
-  /* Remove hover-only rules on touch */
-  .film-collage:hover .fc-poster { filter: none; }
-  .film-collage .fc-poster:hover { transform: none !important; }
 
-  /* ── Polaroid scatter — mobile 2-column staggered grid ─────── */
+  /* ── Polaroid wall — mobile: 2-col staggered grid ────────── */
   .portrait-mosaic {
     display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px;
     min-height: unset;
-    padding: 8px 4px;
+    padding: 4px;
   }
   .pm-cell {
     position: relative !important;
-    left: auto !important; top: auto !important;
+    left: auto !important;
+    top: auto !important;
     width: 100% !important;
-    /* Preserve the slight rotation for organic feel */
   }
-  /* Stagger even cards down slightly */
-  .pm-cell:nth-child(even) { margin-top: 24px; }
-  /* Reset hover blur — use touch JS instead */
-  .portrait-mosaic:hover .pm-cell { filter: none; }
-  .portrait-mosaic:hover .pm-cell:hover { filter: none; box-shadow: none !important; }
-  /* Touch: tapped card */
+  .pm-cell:nth-child(even) { margin-top: 20px; }
+  /* Disable hover effects on touch — use tap instead */
+  .portrait-mosaic:hover .pm-cell { filter: none !important; }
+  .portrait-mosaic:hover .pm-cell:hover {
+    filter: none !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.28) !important;
+    transform: none !important;
+  }
+  /* Touch tap state */
   .pm-cell.pm-tapped {
     filter: blur(0) brightness(1) !important;
-    transform: scale(1.05) translateY(-8px) !important;
+    transform: scale(1.04) translateY(-6px) !important;
     z-index: 20 !important;
-    box-shadow: 0 20px 48px rgba(0,0,0,0.48), 0 4px 12px rgba(0,0,0,0.22) !important;
+    box-shadow: 0 20px 48px rgba(0,0,0,0.45) !important;
   }
   .portrait-mosaic.has-tapped .pm-cell:not(.pm-tapped) {
     filter: blur(1.8px) brightness(0.58) !important;

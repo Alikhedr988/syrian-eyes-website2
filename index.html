@@ -594,6 +594,28 @@ a { text-decoration: none; color: inherit; }
   color: rgba(26,23,20,0.25); margin-top: 28px;
 }
 
+/* Timeline photo strip — shown only for entries with a `photos` array */
+.tl-photostrip {
+  display: flex; gap: 3px;
+  height: 180px; margin-top: 24px;
+  background: var(--dark); overflow: hidden;
+}
+.tl-photostrip[hidden] { display: none; }
+.tl-ps-cell {
+  position: relative; flex: 1; overflow: hidden;
+  background: var(--dark-soft);
+}
+.tl-ps-cell img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 7s ease;
+}
+.tl-ps-cell:hover img { transform: scale(1.05); }
+.tl-ps-cell::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: var(--grain); background-size: 220px;
+  opacity: 0.36; mix-blend-mode: soft-light; pointer-events: none;
+}
+
 .tl-nav-col {
   display: flex; flex-direction: column;
   max-height: 360px; overflow-y: auto;
@@ -1106,6 +1128,78 @@ footer {
   font-size: 9px; letter-spacing: 0.22em;
   color: rgba(255,255,255,0.2);
 }
+
+/* ── Film Lab 2026 — director bio cards ─────────────────────── */
+.film-lab-2026 { position: relative; }
+.film-lab-2026::after {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background-image: var(--grain); background-size: 220px;
+  opacity: 0.30; mix-blend-mode: soft-light; pointer-events: none;
+}
+.film-lab-2026 > * { position: relative; z-index: 1; }
+.director-bios {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+  margin-top: 44px;
+}
+.director-bio-card {
+  background: #141210;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 22px 20px;
+}
+.db-name {
+  font-family: var(--serif);
+  font-size: 18px; font-weight: 400; line-height: 1.2;
+  color: var(--blue); margin-bottom: 10px;
+}
+.db-body {
+  font-style: italic;
+  font-size: 13px; font-weight: 300; line-height: 1.6;
+  color: rgba(245,242,237,0.42);
+}
+
+/* ── Supported Initiatives — photo slideshow ────────────────── */
+.init-slideshow {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  margin-top: 28px;
+  overflow: hidden;
+  background: var(--dark-soft);
+}
+.init-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.init-slide.is-active { opacity: 1; }
+.init-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.init-slideshow::after {
+  content: ''; position: absolute; inset: 0; z-index: 2;
+  background-image: var(--grain); background-size: 220px;
+  opacity: 0.32; mix-blend-mode: soft-light; pointer-events: none;
+}
+.init-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  z-index: 3;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(20,18,16,0.35);
+  color: rgba(255,255,255,0.85);
+  cursor: pointer; transition: all 0.25s;
+  backdrop-filter: blur(2px);
+}
+.init-nav:hover { background: var(--white); color: var(--dark); border-color: var(--white); }
+.init-nav--prev { left: 10px; }
+.init-nav--next { right: 10px; }
+.init-dots { display: flex; gap: 8px; margin-top: 14px; }
+.init-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.22);
+  border: none; padding: 0; cursor: pointer;
+  transition: background 0.25s;
+}
+.init-dot.is-active { background: var(--blue); }
 
 /* ═══════════════════════════════════════════════════════════════
    PODCAST CINEMATIC STRIP — equal treatment, full color
@@ -1792,6 +1886,110 @@ footer {
 .cf-status.ok { color: #3b7a5a; }
 
 /* ═══════════════════════════════════════════════════════════════
+   BOOKLET — INTERACTIVE PAGE FLIP
+═══════════════════════════════════════════════════════════════ */
+#booklet-section {
+  background: #0f0d0b;
+  padding: 120px 88px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+.booklet-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 300; color: var(--cream);
+  margin-bottom: 56px; line-height: 1.1;
+}
+.booklet-stage {
+  display: flex; align-items: center; justify-content: center;
+  gap: 28px;
+  max-width: 680px; margin: 0 auto;
+}
+.booklet-book {
+  position: relative;
+  flex: 1 1 auto;
+  max-width: 680px;
+  aspect-ratio: 1.414 / 1;            /* two portrait A-pages side by side */
+  perspective: 2200px;
+  background: #1a1614;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+/* Page-stack depth on the right edge — a few stacked page slivers */
+.booklet-stack {
+  position: absolute; top: 8px; bottom: 8px; right: -10px;
+  width: 10px; z-index: 0;
+  background: #211c19;
+  box-shadow:
+    3px 0 0 rgba(255,255,255,0.05),
+    6px 0 0 rgba(0,0,0,0.35),
+    8px 0 0 rgba(255,255,255,0.035),
+    11px 0 0 rgba(0,0,0,0.30),
+    13px 0 0 rgba(255,255,255,0.025);
+}
+.booklet-page {
+  position: absolute; top: 0; bottom: 0;
+  width: 50%;
+  overflow: hidden;
+  background: #12100e;
+}
+.booklet-page--left  { left: 0;  box-shadow: inset -18px 0 28px -18px rgba(0,0,0,0.6); }
+.booklet-page--right { right: 0; box-shadow: inset  18px 0 28px -18px rgba(0,0,0,0.6); }
+.booklet-page img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* The flipping page */
+.booklet-flip {
+  position: absolute; top: 0; bottom: 0;
+  width: 50%;
+  transform-style: preserve-3d;
+  z-index: 5;
+  display: none;
+}
+.booklet-flip.anim-next { right: 0; left: auto; transform-origin: left center; }
+.booklet-flip.anim-prev { left: 0; right: auto; transform-origin: right center; }
+.booklet-flip-face {
+  position: absolute; inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  background: #12100e;
+}
+.booklet-flip-face img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.booklet-flip-back { transform: rotateY(180deg); }
+.booklet-flip-shade {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0) 40%, rgba(0,0,0,0.45) 100%);
+  opacity: 0; pointer-events: none;
+}
+.booklet-flip.anim-next .booklet-flip-shade,
+.booklet-flip.anim-prev .booklet-flip-shade {
+  animation: booklet-shade 550ms cubic-bezier(0.645, 0.045, 0.355, 1.000);
+}
+@keyframes booklet-shade {
+  0%   { opacity: 0; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 0; }
+}
+.booklet-arrow {
+  flex: 0 0 auto;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,0.24);
+  background: transparent; color: rgba(255,255,255,0.8);
+  cursor: pointer; transition: all 0.25s;
+}
+.booklet-arrow:hover { background: var(--white); color: var(--dark); border-color: var(--white); }
+.booklet-arrow:disabled { opacity: 0.22; cursor: default; }
+.booklet-arrow:disabled:hover {
+  background: transparent; color: rgba(255,255,255,0.8);
+  border-color: rgba(255,255,255,0.24);
+}
+.booklet-counter {
+  margin-top: 26px;
+  font-size: 10px; letter-spacing: 0.24em;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    ARTWORK DIVIDER — My Eyes paintings as chapter breaks
 ═══════════════════════════════════════════════════════════════ */
 .artwork-divider {
@@ -1871,6 +2069,7 @@ footer {
   footer { flex-direction: column; gap: 22px; padding: 36px 24px; text-align: center; }
   .artwork-divider { height: 100px; }
   .film-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .director-bios { grid-template-columns: 1fr 1fr; }
   .podcast-grid { grid-template-columns: 1fr; gap: 24px; }
   .prog2-film-header { padding-bottom: 36px; margin-bottom: 36px; }
   /* Collage — stack on mobile */
@@ -1890,6 +2089,17 @@ footer {
   .donate-wrap { grid-template-columns: 1fr; gap: 40px; }
   .df-row { grid-template-columns: 1fr; }
   .donate-form-wrap { padding: 22px; }
+  /* Booklet — single page on mobile */
+  #booklet-section { padding: 80px 24px; }
+  .booklet-stage { gap: 10px; }
+  .booklet-book { aspect-ratio: 0.707 / 1; }
+  .booklet-page { width: 100%; }
+  .booklet-page--right { display: none; }
+  .booklet-flip { width: 100%; }
+  .booklet-stack { display: none; }
+  .booklet-arrow { width: 38px; height: 38px; }
+  /* Supported Initiatives slideshow */
+  .init-slideshow { height: 220px; }
   /* Artwork divider */
   .artwork-divider { height: 110px; }
   /* Workshop gallery — stack on mobile */
@@ -2195,6 +2405,35 @@ footer {
   </div>
 </div>
 
+<!-- ██ BOOKLET — INTERACTIVE PAGE FLIP ████████████████████████ -->
+<section id="booklet-section">
+  <div class="eyebrow reveal" style="justify-content:center;">PUBLICATION</div>
+  <h2 class="booklet-title reveal d1">Our Story in Print</h2>
+
+  <div class="booklet-stage reveal d2">
+    <button class="booklet-arrow" id="booklet-prev" type="button" aria-label="Previous page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+
+    <div class="booklet-book" id="booklet-book">
+      <div class="booklet-stack" aria-hidden="true"></div>
+      <div class="booklet-page booklet-page--left"><img id="booklet-img-left" src="1.png" alt="Booklet page"></div>
+      <div class="booklet-page booklet-page--right"><img id="booklet-img-right" src="2.png" alt="Booklet page"></div>
+      <div class="booklet-flip" id="booklet-flip" aria-hidden="true">
+        <div class="booklet-flip-face booklet-flip-front"><img id="booklet-flip-front-img" src="" alt=""></div>
+        <div class="booklet-flip-face booklet-flip-back"><img id="booklet-flip-back-img" src="" alt=""></div>
+        <div class="booklet-flip-shade"></div>
+      </div>
+    </div>
+
+    <button class="booklet-arrow" id="booklet-next" type="button" aria-label="Next page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <div class="booklet-counter"><span id="booklet-counter-cur">1</span> / <span id="booklet-counter-total">12</span></div>
+</section>
+
 <!-- ██ PROGRAMS 04 — FILM LAB (expanded) ██████████████████████ -->
 <section id="prog-2col">
   <div class="eyebrow reveal">ONGOING PROGRAMS</div>
@@ -2341,6 +2580,69 @@ footer {
     </div>
   </div>
 
+  <!-- ██ FILM LAB · 2026 — new posters + director bios ████████ -->
+  <div class="prog2-sep"></div>
+  <div class="film-lab-2026 reveal">
+    <div class="film-lab-label">
+      <span class="film-lab-eyebrow">FILM LAB · 2026</span>
+      <div class="film-lab-rule"></div>
+    </div>
+    <h3 class="prog2-title" style="margin-bottom:18px;">Youth Documentary Filmmaking &amp; Storytelling</h3>
+    <p class="prog2-body" style="max-width:640px;">A media-education initiative training refugee and migrant youth — from Sudan, Egypt, Syria, Palestine and beyond — in filmmaking and podcasting. The aim: challenge media tropes that frame refugees as threats or passive victims, and give young people political agency over their own narratives.</p>
+
+    <div class="film-lab-label" style="margin-top: 56px;">
+      <span class="film-lab-eyebrow">5 FILMS · FILM LAB 2026</span>
+      <div class="film-lab-rule"></div>
+    </div>
+
+    <div class="film-collage">
+      <div class="fc-poster">
+        <img class="fc-poster-img" src="Aida(1).jpg" alt="Voices from Aida's Journey — a film by Aida Hussein">
+        <span class="fc-poster-cap">VOICES FROM AIDA'S JOURNEY</span>
+      </div>
+      <div class="fc-poster">
+        <img class="fc-poster-img" src="Ayat%20(2).jpg" alt="The Doorstep — a film by Ayat Ibrahim">
+        <span class="fc-poster-cap">THE DOORSTEP</span>
+      </div>
+      <div class="fc-poster">
+        <img class="fc-poster-img" src="Hamza%20(1).jpg" alt="Somewhere in Between — a film by Hamza Al-Dahab">
+        <span class="fc-poster-cap">SOMEWHERE IN BETWEEN</span>
+      </div>
+      <div class="fc-poster">
+        <img class="fc-poster-img" src="Kawthar%20(1).jpg" alt="When the Scarecrow Dreams — a film by Kawthar Khalil">
+        <span class="fc-poster-cap">WHEN THE SCARECROW DREAMS</span>
+      </div>
+      <div class="fc-poster">
+        <img class="fc-poster-img" src="Mira%20(1).jpg" alt="The Bee's Path — a film by Mira Austin Bene">
+        <span class="fc-poster-cap">THE BEE'S PATH</span>
+      </div>
+      <span class="fc-archive-label">FILM LAB · 2026</span>
+    </div>
+
+    <div class="director-bios">
+      <div class="director-bio-card">
+        <h4 class="db-name">Aida Hussein</h4>
+        <p class="db-body">Director bio coming soon</p>
+      </div>
+      <div class="director-bio-card">
+        <h4 class="db-name">Ayat Ibrahim</h4>
+        <p class="db-body">Director bio coming soon</p>
+      </div>
+      <div class="director-bio-card">
+        <h4 class="db-name">Hamza Al-Dahab</h4>
+        <p class="db-body">Director bio coming soon</p>
+      </div>
+      <div class="director-bio-card">
+        <h4 class="db-name">Kawthar Khalil</h4>
+        <p class="db-body">Director bio coming soon</p>
+      </div>
+      <div class="director-bio-card">
+        <h4 class="db-name">Mira Austin Bene</h4>
+        <p class="db-body">Director bio coming soon</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Program 05 separator -->
   <div class="prog2-sep"></div>
 
@@ -2350,6 +2652,19 @@ footer {
       <div class="prog2-tag reveal d1">05 / SINCE 2018 · ONGOING</div>
       <h3 class="prog2-title reveal d2">Support to Grassroots Initiatives</h3>
       <p class="prog2-body reveal d3">Technical assistance, logistics, and backing for migrant-led and local grassroots groups — including Nehna Hon, REMAN, Alya's Kitchen, Great Oven, Basmeh wa Zeitooneh, SAWA, Mulham Team, and MCC. Cross-community solidarity is the work itself.</p>
+
+      <div class="init-slideshow reveal d3" id="init-slideshow">
+        <div class="init-slide is-active"><img src="117387009_2027714964025343_7768693027853090737_n.jpg" alt="Supported grassroots initiative" loading="lazy"></div>
+        <div class="init-slide"><img src="117806372_2033239393472900_7571386850015330527_n.jpg" alt="Supported grassroots initiative" loading="lazy"></div>
+        <div class="init-slide"><img src="DSC08095-2.jpg" alt="Supported grassroots initiative" loading="lazy"></div>
+        <button class="init-nav init-nav--prev" type="button" aria-label="Previous photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="init-nav init-nav--next" type="button" aria-label="Next photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <div class="init-dots" id="init-dots" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -2389,8 +2704,9 @@ footer {
           <div class="tl-detail-period" id="tl-period">OCT 27, 2013 – 2014</div>
           <h3 class="tl-detail-name" id="tl-name">Foundation &amp; Immediate Emergency Relief</h3>
           <p class="tl-detail-desc" id="tl-desc">Emergency relief in informal tented settlements across the Bekaa — food, clothing, and winter assistance. Established the civilian-only, non-sectarian approach that defines Syrian Eyes today.</p>
+          <div class="tl-photostrip" id="tl-photostrip" hidden></div>
         </div>
-        <div class="tl-detail-counter" id="tl-counter">01 / 13</div>
+        <div class="tl-detail-counter" id="tl-counter">01 / 20</div>
       </div>
 
       <!-- Right: scrollable project list -->
@@ -2658,6 +2974,7 @@ const PROJECTS = [
   { year:'2016', period:'2016 – 2019', name:'Art & Creative Expression Programs', desc:'Drawing, painting, and storytelling workshops in Lebanon, with local and international art exhibitions. Fifty drawings exhibited in Toronto to support educational activities.' },
   { year:'2016', period:'2016 – 2017', name:'WASH & Water Tank Installation', desc:'Installation of water storage tanks in isolated tented settlements lacking municipal water access. Sanitation support, sewage pit construction, and hygiene kit distribution across North Bekaa communities.' },
   { year:'2017', period:'2017 – 2018', name:'Camp Rehabilitation & Winterization', desc:'Structural reinforcement of informal shelters ahead of winter — tent rehabilitation, plastic sheeting, insulation, and floor leveling. Coordinated cleaning campaigns in Al Shaher, Dalhamiya, and Al Rawda.' },
+  { year:'2018', period:'2018', name:'Cinema Station — Experimental Screenings with Kırkayak Kültür', desc:'An experimental film programme held at our community centre in Al Fares Camp, Bekaa Valley, in partnership with Kırkayak Kültür association. We screened films with women of the camp and held guided discussions after each screening exploring the relationship between cinema and everyday life. A space for reflection, storytelling, and shared meaning-making through film.', photos:['42600686_1420647654732080_1277128905085419520_n.jpg','42686597_1420647664732079_7939259832773640192_n.jpg'] },
   { year:'2018', period:'2018 – 2019', name:'Flood Response & Drainage', desc:'Emergency flood response in Bekaa settlements after winter storms — drainage clearing, mud removal, tent repair, and material distribution to affected families within 48 hours of flooding.' },
   { year:'2019', period:'2019 – 2020', name:'Wildfire Response', desc:'Supported the Lebanese Civil Defence with food, water, equipment, and volunteers during wildfire emergencies in Chouf and Moftaka al Nahreen — cross-community solidarity in environmental crisis.' },
   { year:'2019', period:'2019 – 2020', name:'WASH & Sanitation Support — Phase II', desc:'Sewage infrastructure repairs, latrine construction, and refugee camp cleaning campaigns across Central Bekaa. Focus on hygiene-sensitive areas with young children and elderly residents.' },
@@ -2699,6 +3016,19 @@ function setActive(idx) {
     document.getElementById('tl-name').innerHTML     = p.name;
     document.getElementById('tl-desc').textContent   = p.desc;
     document.getElementById('tl-counter').textContent = String(idx+1).padStart(2,'0') + ' / ' + PROJECTS.length;
+    // Photo strip — only for entries that carry a `photos` array
+    const _strip = document.getElementById('tl-photostrip');
+    if (_strip) {
+      if (p.photos && p.photos.length) {
+        _strip.innerHTML = p.photos.map(src =>
+          '<div class="tl-ps-cell"><img src="' + src + '" alt="' + p.name.replace(/"/g,'&quot;') + '" loading="lazy"></div>'
+        ).join('');
+        _strip.hidden = false;
+      } else {
+        _strip.innerHTML = '';
+        _strip.hidden = true;
+      }
+    }
     ['tl-year','tl-period','tl-name','tl-desc'].forEach(id => {
       document.getElementById(id).style.transition = 'opacity 0.4s ease, transform 0.4s ease';
       document.getElementById(id).style.opacity = '1';
@@ -3086,9 +3416,8 @@ if (statsSection) statsObs.observe(statsSection);
   const isTouchDevice = () => window.matchMedia('(max-width: 900px)').matches ||
                                ('ontouchstart' in window);
 
-  // ── Film posters ──────────────────────────────────────────
-  const collage = document.querySelector('.film-collage');
-  if (collage) {
+  // ── Film posters (every poster wall on the page) ──────────
+  document.querySelectorAll('.film-collage').forEach(collage => {
     const posters = Array.from(collage.querySelectorAll('.fc-poster'));
 
     function tapPoster(target) {
@@ -3117,7 +3446,7 @@ if (statsSection) statsObs.observe(statsSection);
         collage.classList.remove('has-tapped');
       }
     }, { passive: true });
-  }
+  });
 
   // ── Polaroid wall ─────────────────────────────────────────
   const wall = document.getElementById('polaroid-wall');
@@ -3265,7 +3594,7 @@ async function handleDonate(e) {
         name, email, amount, message: msg,
         _replyto: email,
         _subject: `Syrian Eyes message from ${name}`,
-        _cc: 'kitty@syrianeyes.org',
+        _cc: 'info@syrianeyes.org',
         // Bank details go into the email body received by the team — not the page
         transfer_details: _bdText()
       })
@@ -3284,7 +3613,7 @@ async function handleDonate(e) {
       `Name: ${name}\nEmail: ${email}\nAmount: ${amount}\n\n${msg}\n\n---\n${_bdText()}`
     );
     window.location.href =
-      `mailto:syrianeyes.donations@gmail.com,kitty@syrianeyes.org?subject=${sub}&body=${body}`;
+      `mailto:syrianeyes.donations@gmail.com,info@syrianeyes.org?subject=${sub}&body=${body}`;
     txt.textContent = 'SEND MESSAGE';
     status.textContent = 'Opening your email client\u2026';
   }
@@ -3319,6 +3648,160 @@ function closeFilm() {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && !lightbox.hasAttribute('hidden')) closeFilm();
 });
+
+/* ── Booklet — interactive page flip ────────────────────────── */
+(function() {
+  const book = document.getElementById('booklet-book');
+  if (!book) return;
+  const PAGES = ['1.png','2.png','3.png','4.png','5.png','6.png','7.png','8.png','9.png','10.png','11.png','12.png'];
+  const total = PAGES.length;
+  const imgL      = document.getElementById('booklet-img-left');
+  const imgR      = document.getElementById('booklet-img-right');
+  const flip      = document.getElementById('booklet-flip');
+  const flipFront = document.getElementById('booklet-flip-front-img');
+  const flipBack  = document.getElementById('booklet-flip-back-img');
+  const prevBtn   = document.getElementById('booklet-prev');
+  const nextBtn   = document.getElementById('booklet-next');
+  const curEl     = document.getElementById('booklet-counter-cur');
+  const totalEl   = document.getElementById('booklet-counter-total');
+  const DUR  = 550;
+  const EASE = 'cubic-bezier(0.645, 0.045, 0.355, 1.000)';
+
+  let idx = 0;          // leading page index of current view
+  let animating = false;
+
+  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+  const step = () => isMobile() ? 1 : 2;
+
+  totalEl.textContent = total;
+
+  function render() {
+    imgL.src = PAGES[idx] || '';
+    imgR.src = (!isMobile() && PAGES[idx + 1]) ? PAGES[idx + 1] : '';
+    curEl.textContent = (idx + 1);
+    prevBtn.disabled = idx <= 0;
+    nextBtn.disabled = idx + step() >= total;
+  }
+
+  function go(dir) {
+    if (animating) return;
+    const s = step();
+    const nextIdx = idx + dir * s;
+    if (nextIdx < 0 || nextIdx >= total) return;
+    animating = true;
+
+    const forward = dir > 0;
+    flip.className = 'booklet-flip ' + (forward ? 'anim-next' : 'anim-prev');
+
+    if (forward) {
+      flipFront.src = (isMobile() ? PAGES[idx] : (PAGES[idx + 1] || PAGES[idx])) || '';
+      flipBack.src  = PAGES[nextIdx] || '';
+    } else {
+      flipFront.src = PAGES[idx] || '';
+      flipBack.src  = PAGES[idx - 1] || '';
+    }
+
+    flip.style.display = 'block';
+    flip.style.transition = 'none';
+    flip.style.transform = 'rotateY(0deg)';
+    void flip.offsetWidth;                       // force reflow so the start state sticks
+    flip.style.transition = 'transform ' + DUR + 'ms ' + EASE;
+    flip.style.transform = 'rotateY(' + (forward ? -180 : 180) + 'deg)';
+
+    setTimeout(() => {
+      idx = nextIdx;
+      flip.style.transition = 'none';
+      flip.style.display = 'none';
+      flip.className = 'booklet-flip';
+      render();
+      animating = false;
+    }, DUR + 30);
+  }
+
+  nextBtn.addEventListener('click', e => { e.stopPropagation(); go(1); });
+  prevBtn.addEventListener('click', e => { e.stopPropagation(); go(-1); });
+
+  // Click left / right half of the book
+  book.addEventListener('click', e => {
+    if (animating) return;
+    const rect = book.getBoundingClientRect();
+    if ((e.clientX - rect.left) > rect.width / 2) go(1); else go(-1);
+  });
+
+  // Swipe (mobile)
+  let sx = 0, sy = 0;
+  book.addEventListener('touchstart', e => {
+    sx = e.changedTouches[0].clientX; sy = e.changedTouches[0].clientY;
+  }, { passive: true });
+  book.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  // Arrow keys — only while the booklet is on screen
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const r = document.getElementById('booklet-section').getBoundingClientRect();
+    if (r.bottom < 0 || r.top > window.innerHeight) return;
+    go(e.key === 'ArrowRight' ? 1 : -1);
+  });
+
+  window.addEventListener('resize', () => {
+    if (!isMobile() && idx % 2 !== 0) idx -= 1;   // realign to spread parity
+    render();
+  }, { passive: true });
+
+  render();
+})();
+
+/* ── Supported Initiatives — photo slideshow ────────────────── */
+(function() {
+  const box = document.getElementById('init-slideshow');
+  if (!box) return;
+  const slides   = Array.from(box.querySelectorAll('.init-slide'));
+  const dotsWrap = document.getElementById('init-dots');
+  const prev     = box.querySelector('.init-nav--prev');
+  const next     = box.querySelector('.init-nav--next');
+  const DELAY = 4500;
+  let cur = 0, timer = null;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.type = 'button';
+    d.className = 'init-dot' + (i === 0 ? ' is-active' : '');
+    d.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+    d.addEventListener('click', () => { show(i); restart(); });
+    dotsWrap.appendChild(d);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function show(i) {
+    cur = (i + slides.length) % slides.length;
+    slides.forEach((s, n) => s.classList.toggle('is-active', n === cur));
+    dots.forEach((d, n) => d.classList.toggle('is-active', n === cur));
+  }
+  function start()   { if (!timer) timer = setInterval(() => show(cur + 1), DELAY); }
+  function stop()    { clearInterval(timer); timer = null; }
+  function restart() { stop(); start(); }
+
+  next.addEventListener('click', () => { show(cur + 1); restart(); });
+  prev.addEventListener('click', () => { show(cur - 1); restart(); });
+  box.addEventListener('mouseenter', stop);
+  box.addEventListener('mouseleave', start);
+
+  let sx = 0, sy = 0;
+  box.addEventListener('touchstart', e => {
+    sx = e.changedTouches[0].clientX; sy = e.changedTouches[0].clientY;
+  }, { passive: true });
+  box.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { show(cur + (dx < 0 ? 1 : -1)); restart(); }
+  }, { passive: true });
+
+  start();
+})();
 </script>
 </body>
 </html>

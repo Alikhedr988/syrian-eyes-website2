@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<!-- Preload the first hero image (LCP) — the rest of the slideshow lazy-loads via CSS -->
+<link rel="preload" as="image" href="film%20workshop%20activities%20%20(5).jpg" fetchpriority="high">
 <style>
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1423,6 +1425,34 @@ footer {
 .video-stage-frame iframe {
   width: 100%; height: 100%; border: none; display: block;
 }
+/* Click-to-load YouTube facade — no YouTube JS/iframe until the visitor hits play */
+.video-facade {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  padding: 0; border: none; margin: 0;
+  background: var(--dark); cursor: pointer; display: block;
+}
+.video-facade-thumb {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.video-facade::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(rgba(10,9,8,0.10), rgba(10,9,8,0.34));
+  pointer-events: none;
+}
+.video-facade-play {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px; height: 72px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(20,18,16,0.55);
+  border: 1px solid rgba(255,255,255,0.6);
+  backdrop-filter: blur(3px);
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+  z-index: 1;
+}
+.video-facade:hover .video-facade-play { background: var(--blue); border-color: var(--blue); transform: translate(-50%,-50%) scale(1.06); }
+.video-facade-play svg { width: 22px; height: 22px; margin-left: 3px; color: #fff; }
 .video-stage-rail {
   display: flex; justify-content: space-between; align-items: center;
   padding: 10px 18px;
@@ -2316,7 +2346,7 @@ footer {
     <p class="body-text reveal d3">We believe in a world where everyone, regardless of background or circumstance, is treated with respect and granted their fundamental rights. Our work spans emergency response, art and education, medical support, and livelihood development.</p>
   </div>
   <div class="about-photo reveal d2">
-    <img src="Bakery%20(4).jpg" alt="Syrian Eyes — Jarrahieh community bakery, women at work">
+    <img src="Bakery%20(4).jpg" width="1200" height="514" fetchpriority="high" decoding="async" alt="Syrian Eyes — Jarrahieh community bakery, women at work">
   </div>
 </section>
 
@@ -2371,7 +2401,7 @@ footer {
   <div class="prog-photo">
     <div class="prog-photo-overlay"></div>
     <div class="prog-photo-scanlines"></div>
-    <img src="relief%20(2).jpg" alt="Syrian Eyes — emergency relief distribution">
+    <img src="relief%20(2).jpg" width="1200" height="800" loading="lazy" decoding="async" alt="Syrian Eyes — emergency relief distribution">
   </div>
 </div>
 
@@ -2380,7 +2410,7 @@ footer {
   <div class="prog-photo" style="order:-1;">
     <div class="prog-photo-overlay" style="background:linear-gradient(225deg,rgba(26,23,20,0.18),transparent 55%);"></div>
     <div class="prog-photo-scanlines"></div>
-    <img src="my%20eyes%20project%20Jarrahieh%20burned%20centre.jpg" alt="Syrian Eyes — Jarrahieh activity centre" style="filter:none;">
+    <img src="my%20eyes%20project%20Jarrahieh%20burned%20centre.jpg" width="1043" height="695" loading="lazy" decoding="async" alt="Syrian Eyes — Jarrahieh activity centre" style="filter:none;">
   </div>
   <div class="prog-text" id="children-text-panel">
     <div id="paint-layer" aria-hidden="true"></div>
@@ -2401,7 +2431,7 @@ footer {
   <div class="prog-photo">
     <div class="prog-photo-overlay"></div>
     <div class="prog-photo-scanlines"></div>
-    <img src="Medical%20support%20COVID%20(5).jpeg" alt="Syrian Eyes — medical support, COVID response">
+    <img src="Medical%20support%20COVID%20(5).jpeg" width="1200" height="800" loading="lazy" decoding="async" alt="Syrian Eyes — medical support, COVID response">
   </div>
 </div>
 
@@ -2417,8 +2447,8 @@ footer {
 
     <div class="booklet-book" id="booklet-book">
       <div class="booklet-stack" aria-hidden="true"></div>
-      <div class="booklet-page booklet-page--left"><img id="booklet-img-left" src="1.png" alt="Booklet page"></div>
-      <div class="booklet-page booklet-page--right"><img id="booklet-img-right" src="2.png" alt="Booklet page"></div>
+      <div class="booklet-page booklet-page--left"><img id="booklet-img-left" src="1.png" width="1400" height="1980" loading="lazy" decoding="async" alt="Booklet page"></div>
+      <div class="booklet-page booklet-page--right"><img id="booklet-img-right" src="2.png" width="1400" height="1980" loading="lazy" decoding="async" alt="Booklet page"></div>
       <div class="booklet-flip" id="booklet-flip" aria-hidden="true">
         <div class="booklet-flip-face booklet-flip-front"><img id="booklet-flip-front-img" src="" alt=""></div>
         <div class="booklet-flip-face booklet-flip-back"><img id="booklet-flip-back-img" src="" alt=""></div>
@@ -2458,24 +2488,28 @@ footer {
     <div class="workshop-gallery">
       <div class="wg-cell wg-cell--wide">
         <img src="films%20screening%20event%20(1).jpg"
+             width="1200" height="675" loading="lazy" decoding="async"
              onerror="this.style.display='none'"
              alt="Film screening event — As We Are">
         <div class="wg-caption">Screening event · Beirut</div>
       </div>
       <div class="wg-cell">
         <img src="film%20workshop%20activities%20%20(1).jpg"
+             width="1200" height="705" loading="lazy" decoding="async"
              onerror="this.style.display='none'"
              alt="Film workshop — lighting session">
         <div class="wg-caption">Lighting workshop</div>
       </div>
       <div class="wg-cell">
         <img src="film%20workshop%20activities%20%20(2).jpg"
+             width="1200" height="675" loading="lazy" decoding="async"
              onerror="this.style.display='none'"
              alt="Film workshop — student filmmaker">
         <div class="wg-caption">Filmmaking session</div>
       </div>
       <div class="wg-cell">
         <img src="film%20workshop%20activities%20%20(5).jpg"
+             width="1920" height="1080" loading="lazy" decoding="async"
              onerror="this.style.display='none'"
              alt="Film workshop — gallery visit">
         <div class="wg-caption">Gallery visit</div>
@@ -2489,23 +2523,23 @@ footer {
     </div>
     <div class="film-collage">
       <div class="fc-poster">
-        <img class="fc-poster-img" src="Film%20posters%20(1).jpg" alt="Film poster 1">
+        <img class="fc-poster-img" src="Film%20posters%20(1).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="Film poster 1">
         <span class="fc-poster-cap">FILM 01</span>
       </div>
       <div class="fc-poster">
-        <img class="fc-poster-img" src="Film%20posters%20(2).jpg" alt="Film poster 2">
+        <img class="fc-poster-img" src="Film%20posters%20(2).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="Film poster 2">
         <span class="fc-poster-cap">FILM 02</span>
       </div>
       <div class="fc-poster">
-        <img class="fc-poster-img" src="Film%20posters%20(3).jpg" alt="Film poster 3">
+        <img class="fc-poster-img" src="Film%20posters%20(3).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="Film poster 3">
         <span class="fc-poster-cap">FILM 03</span>
       </div>
       <div class="fc-poster">
-        <img class="fc-poster-img" src="Film%20posters%20(4).jpg" alt="Film poster 4">
+        <img class="fc-poster-img" src="Film%20posters%20(4).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="Film poster 4">
         <span class="fc-poster-cap">FILM 04</span>
       </div>
       <div class="fc-poster">
-        <img class="fc-poster-img" src="Film%20posters%20(5).jpg" alt="Film poster 5">
+        <img class="fc-poster-img" src="Film%20posters%20(5).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="Film poster 5">
         <span class="fc-poster-cap">FILM 05</span>
       </div>
       <span class="fc-archive-label">FILM LAB · 2023–2024</span>
@@ -2523,7 +2557,7 @@ footer {
       <!-- Side card 1 -->
       <div class="podcast-side reveal">
         <div class="podcast-side-img">
-          <img src="podcast%20(1).jpg" alt="Podcast recording session">
+          <img src="podcast%20(1).jpg" width="1200" height="776" loading="lazy" decoding="async" alt="Podcast recording session">
           <div class="podcast-scanlines"></div>
         </div>
         <div class="podcast-side-body">
@@ -2542,7 +2576,7 @@ footer {
       <!-- Episode 2 — equal treatment -->
       <div class="podcast-side reveal d1">
         <div class="podcast-side-img">
-          <img src="podcast%20(2).jpg" alt="Podcast studio — participants at microphones">
+          <img src="podcast%20(2).jpg" width="1200" height="675" loading="lazy" decoding="async" alt="Podcast studio — participants at microphones">
           <div class="podcast-scanlines"></div>
         </div>
         <div class="podcast-side-body">
@@ -2561,7 +2595,7 @@ footer {
       <!-- Side card 3 -->
       <div class="podcast-side reveal d2">
         <div class="podcast-side-img">
-          <img src="podcast%20(1)-2.jpg" alt="Podcast workshop participants">
+          <img src="podcast%20(1)-2.jpg" width="1200" height="675" loading="lazy" decoding="async" alt="Podcast workshop participants">
           <div class="podcast-scanlines"></div>
         </div>
         <div class="podcast-side-body">
@@ -2597,23 +2631,23 @@ footer {
 
     <div class="film-collage">
       <div class="fc-poster">
-        <img class="fc-poster-img" src="Aida(1).jpg" alt="Voices from Aida's Journey — a film by Aida Hussein">
+        <img class="fc-poster-img" src="Aida(1).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="Voices from Aida's Journey — a film by Aida Hussein">
         <span class="fc-poster-cap">VOICES FROM AIDA'S JOURNEY</span>
       </div>
       <div class="fc-poster">
-        <img class="fc-poster-img" src="Ayat%20(2).jpg" alt="The Doorstep — a film by Ayat Ibrahim">
+        <img class="fc-poster-img" src="Ayat%20(2).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="The Doorstep — a film by Ayat Ibrahim">
         <span class="fc-poster-cap">THE DOORSTEP</span>
       </div>
       <div class="fc-poster">
-        <img class="fc-poster-img" src="Hamza%20(1).jpg" alt="Somewhere in Between — a film by Hamza Al-Dahab">
+        <img class="fc-poster-img" src="Hamza%20(1).jpg" width="1000" height="1415" loading="lazy" decoding="async" alt="Somewhere in Between — a film by Hamza Al-Dahab">
         <span class="fc-poster-cap">SOMEWHERE IN BETWEEN</span>
       </div>
       <div class="fc-poster">
-        <img class="fc-poster-img" src="Kawthar%20(1).jpg" alt="When the Scarecrow Dreams — a film by Kawthar Khalil">
+        <img class="fc-poster-img" src="Kawthar%20(1).jpg" width="1000" height="1415" loading="lazy" decoding="async" alt="When the Scarecrow Dreams — a film by Kawthar Khalil">
         <span class="fc-poster-cap">WHEN THE SCARECROW DREAMS</span>
       </div>
       <div class="fc-poster">
-        <img class="fc-poster-img" src="Mira%20(1).jpg" alt="The Bee's Path — a film by Mira Austin Bene">
+        <img class="fc-poster-img" src="Mira%20(1).jpg" width="1000" height="1415" loading="lazy" decoding="async" alt="The Bee's Path — a film by Mira Austin Bene">
         <span class="fc-poster-cap">THE BEE'S PATH</span>
       </div>
       <span class="fc-archive-label">FILM LAB · 2026</span>
@@ -2654,9 +2688,9 @@ footer {
       <p class="prog2-body reveal d3">Technical assistance, logistics, and backing for migrant-led and local grassroots groups — including Nehna Hon, REMAN, Alya's Kitchen, Great Oven, Basmeh wa Zeitooneh, SAWA, Mulham Team, and MCC. Cross-community solidarity is the work itself.</p>
 
       <div class="init-slideshow reveal d3" id="init-slideshow">
-        <div class="init-slide is-active"><img src="117387009_2027714964025343_7768693027853090737_n.jpg" alt="Supported grassroots initiative" loading="lazy"></div>
-        <div class="init-slide"><img src="117806372_2033239393472900_7571386850015330527_n.jpg" alt="Supported grassroots initiative" loading="lazy"></div>
-        <div class="init-slide"><img src="DSC08095-2.jpg" alt="Supported grassroots initiative" loading="lazy"></div>
+        <div class="init-slide is-active"><img src="117387009_2027714964025343_7768693027853090737_n.jpg" width="720" height="900" decoding="async" alt="Supported grassroots initiative" loading="lazy"></div>
+        <div class="init-slide"><img src="117806372_2033239393472900_7571386850015330527_n.jpg" width="630" height="417" decoding="async" alt="Supported grassroots initiative" loading="lazy"></div>
+        <div class="init-slide"><img src="DSC08095-2.jpg" width="1200" height="800" decoding="async" alt="Supported grassroots initiative" loading="lazy"></div>
         <button class="init-nav init-nav--prev" type="button" aria-label="Previous photo">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
@@ -2755,35 +2789,35 @@ footer {
   <!-- Polaroid scatter — positioned organically by JS on load -->
   <div class="portrait-mosaic reveal" id="polaroid-wall">
     <div class="pm-cell" id="pol-1">
-      <img src="my%20eyes%20project%20malak_sketch%20(1).jpg" alt="My Eyes — Malak sketch 1" loading="lazy">
+      <img src="my%20eyes%20project%20malak_sketch%20(1).jpg" width="750" height="750" decoding="async" alt="My Eyes — Malak sketch 1" loading="lazy">
       <div class="pm-caption"><span class="pm-num">01</span></div>
     </div>
     <div class="pm-cell" id="pol-2">
-      <img src="my%20eyes%20project%20malak_sketch%20(2).jpg" alt="My Eyes — Malak sketch 2" loading="lazy">
+      <img src="my%20eyes%20project%20malak_sketch%20(2).jpg" width="750" height="750" decoding="async" alt="My Eyes — Malak sketch 2" loading="lazy">
       <div class="pm-caption"><span class="pm-num">02</span></div>
     </div>
     <div class="pm-cell" id="pol-3">
-      <img src="my%20eyes%20project%20malak_sketch%20(3).jpg" alt="My Eyes — Malak sketch 3" loading="lazy">
+      <img src="my%20eyes%20project%20malak_sketch%20(3).jpg" width="750" height="750" decoding="async" alt="My Eyes — Malak sketch 3" loading="lazy">
       <div class="pm-caption"><span class="pm-num">03</span></div>
     </div>
     <div class="pm-cell" id="pol-4">
-      <img src="my%20eyes%20project%20malak_sketch%20(4).jpg" alt="My Eyes — Malak sketch 4" loading="lazy">
+      <img src="my%20eyes%20project%20malak_sketch%20(4).jpg" width="750" height="750" decoding="async" alt="My Eyes — Malak sketch 4" loading="lazy">
       <div class="pm-caption"><span class="pm-num">04</span></div>
     </div>
     <div class="pm-cell" id="pol-5">
-      <img src="my%20eyes%20project%20malak_sketch%20(5).jpg" alt="My Eyes — Malak sketch 5" loading="lazy">
+      <img src="my%20eyes%20project%20malak_sketch%20(5).jpg" width="750" height="750" decoding="async" alt="My Eyes — Malak sketch 5" loading="lazy">
       <div class="pm-caption"><span class="pm-num">05</span></div>
     </div>
     <div class="pm-cell" id="pol-6">
-      <img src="my%20eyes%20project%20malak_sketch%20(7).jpg" alt="My Eyes — Malak sketch 7" loading="lazy">
+      <img src="my%20eyes%20project%20malak_sketch%20(7).jpg" width="750" height="750" decoding="async" alt="My Eyes — Malak sketch 7" loading="lazy">
       <div class="pm-caption"><span class="pm-num">06</span></div>
     </div>
     <div class="pm-cell" id="pol-7">
-      <img src="my%20eyes%20project%20malak_sketch%20(8).jpg" alt="My Eyes — Malak sketch 8" loading="lazy">
+      <img src="my%20eyes%20project%20malak_sketch%20(8).jpg" width="750" height="750" decoding="async" alt="My Eyes — Malak sketch 8" loading="lazy">
       <div class="pm-caption"><span class="pm-num">07</span></div>
     </div>
     <div class="pm-cell" id="pol-8">
-      <img src="my%20eyes%20project%20malak_sketch%20(9).jpg" alt="My Eyes — Malak sketch 9" loading="lazy">
+      <img src="my%20eyes%20project%20malak_sketch%20(9).jpg" width="750" height="750" decoding="async" alt="My Eyes — Malak sketch 9" loading="lazy">
       <div class="pm-caption"><span class="pm-num">08</span></div>
     </div>
   </div>
@@ -2805,13 +2839,16 @@ footer {
     </div>
     <div class="video-stage reveal d2">
       <div class="video-stage-frame">
-        <iframe
-          src="https://www.youtube.com/embed/S8tkry0C3x4?rel=0&modestbranding=1"
-          title="Syrian Eyes — On the Ground"
-          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          loading="lazy">
-        </iframe>
+        <button type="button" class="video-facade" id="video-facade"
+                data-video-id="S8tkry0C3x4"
+                aria-label="Play video: Syrian Eyes — On the Ground">
+          <img class="video-facade-thumb" width="1280" height="720" alt=""
+               src="https://img.youtube.com/vi/S8tkry0C3x4/maxresdefault.jpg"
+               onerror="this.onerror=null;this.src='https://img.youtube.com/vi/S8tkry0C3x4/hqdefault.jpg'">
+          <span class="video-facade-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+        </button>
       </div>
       <div class="video-stage-rail">
         <span class="video-stage-label">SYRIAN EYES · DOCUMENTARY</span>
@@ -3021,7 +3058,7 @@ function setActive(idx) {
     if (_strip) {
       if (p.photos && p.photos.length) {
         _strip.innerHTML = p.photos.map(src =>
-          '<div class="tl-ps-cell"><img src="' + src + '" alt="' + p.name.replace(/"/g,'&quot;') + '" loading="lazy"></div>'
+          '<div class="tl-ps-cell"><img src="' + src + '" width="960" height="640" decoding="async" alt="' + p.name.replace(/"/g,'&quot;') + '" loading="lazy"></div>'
         ).join('');
         _strip.hidden = false;
       } else {
@@ -3648,6 +3685,22 @@ function closeFilm() {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && !lightbox.hasAttribute('hidden')) closeFilm();
 });
+
+/* ── YouTube facade — load the real iframe only on click ────── */
+(function() {
+  const facade = document.getElementById('video-facade');
+  if (!facade) return;
+  facade.addEventListener('click', () => {
+    const id = facade.dataset.videoId;
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1';
+    iframe.title = 'Syrian Eyes — On the Ground';
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
+    facade.replaceWith(iframe);
+  });
+})();
 
 /* ── Booklet — interactive page flip ────────────────────────── */
 (function() {

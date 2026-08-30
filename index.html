@@ -1916,104 +1916,61 @@ footer {
 .cf-status.ok { color: #3b7a5a; }
 
 /* ═══════════════════════════════════════════════════════════════
-   BOOKLET — INTERACTIVE PAGE FLIP
+   BOOKLET — StPageFlip realistic page curl
 ═══════════════════════════════════════════════════════════════ */
 #booklet-section {
   background: #0f0d0b;
-  padding: 120px 88px;
+  padding: 100px 40px;
   border-top: 1px solid rgba(255,255,255,0.05);
   text-align: center;
 }
 .booklet-title {
   font-family: var(--serif);
-  font-size: clamp(32px, 3.5vw, 48px);
+  font-size: clamp(34px, 4vw, 56px);
   font-weight: 300; color: var(--cream);
-  margin-bottom: 56px; line-height: 1.1;
+  margin-bottom: 14px; line-height: 1.1;
+}
+.booklet-sub {
+  font-family: var(--sans);
+  font-size: 14px; font-weight: 300;
+  color: var(--muted);
+  margin-bottom: 60px;
 }
 .booklet-stage {
   display: flex; align-items: center; justify-content: center;
-  gap: 28px;
-  max-width: 680px; margin: 0 auto;
+  gap: 32px;
+  width: 100%;
 }
+.booklet-viewport {
+  width: 80vw; max-width: 900px;
+  flex: 0 1 900px;
+}
+/* #booklet-book is sized by StPageFlip (autoSize) */
 .booklet-book {
-  position: relative;
-  flex: 1 1 auto;
-  max-width: 680px;
-  aspect-ratio: 1.414 / 1;            /* two portrait A-pages side by side */
-  perspective: 2200px;
-  background: #1a1614;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-  cursor: pointer;
+  margin: 0 auto;
+  box-shadow: 0 60px 120px rgba(0,0,0,0.6);
 }
-/* Page-stack depth on the right edge — a few stacked page slivers */
-.booklet-stack {
-  position: absolute; top: 8px; bottom: 8px; right: -10px;
-  width: 10px; z-index: 0;
-  background: #211c19;
-  box-shadow:
-    3px 0 0 rgba(255,255,255,0.05),
-    6px 0 0 rgba(0,0,0,0.35),
-    8px 0 0 rgba(255,255,255,0.035),
-    11px 0 0 rgba(0,0,0,0.30),
-    13px 0 0 rgba(255,255,255,0.025);
-}
-.booklet-page {
-  position: absolute; top: 0; bottom: 0;
-  width: 50%;
-  overflow: hidden;
+.booklet-book .page {
   background: #12100e;
-}
-.booklet-page--left  { left: 0;  box-shadow: inset -18px 0 28px -18px rgba(0,0,0,0.6); }
-.booklet-page--right { right: 0; box-shadow: inset  18px 0 28px -18px rgba(0,0,0,0.6); }
-.booklet-page img { width: 100%; height: 100%; object-fit: cover; display: block; }
-/* The flipping page */
-.booklet-flip {
-  position: absolute; top: 0; bottom: 0;
-  width: 50%;
-  transform-style: preserve-3d;
-  z-index: 5;
-  display: none;
-}
-.booklet-flip.anim-next { right: 0; left: auto; transform-origin: left center; }
-.booklet-flip.anim-prev { left: 0; right: auto; transform-origin: right center; }
-.booklet-flip-face {
-  position: absolute; inset: 0;
   overflow: hidden;
-  backface-visibility: hidden;
-  background: #12100e;
 }
-.booklet-flip-face img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.booklet-flip-back { transform: rotateY(180deg); }
-.booklet-flip-shade {
-  position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0) 40%, rgba(0,0,0,0.45) 100%);
-  opacity: 0; pointer-events: none;
-}
-.booklet-flip.anim-next .booklet-flip-shade,
-.booklet-flip.anim-prev .booklet-flip-shade {
-  animation: booklet-shade 550ms cubic-bezier(0.645, 0.045, 0.355, 1.000);
-}
-@keyframes booklet-shade {
-  0%   { opacity: 0; }
-  50%  { opacity: 0.6; }
-  100% { opacity: 0; }
+.booklet-book .page img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  pointer-events: none;
 }
 .booklet-arrow {
   flex: 0 0 auto;
-  width: 44px; height: 44px;
+  width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
-  border: 1px solid rgba(255,255,255,0.24);
+  border: 1px solid rgba(255,255,255,0.22);
   background: transparent; color: rgba(255,255,255,0.8);
   cursor: pointer; transition: all 0.25s;
 }
 .booklet-arrow:hover { background: var(--white); color: var(--dark); border-color: var(--white); }
-.booklet-arrow:disabled { opacity: 0.22; cursor: default; }
-.booklet-arrow:disabled:hover {
-  background: transparent; color: rgba(255,255,255,0.8);
-  border-color: rgba(255,255,255,0.24);
-}
+.booklet-arrow:disabled { opacity: 0.22; cursor: default; pointer-events: none; }
 .booklet-counter {
-  margin-top: 26px;
+  margin-top: 32px;
   font-size: 10px; letter-spacing: 0.24em;
   color: rgba(255,255,255,0.4);
   text-transform: uppercase;
@@ -2120,14 +2077,10 @@ footer {
   .df-row { grid-template-columns: 1fr; }
   .donate-form-wrap { padding: 22px; }
   /* Booklet — single page on mobile */
-  #booklet-section { padding: 80px 24px; }
-  .booklet-stage { gap: 10px; }
-  .booklet-book { aspect-ratio: 0.707 / 1; }
-  .booklet-page { width: 100%; }
-  .booklet-page--right { display: none; }
-  .booklet-flip { width: 100%; }
-  .booklet-stack { display: none; }
-  .booklet-arrow { width: 38px; height: 38px; }
+  #booklet-section { padding: 72px 20px; }
+  .booklet-stage { flex-wrap: wrap; gap: 18px 24px; }
+  .booklet-viewport { order: 0; flex-basis: 100%; width: 100%; max-width: 520px; margin: 0 auto; }
+  .booklet-arrow { order: 1; width: 44px; height: 44px; }
   /* Supported Initiatives slideshow */
   .init-slideshow { height: 220px; }
   /* Artwork divider */
@@ -2435,33 +2388,40 @@ footer {
   </div>
 </div>
 
-<!-- ██ BOOKLET — INTERACTIVE PAGE FLIP ████████████████████████ -->
+<!-- ██ BOOKLET — StPageFlip 3D PAGE CURL █████████████████████ -->
 <section id="booklet-section">
   <div class="eyebrow reveal" style="justify-content:center;">PUBLICATION</div>
   <h2 class="booklet-title reveal d1">Our Story in Print</h2>
+  <p class="booklet-sub reveal d2">A visual record of our work — 2013 to today.</p>
 
   <div class="booklet-stage reveal d2">
-    <button class="booklet-arrow" id="booklet-prev" type="button" aria-label="Previous page">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><polyline points="15 18 9 12 15 6"/></svg>
+    <button class="booklet-arrow booklet-arrow--prev" id="booklet-prev" type="button" aria-label="Previous page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
 
-    <div class="booklet-book" id="booklet-book">
-      <div class="booklet-stack" aria-hidden="true"></div>
-      <div class="booklet-page booklet-page--left"><img id="booklet-img-left" src="1.png" width="1400" height="1980" loading="lazy" decoding="async" alt="Booklet page"></div>
-      <div class="booklet-page booklet-page--right"><img id="booklet-img-right" src="2.png" width="1400" height="1980" loading="lazy" decoding="async" alt="Booklet page"></div>
-      <div class="booklet-flip" id="booklet-flip" aria-hidden="true">
-        <div class="booklet-flip-face booklet-flip-front"><img id="booklet-flip-front-img" src="" alt=""></div>
-        <div class="booklet-flip-face booklet-flip-back"><img id="booklet-flip-back-img" src="" alt=""></div>
-        <div class="booklet-flip-shade"></div>
+    <div class="booklet-viewport">
+      <div class="booklet-book" id="booklet-book">
+        <div class="page page--cover" data-density="hard"><img src="1.jpg" width="1400" height="1980" decoding="async" alt="Our Story in Print — cover"></div>
+        <div class="page"><img src="2.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 2"></div>
+        <div class="page"><img src="3.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 3"></div>
+        <div class="page"><img src="4.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 4"></div>
+        <div class="page"><img src="5.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 5"></div>
+        <div class="page"><img src="6.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 6"></div>
+        <div class="page"><img src="7.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 7"></div>
+        <div class="page"><img src="8.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 8"></div>
+        <div class="page"><img src="9.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 9"></div>
+        <div class="page"><img src="10.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 10"></div>
+        <div class="page"><img src="11.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 11"></div>
+        <div class="page page--cover" data-density="hard"><img src="12.jpg" width="1400" height="1980" decoding="async" alt="Booklet back cover"></div>
       </div>
     </div>
 
-    <button class="booklet-arrow" id="booklet-next" type="button" aria-label="Next page">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>
+    <button class="booklet-arrow booklet-arrow--next" id="booklet-next" type="button" aria-label="Next page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
   </div>
 
-  <div class="booklet-counter"><span id="booklet-counter-cur">1</span> / <span id="booklet-counter-total">12</span></div>
+  <div class="booklet-counter" id="booklet-counter">Page 1 of 12</div>
 </section>
 
 <!-- ██ PROGRAMS 04 — FILM LAB (expanded) ██████████████████████ -->
@@ -2516,8 +2476,63 @@ footer {
       </div>
     </div>
 
-    <!-- Film archive wall — posters enlarged -->
-    <div class="film-lab-label" style="margin-top: 64px;">
+    <!-- ── FILM LAB 2026 — poster wall + director bios ── -->
+    <div class="film-lab-2026 reveal">
+      <div class="film-lab-label" style="margin-top: 64px;">
+        <span class="film-lab-eyebrow">5 FILMS · FILM LAB 2026</span>
+        <div class="film-lab-rule"></div>
+      </div>
+
+      <div class="film-collage">
+        <div class="fc-poster">
+          <img class="fc-poster-img" src="Aida(1).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="Voices from Aida's Journey — a film by Aida Hussein">
+          <span class="fc-poster-cap">VOICES FROM AIDA'S JOURNEY</span>
+        </div>
+        <div class="fc-poster">
+          <img class="fc-poster-img" src="Ayat%20(2).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="The Doorstep — a film by Ayat Ibrahim">
+          <span class="fc-poster-cap">THE DOORSTEP</span>
+        </div>
+        <div class="fc-poster">
+          <img class="fc-poster-img" src="Hamza%20(1).jpg" width="1000" height="1415" loading="lazy" decoding="async" alt="Somewhere in Between — a film by Hamza Al-Dahab">
+          <span class="fc-poster-cap">SOMEWHERE IN BETWEEN</span>
+        </div>
+        <div class="fc-poster">
+          <img class="fc-poster-img" src="Kawthar%20(1).jpg" width="1000" height="1415" loading="lazy" decoding="async" alt="When the Scarecrow Dreams — a film by Kawthar Khalil">
+          <span class="fc-poster-cap">WHEN THE SCARECROW DREAMS</span>
+        </div>
+        <div class="fc-poster">
+          <img class="fc-poster-img" src="Mira%20(1).jpg" width="1000" height="1415" loading="lazy" decoding="async" alt="The Bee's Path — a film by Mira Austin Bene">
+          <span class="fc-poster-cap">THE BEE'S PATH</span>
+        </div>
+        <span class="fc-archive-label">FILM LAB · 2026</span>
+      </div>
+
+      <div class="director-bios">
+        <div class="director-bio-card">
+          <h4 class="db-name">Aida Hussein</h4>
+          <p class="db-body">Director bio coming soon</p>
+        </div>
+        <div class="director-bio-card">
+          <h4 class="db-name">Ayat Ibrahim</h4>
+          <p class="db-body">Director bio coming soon</p>
+        </div>
+        <div class="director-bio-card">
+          <h4 class="db-name">Hamza Al-Dahab</h4>
+          <p class="db-body">Director bio coming soon</p>
+        </div>
+        <div class="director-bio-card">
+          <h4 class="db-name">Kawthar Khalil</h4>
+          <p class="db-body">Director bio coming soon</p>
+        </div>
+        <div class="director-bio-card">
+          <h4 class="db-name">Mira Austin Bene</h4>
+          <p class="db-body">Director bio coming soon</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Film archive wall — 2023–2024 -->
+    <div class="film-lab-label" style="margin-top: 72px;">
       <span class="film-lab-eyebrow">5 FILMS · FILM LAB 2023–2024</span>
       <div class="film-lab-rule"></div>
     </div>
@@ -2611,69 +2626,6 @@ footer {
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- ██ FILM LAB · 2026 — new posters + director bios ████████ -->
-  <div class="prog2-sep"></div>
-  <div class="film-lab-2026 reveal">
-    <div class="film-lab-label">
-      <span class="film-lab-eyebrow">FILM LAB · 2026</span>
-      <div class="film-lab-rule"></div>
-    </div>
-    <h3 class="prog2-title" style="margin-bottom:18px;">Youth Documentary Filmmaking &amp; Storytelling</h3>
-    <p class="prog2-body" style="max-width:640px;">A media-education initiative training refugee and migrant youth — from Sudan, Egypt, Syria, Palestine and beyond — in filmmaking and podcasting. The aim: challenge media tropes that frame refugees as threats or passive victims, and give young people political agency over their own narratives.</p>
-
-    <div class="film-lab-label" style="margin-top: 56px;">
-      <span class="film-lab-eyebrow">5 FILMS · FILM LAB 2026</span>
-      <div class="film-lab-rule"></div>
-    </div>
-
-    <div class="film-collage">
-      <div class="fc-poster">
-        <img class="fc-poster-img" src="Aida(1).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="Voices from Aida's Journey — a film by Aida Hussein">
-        <span class="fc-poster-cap">VOICES FROM AIDA'S JOURNEY</span>
-      </div>
-      <div class="fc-poster">
-        <img class="fc-poster-img" src="Ayat%20(2).jpg" width="1000" height="1414" loading="lazy" decoding="async" alt="The Doorstep — a film by Ayat Ibrahim">
-        <span class="fc-poster-cap">THE DOORSTEP</span>
-      </div>
-      <div class="fc-poster">
-        <img class="fc-poster-img" src="Hamza%20(1).jpg" width="1000" height="1415" loading="lazy" decoding="async" alt="Somewhere in Between — a film by Hamza Al-Dahab">
-        <span class="fc-poster-cap">SOMEWHERE IN BETWEEN</span>
-      </div>
-      <div class="fc-poster">
-        <img class="fc-poster-img" src="Kawthar%20(1).jpg" width="1000" height="1415" loading="lazy" decoding="async" alt="When the Scarecrow Dreams — a film by Kawthar Khalil">
-        <span class="fc-poster-cap">WHEN THE SCARECROW DREAMS</span>
-      </div>
-      <div class="fc-poster">
-        <img class="fc-poster-img" src="Mira%20(1).jpg" width="1000" height="1415" loading="lazy" decoding="async" alt="The Bee's Path — a film by Mira Austin Bene">
-        <span class="fc-poster-cap">THE BEE'S PATH</span>
-      </div>
-      <span class="fc-archive-label">FILM LAB · 2026</span>
-    </div>
-
-    <div class="director-bios">
-      <div class="director-bio-card">
-        <h4 class="db-name">Aida Hussein</h4>
-        <p class="db-body">Director bio coming soon</p>
-      </div>
-      <div class="director-bio-card">
-        <h4 class="db-name">Ayat Ibrahim</h4>
-        <p class="db-body">Director bio coming soon</p>
-      </div>
-      <div class="director-bio-card">
-        <h4 class="db-name">Hamza Al-Dahab</h4>
-        <p class="db-body">Director bio coming soon</p>
-      </div>
-      <div class="director-bio-card">
-        <h4 class="db-name">Kawthar Khalil</h4>
-        <p class="db-body">Director bio coming soon</p>
-      </div>
-      <div class="director-bio-card">
-        <h4 class="db-name">Mira Austin Bene</h4>
-        <p class="db-body">Director bio coming soon</p>
-      </div>
     </div>
   </div>
 
@@ -2998,6 +2950,8 @@ footer {
 </footer>
 
 <!-- ██ SCRIPTS █████████████████████████████████████████████████ -->
+<!-- StPageFlip — realistic 3D page-curl for the booklet (MIT) -->
+<script src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script>
 /* ── Timeline data ─────────────────────────────────────────── */
 const PROJECTS = [
@@ -3702,110 +3656,75 @@ document.addEventListener('keydown', e => {
   });
 })();
 
-/* ── Booklet — interactive page flip ────────────────────────── */
+/* ── Booklet — StPageFlip realistic 3D page curl ───────────── */
 (function() {
-  const book = document.getElementById('booklet-book');
-  if (!book) return;
-  const PAGES = ['1.png','2.png','3.png','4.png','5.png','6.png','7.png','8.png','9.png','10.png','11.png','12.png'];
-  const total = PAGES.length;
-  const imgL      = document.getElementById('booklet-img-left');
-  const imgR      = document.getElementById('booklet-img-right');
-  const flip      = document.getElementById('booklet-flip');
-  const flipFront = document.getElementById('booklet-flip-front-img');
-  const flipBack  = document.getElementById('booklet-flip-back-img');
-  const prevBtn   = document.getElementById('booklet-prev');
-  const nextBtn   = document.getElementById('booklet-next');
-  const curEl     = document.getElementById('booklet-counter-cur');
-  const totalEl   = document.getElementById('booklet-counter-total');
-  const DUR  = 550;
-  const EASE = 'cubic-bezier(0.645, 0.045, 0.355, 1.000)';
+  const el = document.getElementById('booklet-book');
+  if (!el) return;
+  if (!window.St || !St.PageFlip) { console.warn('StPageFlip not loaded'); return; }
 
-  let idx = 0;          // leading page index of current view
-  let animating = false;
+  const PAGES = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg','9.jpg','10.jpg','11.jpg','12.jpg'];
+  const TOTAL = PAGES.length;
+  const counter = document.getElementById('booklet-counter');
+  const prevBtn = document.getElementById('booklet-prev');
+  const nextBtn = document.getElementById('booklet-next');
+  const section = document.getElementById('booklet-section');
 
-  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
-  const step = () => isMobile() ? 1 : 2;
-
-  totalEl.textContent = total;
-
-  function render() {
-    imgL.src = PAGES[idx] || '';
-    imgR.src = (!isMobile() && PAGES[idx + 1]) ? PAGES[idx + 1] : '';
-    curEl.textContent = (idx + 1);
-    prevBtn.disabled = idx <= 0;
-    nextBtn.disabled = idx + step() >= total;
-  }
-
-  function go(dir) {
-    if (animating) return;
-    const s = step();
-    const nextIdx = idx + dir * s;
-    if (nextIdx < 0 || nextIdx >= total) return;
-    animating = true;
-
-    const forward = dir > 0;
-    flip.className = 'booklet-flip ' + (forward ? 'anim-next' : 'anim-prev');
-
-    if (forward) {
-      flipFront.src = (isMobile() ? PAGES[idx] : (PAGES[idx + 1] || PAGES[idx])) || '';
-      flipBack.src  = PAGES[nextIdx] || '';
-    } else {
-      flipFront.src = PAGES[idx] || '';
-      flipBack.src  = PAGES[idx - 1] || '';
-    }
-
-    flip.style.display = 'block';
-    flip.style.transition = 'none';
-    flip.style.transform = 'rotateY(0deg)';
-    void flip.offsetWidth;                       // force reflow so the start state sticks
-    flip.style.transition = 'transform ' + DUR + 'ms ' + EASE;
-    flip.style.transform = 'rotateY(' + (forward ? -180 : 180) + 'deg)';
-
-    setTimeout(() => {
-      idx = nextIdx;
-      flip.style.transition = 'none';
-      flip.style.display = 'none';
-      flip.className = 'booklet-flip';
-      render();
-      animating = false;
-    }, DUR + 30);
-  }
-
-  nextBtn.addEventListener('click', e => { e.stopPropagation(); go(1); });
-  prevBtn.addEventListener('click', e => { e.stopPropagation(); go(-1); });
-
-  // Click left / right half of the book
-  book.addEventListener('click', e => {
-    if (animating) return;
-    const rect = book.getBoundingClientRect();
-    if ((e.clientX - rect.left) > rect.width / 2) go(1); else go(-1);
+  const pageFlip = new St.PageFlip(el, {
+    width: 450,               // single-page base — half the 900px container
+    height: 637,              // 450 / 0.707 booklet page ratio
+    size: 'stretch',
+    minWidth: 300,
+    maxWidth: 900,
+    minHeight: 400,
+    maxHeight: 700,
+    maxShadowOpacity: 0.5,
+    showCover: true,
+    mobileScrollSupport: true,
+    usePortrait: true,        // single page on mobile
+    autoSize: true,
+    drawShadow: true,
+    flippingTime: 700,
+    useMouseEvents: true
   });
 
-  // Swipe (mobile)
-  let sx = 0, sy = 0;
-  book.addEventListener('touchstart', e => {
-    sx = e.changedTouches[0].clientX; sy = e.changedTouches[0].clientY;
-  }, { passive: true });
-  book.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - sx;
-    const dy = e.changedTouches[0].clientY - sy;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? 1 : -1);
-  }, { passive: true });
+  pageFlip.loadFromHTML(document.querySelectorAll('#booklet-book .page'));
+
+  const preloaded = {};
+  function preload(i) {
+    if (i < 0 || i >= TOTAL || preloaded[i]) return;
+    preloaded[i] = true;
+    const im = new Image();
+    im.src = PAGES[i];
+  }
+
+  function currentIndex() {
+    try { return pageFlip.getCurrentPageIndex(); } catch (e) { return 0; }
+  }
+
+  function update(idx) {
+    const i = (typeof idx === 'number') ? idx : currentIndex();
+    counter.textContent = 'Page ' + (i + 1) + ' of ' + TOTAL;
+    prevBtn.disabled = i <= 0;
+    nextBtn.disabled = i >= TOTAL - 1;
+    // Preload neighbours so the next/prev flip has its image ready
+    preload(i + 1); preload(i + 2); preload(i - 1);
+  }
+
+  pageFlip.on('flip', e => update(e.data));
+  pageFlip.on('init', e => update(e.data));
+
+  prevBtn.addEventListener('click', () => pageFlip.flipPrev());
+  nextBtn.addEventListener('click', () => pageFlip.flipNext());
 
   // Arrow keys — only while the booklet is on screen
   document.addEventListener('keydown', e => {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    const r = document.getElementById('booklet-section').getBoundingClientRect();
+    const r = section.getBoundingClientRect();
     if (r.bottom < 0 || r.top > window.innerHeight) return;
-    go(e.key === 'ArrowRight' ? 1 : -1);
+    if (e.key === 'ArrowRight') pageFlip.flipNext(); else pageFlip.flipPrev();
   });
 
-  window.addEventListener('resize', () => {
-    if (!isMobile() && idx % 2 !== 0) idx -= 1;   // realign to spread parity
-    render();
-  }, { passive: true });
-
-  render();
+  update(0);
 })();
 
 /* ── Supported Initiatives — photo slideshow ────────────────── */

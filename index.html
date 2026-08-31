@@ -1091,7 +1091,7 @@ footer {
 /* The hovered poster rises sharp and forward */
 .film-collage .fc-poster:hover {
   filter: none !important;
-  transform: rotate(0deg) translateY(-30px) scale(1.14) !important;
+  transform: rotate(0deg) translateY(-48px) scale(1.28) !important;
   z-index: 10 !important;
 }
 .fc-poster:hover + .fc-poster { margin-left: 8px; }
@@ -1212,18 +1212,23 @@ footer {
 .prog2-photo-col {
   position: relative;
   overflow: hidden;
+  max-width: 480px;
 }
-/* Fix photo display — no aggressive cropping */
+/* Portrait-friendly photo frame — not panoramic */
+.prog2-photo-col img,
 .prog2-photo-col .init-slide img {
   width: 100%;
-  height: 320px;
+  height: 420px;
   object-fit: cover;
   object-position: center center;
   display: block;
+  aspect-ratio: unset;
 }
 /* Ensure slideshow fills the column properly */
 .prog2-photo-col .init-slideshow {
   width: 100%;
+  height: 420px;
+  overflow: hidden;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2114,7 +2119,9 @@ footer {
   /* Supported Initiatives slideshow */
   .init-slideshow { height: 220px; }
   .prog2-item--split { grid-template-columns: 1fr; }
-  .prog2-photo-col .init-slide img { height: 240px; }
+  .prog2-photo-col .init-slideshow { height: 280px; }
+  .prog2-photo-col img,
+  .prog2-photo-col .init-slide img { height: 280px; }
   /* Artwork divider */
   .artwork-divider { height: 110px; }
   /* Workshop gallery — stack on mobile */
@@ -2986,7 +2993,8 @@ footer {
   </div>
   <div class="footer-links">
     <a href="https://www.syrianeyes.org" target="_blank">Website</a>
-    <a href="https://www.facebook.com/syrianeyes" target="_blank">Facebook</a>
+    <a href="https://www.facebook.com/Syrian.eyes.sy" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://www.instagram.com/syrianeyesteam/" target="_blank" rel="noopener">Instagram</a>
     <a href="mailto:info@syrianeyes.org">Contact</a>
   </div>
 </footer>

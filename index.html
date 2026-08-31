@@ -394,7 +394,7 @@ a { text-decoration: none; color: inherit; }
 .stat-num {
   font-family: var(--serif);
   font-size: clamp(44px, 5vw, 66px);
-  font-weight: 300; color: var(--brand-yellow); line-height: 1;
+  font-weight: 300; color: var(--white); line-height: 1;
   margin-bottom: 12px;
 }
 .stat-lbl {
@@ -402,7 +402,7 @@ a { text-decoration: none; color: inherit; }
   color: rgba(255,255,255,0.68);
 }
 .stat-bar { height: 2px; background: rgba(255,255,255,0.18); margin-top: 14px; border-radius: 1px; overflow: hidden; }
-.stat-fill { height: 100%; background: var(--brand-red) !important; width: 0; border-radius: 1px; transition: width 1.6s ease; }
+.stat-fill { height: 100%; background: rgba(255,255,255,0.65); width: 0; border-radius: 1px; transition: width 1.6s ease; }
 
 /* ═══════════════════════════════════════════════════════════════
    PROGRAMS
@@ -1091,7 +1091,7 @@ footer {
 /* The hovered poster rises sharp and forward */
 .film-collage .fc-poster:hover {
   filter: none !important;
-  transform: rotate(0deg) translateY(-28px) scale(1.09) !important;
+  transform: rotate(0deg) translateY(-28px) scale(1.25) !important;
   z-index: 20 !important;
 }
 .fc-poster:hover + .fc-poster { margin-left: 8px; }

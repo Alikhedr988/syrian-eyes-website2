@@ -1091,7 +1091,7 @@ footer {
 /* The hovered poster rises sharp and forward */
 .film-collage .fc-poster:hover {
   filter: none !important;
-  transform: rotate(0deg) translateY(-60px) scale(2.0) !important;
+  transform: rotate(0deg) translateY(-28px) scale(0.95) !important;
   z-index: 20 !important;
 }
 .fc-poster:hover + .fc-poster { margin-left: 8px; }
@@ -1970,8 +1970,8 @@ footer {
   width: 100%;
 }
 .booklet-viewport {
-  width: 78.4vw; max-width: 80vw;
-  flex: 0 1 1568px;
+  width: 54.88vw; max-width: 56vw;
+  flex: 0 1 1098px;
 }
 /* #booklet-book is sized by StPageFlip (autoSize) */
 .booklet-book {
@@ -2114,7 +2114,7 @@ footer {
   /* Booklet — single page on mobile */
   #booklet-section { padding: 72px 20px; }
   .booklet-stage { flex-wrap: wrap; gap: 18px 24px; }
-  .booklet-viewport { order: 0; flex-basis: 100%; width: 78.4vw; max-width: 80vw; margin: 0 auto; }
+  .booklet-viewport { order: 0; flex-basis: 100%; width: 54.88vw; max-width: 56vw; margin: 0 auto; }
   .booklet-arrow { order: 1; width: 44px; height: 44px; }
   /* Supported Initiatives slideshow */
   .init-slideshow { height: 220px; }
@@ -3731,13 +3731,13 @@ document.addEventListener('keydown', e => {
   const section = document.getElementById('booklet-section');
 
   const pageFlip = new St.PageFlip(el, {
-    width: 736,
-    height: 1040,
+    width: 515,
+    height: 728,
     size: 'stretch',
-    minWidth: 544,
-    maxWidth: 800,
-    minHeight: 800,
-    maxHeight: 1120,
+    minWidth: 381,
+    maxWidth: 560,
+    minHeight: 560,
+    maxHeight: 784,
     maxShadowOpacity: 0.5,
     startPage: 0,
     showCover: false,          // no rigid cover — real cover flips like a middle page

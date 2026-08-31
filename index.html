@@ -156,7 +156,7 @@ a { text-decoration: none; color: inherit; }
 #hero-click-hint.hidden { opacity: 0; }
 #hero-click-hint span {
   font-size: 8px; letter-spacing: 0.24em;
-  color: rgba(255,255,255,0.5);
+  color: var(--brand-yellow); opacity: 0.6;
 }
 
 /* Each slide — stacked fullscreen layers */
@@ -315,7 +315,7 @@ a { text-decoration: none; color: inherit; }
   z-index: 6; cursor: pointer;
 }
 .hero-scroll-line { width: 1px; height: 26px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.22)); }
-.hero-scroll-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.22); animation: blink 2.4s ease-in-out infinite; }
+.hero-scroll-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--brand-yellow); animation: blink 2.4s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:0.3} 50%{opacity:1} }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -394,7 +394,7 @@ a { text-decoration: none; color: inherit; }
 .stat-num {
   font-family: var(--serif);
   font-size: clamp(44px, 5vw, 66px);
-  font-weight: 300; color: var(--white); line-height: 1;
+  font-weight: 300; color: var(--brand-yellow); line-height: 1;
   margin-bottom: 12px;
 }
 .stat-lbl {
@@ -402,7 +402,7 @@ a { text-decoration: none; color: inherit; }
   color: rgba(255,255,255,0.68);
 }
 .stat-bar { height: 2px; background: rgba(255,255,255,0.18); margin-top: 14px; border-radius: 1px; overflow: hidden; }
-.stat-fill { height: 100%; background: rgba(255,255,255,0.65); width: 0; border-radius: 1px; transition: width 1.6s ease; }
+.stat-fill { height: 100%; background: var(--brand-red) !important; width: 0; border-radius: 1px; transition: width 1.6s ease; }
 
 /* ═══════════════════════════════════════════════════════════════
    PROGRAMS
@@ -438,6 +438,7 @@ a { text-decoration: none; color: inherit; }
   font-size: 10px; letter-spacing: 0.2em;
   color: var(--blue); margin-bottom: 16px;
 }
+#prog-emergency .prog-tag { color: var(--brand-red); }
 .prog-title {
   font-family: var(--serif);
   font-size: clamp(26px, 2.8vw, 38px);
@@ -590,7 +591,7 @@ a { text-decoration: none; color: inherit; }
 }
 .tl-detail-counter {
   font-size: 10px; letter-spacing: 0.14em;
-  color: rgba(26,23,20,0.25); margin-top: 28px;
+  color: var(--brand-yellow); margin-top: 28px;
 }
 
 /* Timeline photo strip — shown only for entries with a `photos` array */
@@ -687,7 +688,7 @@ a { text-decoration: none; color: inherit; }
   cursor: grab; transition: left 0.15s ease;
   z-index: 2;
 }
-.tl-thumb:active { cursor: grabbing; transform: translate(-50%, -50%) scale(1.2); }
+.tl-thumb:active { cursor: grabbing; transform: translate(-50%, -50%) scale(1.2); border-color: var(--brand-red); }
 .tl-year-markers {
   display: flex; justify-content: space-between;
 }
@@ -1056,15 +1057,15 @@ footer {
   gap: 0;
   align-items: flex-end;
   justify-content: center;
-  min-height: 480px;
-  padding: 40px 0 48px;
+  min-height: 520px;
+  padding: 44px 0 52px;
 }
 /* Each poster is a card that lifts on hover */
 .fc-poster {
   position: relative;
   flex: 0 0 auto;
-  width: 200px;
-  margin-left: -32px;
+  width: 240px;
+  margin-left: -36px;
   cursor: pointer;
   transition:
     opacity 0.5s ease,
@@ -1200,6 +1201,30 @@ footer {
   transition: background 0.25s;
 }
 .init-dot.is-active { background: var(--blue); }
+
+/* Grassroots Initiatives — split text/photo layout */
+.prog2-item--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.prog2-photo-col {
+  position: relative;
+  overflow: hidden;
+}
+/* Fix photo display — no aggressive cropping */
+.prog2-photo-col .init-slide img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+/* Ensure slideshow fills the column properly */
+.prog2-photo-col .init-slideshow {
+  width: 100%;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    PODCAST CINEMATIC STRIP — equal treatment, full color
@@ -1940,8 +1965,8 @@ footer {
   width: 100%;
 }
 .booklet-viewport {
-  width: 94vw; max-width: 1100px;
-  flex: 0 1 1100px;
+  width: 92vw; max-width: 980px;
+  flex: 0 1 980px;
 }
 /* #booklet-book is sized by StPageFlip (autoSize) */
 .booklet-book {
@@ -1952,6 +1977,8 @@ footer {
 .booklet-book .page {
   background: #12100e;
 }
+/* Blank flyleaf pages — match the stage so they read as "no page" (closed-book edges) */
+.booklet-book .page-blank { background: #0f0d0b; }
 .booklet-book .page img {
   width: 100%; height: 100%;
   object-fit: cover; display: block;
@@ -2082,10 +2109,12 @@ footer {
   /* Booklet — single page on mobile */
   #booklet-section { padding: 72px 20px; }
   .booklet-stage { flex-wrap: wrap; gap: 18px 24px; }
-  .booklet-viewport { order: 0; flex-basis: 100%; width: 92vw; max-width: 520px; margin: 0 auto; }
+  .booklet-viewport { order: 0; flex-basis: 100%; width: 94vw; max-width: 460px; margin: 0 auto; }
   .booklet-arrow { order: 1; width: 44px; height: 44px; }
   /* Supported Initiatives slideshow */
   .init-slideshow { height: 220px; }
+  .prog2-item--split { grid-template-columns: 1fr; }
+  .prog2-photo-col .init-slide img { height: 240px; }
   /* Artwork divider */
   .artwork-divider { height: 110px; }
   /* Workshop gallery — stack on mobile */
@@ -2125,8 +2154,8 @@ footer {
   .film-collage::-webkit-scrollbar { display: none; }
   .fc-poster {
     margin-left: 0 !important;
-    width: 52vw !important;
-    max-width: 200px;
+    width: 60vw !important;
+    max-width: 220px;
     flex-shrink: 0;
     scroll-snap-align: center;
     transform: none !important;
@@ -2411,6 +2440,7 @@ footer {
 
     <div class="booklet-viewport">
       <div class="booklet-book" id="booklet-book">
+        <div class="page page-blank" aria-hidden="true"></div>
         <div class="page"><img src="1.jpg" width="1400" height="1980" decoding="async" alt="Our Story in Print — cover"></div>
         <div class="page"><img src="2.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 2"></div>
         <div class="page"><img src="3.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 3"></div>
@@ -2423,6 +2453,7 @@ footer {
         <div class="page"><img src="10.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 10"></div>
         <div class="page"><img src="11.jpg" width="1400" height="1980" decoding="async" alt="Booklet page 11"></div>
         <div class="page"><img src="12.jpg" width="1400" height="1980" decoding="async" alt="Booklet back cover"></div>
+        <div class="page page-blank" aria-hidden="true"></div>
       </div>
     </div>
 
@@ -2643,12 +2674,13 @@ footer {
   <div class="prog2-sep"></div>
 
   <!-- Program 05 -->
-  <div class="prog2-grid">
-    <div>
+  <div class="prog2-item prog2-item--split">
+    <div class="prog2-text-col">
       <div class="prog2-tag reveal d1">05 / SINCE 2018 · ONGOING</div>
       <h3 class="prog2-title reveal d2">Support to Grassroots Initiatives</h3>
       <p class="prog2-body reveal d3">Technical assistance, logistics, and backing for migrant-led and local grassroots groups — including Nehna Hon, REMAN, Alya's Kitchen, Great Oven, Basmeh wa Zeitooneh, SAWA, Mulham Team, and MCC. Cross-community solidarity is the work itself.</p>
-
+    </div>
+    <div class="prog2-photo-col">
       <div class="init-slideshow reveal d3" id="init-slideshow">
         <div class="init-slide is-active"><img src="117387009_2027714964025343_7768693027853090737_n.jpg" width="720" height="900" decoding="async" alt="Supported grassroots initiative" loading="lazy"></div>
         <div class="init-slide"><img src="117806372_2033239393472900_7571386850015330527_n.jpg" width="630" height="417" decoding="async" alt="Supported grassroots initiative" loading="lazy"></div>
@@ -3691,16 +3723,17 @@ document.addEventListener('keydown', e => {
   const section = document.getElementById('booklet-section');
 
   const pageFlip = new St.PageFlip(el, {
-    width: 550,
-    height: 760,
+    width: 460,
+    height: 650,
     size: 'stretch',
     minWidth: 340,
-    maxWidth: 600,
+    maxWidth: 500,
     minHeight: 500,
-    maxHeight: 820,
+    maxHeight: 700,
     maxShadowOpacity: 0.5,
-    showCover: false,          // first/last pages animate like every other page
-    usePortrait: true,         // single page on mobile
+    startPage: 0,
+    showCover: false,          // no rigid cover — real cover flips like a middle page
+    usePortrait: true,         // single page on mobile / closed-book start
     mobileScrollSupport: false,
     swipeDistance: 30,
     autoSize: true,
@@ -3725,11 +3758,13 @@ document.addEventListener('keydown', e => {
 
   function update(idx) {
     const i = (typeof idx === 'number') ? idx : currentIndex();
-    counter.textContent = 'Page ' + (i + 1) + ' of ' + TOTAL;
+    // idx 0 and idx TOTAL+1 are blank flyleaves; real pages are idx 1..TOTAL
+    const real = Math.min(TOTAL, Math.max(1, i));
+    counter.textContent = 'Page ' + real + ' of ' + TOTAL;
     prevBtn.disabled = i <= 0;
-    nextBtn.disabled = i >= TOTAL - 1;
-    // Preload neighbours so the next/prev flip has its image ready
-    preload(i + 1); preload(i + 2); preload(i - 1);
+    nextBtn.disabled = i >= TOTAL;
+    // Preload neighbours (PAGES[n] is real page n+1)
+    preload(real - 2); preload(real - 1); preload(real);
   }
 
   pageFlip.on('flip', e => update(e.data));

@@ -1970,8 +1970,8 @@ footer {
   width: 100%;
 }
 .booklet-viewport {
-  width: 98vw; max-width: 100vw;
-  flex: 0 1 1960px;
+  width: 78.4vw; max-width: 80vw;
+  flex: 0 1 1568px;
 }
 /* #booklet-book is sized by StPageFlip (autoSize) */
 .booklet-book {
@@ -2114,7 +2114,7 @@ footer {
   /* Booklet — single page on mobile */
   #booklet-section { padding: 72px 20px; }
   .booklet-stage { flex-wrap: wrap; gap: 18px 24px; }
-  .booklet-viewport { order: 0; flex-basis: 100%; width: 98vw; max-width: 100vw; margin: 0 auto; }
+  .booklet-viewport { order: 0; flex-basis: 100%; width: 78.4vw; max-width: 80vw; margin: 0 auto; }
   .booklet-arrow { order: 1; width: 44px; height: 44px; }
   /* Supported Initiatives slideshow */
   .init-slideshow { height: 220px; }
@@ -3731,13 +3731,13 @@ document.addEventListener('keydown', e => {
   const section = document.getElementById('booklet-section');
 
   const pageFlip = new St.PageFlip(el, {
-    width: 920,
-    height: 1300,
+    width: 736,
+    height: 1040,
     size: 'stretch',
-    minWidth: 680,
-    maxWidth: 1000,
-    minHeight: 1000,
-    maxHeight: 1400,
+    minWidth: 544,
+    maxWidth: 800,
+    minHeight: 800,
+    maxHeight: 1120,
     maxShadowOpacity: 0.5,
     startPage: 0,
     showCover: false,          // no rigid cover — real cover flips like a middle page

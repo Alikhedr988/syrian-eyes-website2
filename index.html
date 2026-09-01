@@ -509,192 +509,162 @@ a { text-decoration: none; color: inherit; }
 .prog2-body { font-size: 14px; font-weight: 300; line-height: 1.86; color: #5a5450; }
 
 /* ═══════════════════════════════════════════════════════════════
-   PAST PROJECTS — painting seeps in at edges
+   PAST PROJECTS — cinematic field archive
 ═══════════════════════════════════════════════════════════════ */
 #past-projects {
-  background: #1a1614;
-  padding: var(--sp-section) 88px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  position: relative; overflow: hidden;
-}
-/* Left-edge painting wash */
-#past-projects::before {
-  content: '';
-  position: absolute;
-  left: -60px; top: 0; bottom: 0;
-  width: 340px; z-index: 0;
-  background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(7).jpg');
-  background-size: cover; background-position: right center;
-  opacity: 0.10;
-  pointer-events: none;
-}
-/* Right-edge painting wash */
-#past-projects::after {
-  content: '';
-  position: absolute;
-  right: -60px; top: 0; bottom: 0;
-  width: 280px; z-index: 0;
-  background-image: url('design%20elements%20-%20kids%20drawings%20-%20my%20eyes%20project%20(4).jpg');
-  background-size: cover; background-position: left center;
-  opacity: 0.09;
-  pointer-events: none;
-}
-#past-projects > * { position: relative; z-index: 1; }
-.archive-hdr { margin-bottom: 64px; }
-.archive-title {
-  font-family: var(--serif);
-  font-size: clamp(40px, 4.5vw, 62px);
-  font-weight: 400; color: var(--white);
-  margin-bottom: 14px; line-height: 1.1;
-}
-.archive-sub {
-  font-size: 14px; font-weight: 300; line-height: 1.8;
-  color: var(--text-on-dark-secondary); max-width: 520px;
-}
-
-/* ── Timeline component ── */
-#timeline-wrap {
-  background: var(--white);
-  border: 1px solid rgba(26,23,20,0.1);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.tl-top {
-  display: grid; grid-template-columns: 1fr 1fr;
-  min-height: 360px;
-}
-.tl-detail {
-  padding: 52px 56px;
-  display: flex; flex-direction: column; justify-content: space-between;
-  border-right: 1px solid rgba(26,23,20,0.08);
-}
-.tl-detail-year {
-  font-family: var(--serif);
-  font-size: 72px; font-weight: 300; line-height: 1;
-  color: var(--dark); margin-bottom: 4px;
-  transition: all 0.4s ease;
-}
-.tl-detail-period {
-  font-size: 11px; letter-spacing: 0.14em;
-  color: var(--blue); margin-bottom: 24px;
-  transition: all 0.35s ease;
-}
-.tl-detail-name {
-  font-family: var(--serif);
-  font-size: clamp(22px, 2.4vw, 30px);
-  font-weight: 400; line-height: 1.22; color: var(--dark);
-  margin-bottom: 20px; transition: all 0.35s ease;
-}
-.tl-detail-desc {
-  font-size: 14px; font-weight: 300; line-height: 1.82;
-  color: var(--muted); flex: 1; transition: all 0.35s ease;
-}
-.tl-detail-counter {
-  font-size: 10px; letter-spacing: 0.14em;
-  color: var(--brand-yellow); margin-top: 28px;
-}
-
-/* Timeline photo strip — shown only for entries with a `photos` array */
-.tl-photostrip {
-  display: flex; gap: 3px;
-  height: 180px; margin-top: 24px;
-  background: var(--dark); overflow: hidden;
-}
-.tl-photostrip[hidden] { display: none; }
-.tl-ps-cell {
-  position: relative; flex: 1; overflow: hidden;
-  background: var(--dark-soft);
-}
-.tl-ps-cell img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform 7s ease;
-}
-.tl-ps-cell:hover img { transform: scale(1.05); }
-.tl-ps-cell::after {
-  content: ''; position: absolute; inset: 0;
-  background-image: var(--grain); background-size: 220px;
-  opacity: 0.36; mix-blend-mode: soft-light; pointer-events: none;
-}
-
-.tl-nav-col {
-  display: flex; flex-direction: column;
-  max-height: 360px; overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(26,23,20,0.1) transparent;
-}
-.tl-nav-col::-webkit-scrollbar { width: 3px; }
-.tl-nav-col::-webkit-scrollbar-thumb { background: rgba(26,23,20,0.12); border-radius: 2px; }
-
-.tl-item {
-  padding: 20px 28px;
-  border-bottom: 1px solid rgba(26,23,20,0.06);
-  cursor: pointer;
-  display: flex; align-items: center; gap: 16px;
-  transition: background 0.2s;
   position: relative;
+  background: #080706;
+  overflow: hidden;
+  padding: 0;
 }
-.tl-item:last-child { border-bottom: none; }
-.tl-item:hover { background: rgba(26,23,20,0.025); }
-.tl-item.active {
-  background: var(--dark);
-}
-.tl-item-year {
-  font-size: 11px; letter-spacing: 0.1em;
-  color: var(--brand-blue); min-width: 40px;
-  transition: color 0.2s;
-}
-.tl-item.active .tl-item-year { color: var(--brand-blue); }
-.tl-item-name {
-  font-size: 13px; font-weight: 400; color: var(--dark);
-  line-height: 1.35; transition: color 0.2s;
-}
-.tl-item.active .tl-item-name { color: var(--white); }
-.tl-item-dot {
-  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-  width: 3px; height: 0; background: var(--brand-blue);
-  transition: height 0.3s ease;
-}
-.tl-item.active .tl-item-dot { height: 100%; }
 
-/* Scrubber */
-.tl-scrubber {
-  padding: 28px 56px;
-  border-top: 1px solid rgba(26,23,20,0.08);
-  background: var(--cream);
-  display: flex; flex-direction: column; gap: 12px;
-}
-.tl-scrubber-label {
-  font-size: 9px; letter-spacing: 0.2em;
-  color: rgba(26,23,20,0.35);
-  display: flex; justify-content: space-between;
-}
-.tl-track-wrap {
-  position: relative; height: 2px;
-  background: rgba(26,23,20,0.12);
-  cursor: pointer; border-radius: 1px;
-}
-.tl-track-fill {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  background: var(--brand-blue); border-radius: 1px;
-  transition: width 0.15s ease;
-  pointer-events: none;
-}
-.tl-thumb {
-  position: absolute; top: 50%;
-  width: 14px; height: 14px; border-radius: 50%;
-  background: var(--white); border: 2px solid var(--brand-blue);
-  box-shadow: 0 0 0 3px rgba(62,95,150,0.18);
-  transform: translate(-50%, -50%);
-  cursor: grab; transition: left 0.15s ease;
-  z-index: 2;
-}
-.tl-thumb:active { cursor: grabbing; transform: translate(-50%, -50%) scale(1.2); border-color: var(--brand-red); }
-.tl-year-markers {
-  display: flex; justify-content: space-between;
-}
-.tl-year-mark {
-  font-size: 9px; letter-spacing: 0.08em;
-  color: rgba(26,23,20,0.28);
+/* Ambient orbs */
+.arch-orb { position:absolute; border-radius:50%; pointer-events:none; z-index:0; mix-blend-mode:screen; }
+.arch-orb-a { width:500px; height:500px; background:radial-gradient(circle,rgba(62,95,150,.18),transparent 70%); top:-150px; left:-100px; }
+.arch-orb-b { width:400px; height:400px; background:radial-gradient(circle,rgba(228,166,62,.10),transparent 70%); bottom:-100px; right:-80px; }
+.arch-orb-cursor { width:280px; height:280px; background:radial-gradient(circle,rgba(75,140,250,.09),transparent 70%); transform:translate(-50%,-50%); transition:left .18s ease,top .18s ease; position:absolute; pointer-events:none; z-index:0; }
+
+/* Grain */
+.arch-grain { position:absolute; inset:0; z-index:1; pointer-events:none; opacity:.45; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E"); }
+
+/* Nav */
+.arch-nav { position:relative; z-index:10; display:flex; align-items:center; justify-content:space-between; padding:16px 88px; border-bottom:1px solid rgba(255,255,255,.04); background:rgba(8,7,6,.6); backdrop-filter:blur(12px); }
+.arch-mark { font-family:'Cormorant Garamond',Georgia,serif; font-size:12px; font-weight:300; letter-spacing:.28em; color:rgba(255,255,255,.28); display:flex; align-items:center; gap:10px; }
+.arch-mark-dot { width:7px; height:7px; border-radius:50%; background:#e4a63e; box-shadow:0 0 8px #e4a63e,0 0 20px rgba(228,166,62,.4); animation:archGlow 2.5s ease-in-out infinite; }
+@keyframes archGlow { 0%,100%{box-shadow:0 0 6px #e4a63e,0 0 14px rgba(228,166,62,.3)} 50%{box-shadow:0 0 12px #e4a63e,0 0 28px rgba(228,166,62,.5)} }
+.arch-cats { display:flex; gap:5px; }
+.arch-cb { background:none; border:0.5px solid rgba(255,255,255,.1); color:rgba(255,255,255,.32); font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:.14em; padding:4px 12px; cursor:pointer; border-radius:2px; transition:all .25s; }
+.arch-cb:hover { border-color:rgba(255,255,255,.28); color:rgba(255,255,255,.72); }
+.arch-cb.on { border-color:#e4a63e; color:#e4a63e; background:rgba(228,166,62,.08); }
+
+/* Film strip */
+.arch-fstrip { position:relative; z-index:10; background:linear-gradient(180deg,#0a0907,#0f0d0b); border-bottom:1px solid rgba(255,255,255,.04); padding:0 88px; }
+.arch-sprockets { display:flex; align-items:center; height:11px; overflow:hidden; }
+.arch-sprocket { width:13px; height:7px; border:1px solid rgba(255,255,255,.09); border-radius:1px; flex-shrink:0; margin-right:7px; background:#080706; transition:border-color .2s,background .2s; }
+.arch-sprocket.lit { border-color:rgba(228,166,62,.3); background:rgba(228,166,62,.04); }
+.arch-rail { position:relative; height:52px; cursor:col-resize; }
+.arch-rail-bg { position:absolute; left:0; right:0; top:50%; height:1px; background:rgba(255,255,255,.07); transform:translateY(-50%); }
+.arch-rail-line { position:absolute; left:0; top:50%; height:1px; background:linear-gradient(90deg,#3e5f96,#4b8cfa); transform:translateY(-50%); transition:width .04s; }
+.arch-rail-glow { position:absolute; left:0; top:50%; height:3px; background:linear-gradient(90deg,transparent,#4b8cfa); transform:translateY(-50%); border-radius:0 2px 2px 0; filter:blur(1px); opacity:.6; transition:width .04s; }
+.arch-ticks { position:absolute; inset:0; pointer-events:none; }
+.arch-tk { position:absolute; bottom:5px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:2px; }
+.arch-tk-l { font-size:7px; letter-spacing:.06em; color:rgba(255,255,255,.18); white-space:nowrap; }
+.arch-tk-b { width:1px; background:rgba(255,255,255,.12); }
+.arch-tk.mj .arch-tk-l { color:rgba(255,255,255,.42); font-size:8px; }
+.arch-tk.mj .arch-tk-b { background:rgba(255,255,255,.35); }
+
+/* Event dots */
+.arch-edot { position:absolute; top:50%; transform:translate(-50%,-50%); width:8px; height:8px; border-radius:50%; border:1.5px solid #080706; cursor:pointer; z-index:4; transition:all .22s cubic-bezier(.23,1,.32,1); }
+.arch-edot:hover { transform:translate(-50%,-50%) scale(2.4); z-index:5; }
+.arch-edot.emergency { background:#df4848; box-shadow:0 0 6px rgba(223,72,72,.5); }
+.arch-edot.art { background:#e4a63e; box-shadow:0 0 6px rgba(228,166,62,.5); }
+.arch-edot.film { background:#4b8cfa; box-shadow:0 0 6px rgba(75,140,250,.5); }
+.arch-edot.medical { background:#2d6b5e; box-shadow:0 0 6px rgba(45,107,94,.5); }
+
+/* Playhead */
+.arch-ph { position:absolute; top:50%; transform:translate(-50%,-50%); width:24px; height:24px; border-radius:50%; background:radial-gradient(circle at 38% 35%,rgba(255,255,255,.9),rgba(220,215,205,1)); box-shadow:0 0 0 2px rgba(255,255,255,.15),0 0 16px rgba(255,255,255,.2),0 0 36px rgba(228,166,62,.15),inset 0 1px 0 rgba(255,255,255,.8); cursor:grab; z-index:6; }
+.arch-ph:active { cursor:grabbing; box-shadow:0 0 0 4px rgba(255,255,255,.2),0 0 28px rgba(255,255,255,.3),0 0 56px rgba(228,166,62,.25); }
+.arch-ph-inner { position:absolute; inset:7px; border-radius:50%; background:#3e5f96; box-shadow:0 0 6px rgba(75,140,250,.8); }
+.arch-ph-tag { position:absolute; bottom:calc(100% + 9px); left:50%; transform:translateX(-50%); background:#f5f2ed; color:#080706; font-size:11px; font-weight:500; letter-spacing:.1em; padding:3px 9px; border-radius:2px; white-space:nowrap; font-family:'DM Sans',sans-serif; box-shadow:0 4px 12px rgba(0,0,0,.4); pointer-events:none; }
+.arch-ph-tag::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:4px solid transparent; border-top-color:#f5f2ed; }
+
+/* Year stage */
+.arch-stage { position:relative; z-index:5; height:90px; overflow:hidden; border-bottom:1px solid rgba(255,255,255,.04); padding:0 88px; display:flex; align-items:center; gap:0; }
+.arch-stage-beam { position:absolute; top:0; width:120px; height:100%; background:linear-gradient(180deg,rgba(228,166,62,.06),transparent); pointer-events:none; clip-path:polygon(20% 0,80% 0,100% 100%,0% 100%); transition:left .1s ease; }
+.arch-stage-yr { font-family:'Cormorant Garamond',Georgia,serif; font-size:110px; font-weight:300; line-height:1; letter-spacing:-.03em; position:absolute; left:80px; background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02)); -webkit-background-clip:text; background-clip:text; color:transparent; pointer-events:none; }
+.arch-stage-info { position:relative; z-index:2; margin-left:170px; display:flex; flex-direction:column; gap:5px; }
+.arch-stage-phrase { font-family:'Cormorant Garamond',Georgia,serif; font-size:24px; font-weight:300; color:rgba(255,255,255,.8); letter-spacing:-.01em; transition:opacity .4s,transform .4s; }
+.arch-stage-phrase em { color:#e4a63e; font-style:italic; }
+.arch-stage-phrase.fade { opacity:0; transform:translateY(6px); }
+.arch-stage-sub { font-size:9px; letter-spacing:.22em; color:rgba(255,255,255,.22); }
+.arch-stage-count { margin-left:auto; text-align:right; }
+.arch-sc-num { font-family:'Cormorant Garamond',Georgia,serif; font-size:46px; font-weight:300; color:#3e5f96; line-height:1; text-shadow:0 0 24px rgba(75,140,250,.3); transition:all .25s; }
+.arch-sc-lbl { font-size:8px; letter-spacing:.2em; color:rgba(255,255,255,.2); }
+
+/* Cards zone */
+.arch-cards-zone { padding:20px 88px 28px; position:relative; z-index:5; min-height:220px; }
+.arch-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+
+/* Project card */
+.arch-pc { background:linear-gradient(135deg,#1c1914,#17150f); border:0.5px solid rgba(255,255,255,.07); border-radius:4px; padding:14px 13px 13px; cursor:pointer; position:relative; overflow:hidden; transition:all .38s cubic-bezier(.23,1,.32,1); }
+.arch-pc::before { content:''; position:absolute; top:-60px; left:-60px; width:160px; height:160px; background:radial-gradient(circle,rgba(75,140,250,.14),transparent 70%); opacity:0; transition:opacity .4s,top .4s,left .4s; border-radius:50%; }
+.arch-pc:hover { border-color:rgba(62,95,150,.4); transform:translateY(-5px) scale(1.01); box-shadow:0 20px 48px rgba(0,0,0,.6),0 0 0 0.5px rgba(75,140,250,.15); }
+.arch-pc:hover::before { opacity:1; top:-20px; left:-20px; }
+@keyframes archCardIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+.arch-pc.in { animation:archCardIn .4s cubic-bezier(.23,1,.32,1) both; }
+.arch-pc-yr { font-size:9px; letter-spacing:.18em; color:#e4a63e; margin-bottom:9px; opacity:.8; }
+.arch-pc-frame { width:100%; height:74px; background:#0f0d0b; border-radius:2px; margin-bottom:10px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; border:0.5px solid rgba(255,255,255,.05); }
+.arch-pc-frame::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.012) 3px,rgba(255,255,255,.012) 4px); pointer-events:none; }
+.arch-pc-fi { font-size:24px; color:rgba(255,255,255,.12); }
+.arch-pc-mtag { position:absolute; top:7px; right:7px; font-size:7px; letter-spacing:.12em; padding:2px 6px; border-radius:2px; }
+.arch-pc-mtag.ph { background:rgba(62,95,150,.3); color:#7aabf5; }
+.arch-pc-mtag.vd { background:rgba(228,166,62,.22); color:#e4a63e; }
+.arch-pc-title { font-size:11px; color:rgba(255,255,255,.72); line-height:1.35; margin-bottom:8px; font-weight:300; }
+.arch-pc-tag { display:inline-block; font-size:8px; letter-spacing:.1em; padding:2px 7px; border-radius:1px; }
+.arch-pc-tag.emergency { background:rgba(223,72,72,.16); color:#f09090; }
+.arch-pc-tag.art { background:rgba(228,166,62,.14); color:#e4a63e; }
+.arch-pc-tag.film { background:rgba(75,140,250,.12); color:#4b8cfa; }
+.arch-pc-tag.medical { background:rgba(45,107,94,.18); color:#5dbfaa; }
+
+.arch-no-p { grid-column:1/-1; text-align:center; padding:50px; font-family:'Cormorant Garamond',Georgia,serif; font-size:20px; font-weight:300; color:rgba(255,255,255,.12); font-style:italic; }
+
+/* Hint */
+.arch-hint { text-align:center; padding:10px; font-size:9px; letter-spacing:.22em; color:rgba(255,255,255,.15); transition:opacity .6s; animation:archFlicker 3s ease-in-out infinite; }
+@keyframes archFlicker { 0%,100%{opacity:.4} 45%{opacity:.8} 50%{opacity:.3} 55%{opacity:.8} }
+
+/* Legend */
+.arch-legend { display:flex; gap:16px; padding:0 88px 16px; position:relative; z-index:5; }
+.arch-leg-item { display:flex; align-items:center; gap:5px; }
+.arch-leg-dot { width:5px; height:5px; border-radius:50%; }
+.arch-leg-item span { font-size:9px; letter-spacing:.1em; color:rgba(255,255,255,.28); }
+
+/* Case file */
+.arch-case { position:absolute; inset:0; z-index:30; background:#080706; border-radius:0; display:none; flex-direction:column; opacity:0; transform:translateY(12px); transition:opacity .35s ease,transform .35s cubic-bezier(.23,1,.32,1); }
+.arch-case.open { display:flex; opacity:1; transform:translateY(0); }
+.arch-case-top { display:flex; align-items:center; justify-content:space-between; padding:14px 88px; border-bottom:1px solid rgba(255,255,255,.05); background:linear-gradient(180deg,#111009,#0c0a08); position:relative; z-index:2; }
+.arch-bk { background:none; border:0.5px solid rgba(255,255,255,.15); color:rgba(255,255,255,.5); font-size:9px; letter-spacing:.16em; padding:5px 14px; cursor:pointer; border-radius:2px; transition:all .22s; font-family:'DM Sans',sans-serif; }
+.arch-bk:hover { border-color:#e4a63e; color:#e4a63e; background:rgba(228,166,62,.06); }
+.arch-case-nav { display:flex; align-items:center; gap:8px; }
+.arch-cn { background:none; border:0.5px solid rgba(255,255,255,.12); color:rgba(255,255,255,.35); width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; border-radius:2px; font-size:13px; transition:all .2s; }
+.arch-cn:hover { border-color:rgba(255,255,255,.4); color:rgba(255,255,255,.9); }
+.arch-cst { font-size:9px; letter-spacing:.18em; color:rgba(255,255,255,.22); }
+.arch-case-body { display:grid; grid-template-columns:200px 1fr; flex:1; overflow:hidden; min-height:0; position:relative; z-index:2; }
+.arch-cmeta { padding:28px 20px; border-right:1px solid rgba(255,255,255,.05); background:#0a0907; overflow-y:auto; }
+.arch-cm-yr { font-family:'Cormorant Garamond',Georgia,serif; font-size:52px; font-weight:300; color:#e4a63e; line-height:1; margin-bottom:20px; text-shadow:0 0 30px rgba(228,166,62,.3); }
+.arch-mf { margin-bottom:16px; }
+.arch-ml { font-size:8px; letter-spacing:.18em; color:rgba(255,255,255,.22); margin-bottom:4px; }
+.arch-mv { font-size:12px; color:rgba(255,255,255,.65); line-height:1.55; font-weight:300; }
+.arch-mtag { display:inline-block; font-size:8px; letter-spacing:.12em; padding:2px 9px; border-radius:1px; }
+.arch-ccont { padding:28px 32px; overflow-y:auto; }
+.arch-ct { font-family:'Cormorant Garamond',Georgia,serif; font-size:26px; font-weight:300; color:#f5f2ed; line-height:1.2; margin-bottom:6px; }
+.arch-cp { font-size:9px; letter-spacing:.2em; color:#3e5f96; margin-bottom:18px; }
+.arch-cd { font-size:14px; color:rgba(255,255,255,.48); line-height:1.82; margin-bottom:24px; max-width:520px; font-weight:300; }
+.arch-ms { margin-bottom:20px; }
+.arch-ml2 { font-size:8px; letter-spacing:.2em; color:rgba(255,255,255,.2); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.arch-ml2::after { content:''; flex:1; height:0.5px; background:rgba(255,255,255,.07); }
+.arch-pstrip { display:flex; gap:8px; flex-wrap:wrap; }
+.arch-pth { width:90px; height:62px; background:#141210; border:0.5px solid rgba(255,255,255,.07); border-radius:2px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer; transition:all .22s; }
+.arch-pth:hover { border-color:rgba(62,95,150,.45); box-shadow:0 0 12px rgba(62,95,150,.2); }
+.arch-pth span { font-size:7px; letter-spacing:.1em; color:rgba(255,255,255,.2); }
+.arch-vth { width:130px; height:78px; background:rgba(228,166,62,.07); border:0.5px solid rgba(228,166,62,.18); border-radius:2px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; cursor:pointer; transition:all .22s; }
+.arch-vth:hover { background:rgba(228,166,62,.13); border-color:rgba(228,166,62,.45); box-shadow:0 0 20px rgba(228,166,62,.12); }
+.arch-vth span { font-size:8px; letter-spacing:.12em; color:rgba(228,166,62,.7); }
+
+/* Mobile */
+@media (max-width: 900px) {
+  .arch-nav { padding:12px 20px; flex-wrap:wrap; gap:10px; }
+  .arch-fstrip { padding:0 16px; }
+  .arch-stage { padding:0 20px; height:72px; }
+  .arch-stage-yr { font-size:72px; left:16px; }
+  .arch-stage-info { margin-left:110px; }
+  .arch-stage-phrase { font-size:18px; }
+  .arch-cards-zone { padding:16px 20px 20px; }
+  .arch-grid { grid-template-columns:1fr 1fr; gap:8px; }
+  .arch-legend { padding:0 20px 14px; }
+  .arch-case-top { padding:12px 20px; }
+  .arch-case-body { grid-template-columns:1fr; }
+  .arch-cmeta { border-right:none; border-bottom:1px solid rgba(255,255,255,.05); padding:16px 20px; }
+  .arch-ccont { padding:16px 20px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2079,12 +2049,8 @@ footer {
   .stat { border-bottom: 1px solid rgba(255,255,255,0.1); }
   .prog-text { padding: 56px 32px; }
   .prog-photo { min-height: 280px; }
-  #prog-2col, #past-projects, #voices, #video-section, #cta { padding: 72px 24px; }
+  #prog-2col, #voices, #video-section, #cta { padding: 72px 24px; }
   .prog2-grid { grid-template-columns: 1fr; gap: 48px; }
-  .tl-top { grid-template-columns: 1fr; }
-  .tl-nav-col { max-height: 220px; border-top: 1px solid rgba(26,23,20,0.08); }
-  .tl-detail { padding: 36px 28px; }
-  .tl-scrubber { padding: 22px 28px; }
   .gallery-grid { grid-template-columns: 1fr 1fr; }
   .gallery-cell-main { grid-column: 1 / -1; aspect-ratio: 16/9; }
   .voices-hdr { grid-template-columns: 1fr; }
@@ -2721,56 +2687,93 @@ footer {
 <!-- asset: assets/design_elements_-_kids_drawings_-_my_eyes_project__6_.png -->
 <div class="artwork-divider artwork-divider--blue" aria-hidden="true"></div>
 
-<!-- ██ PAST PROJECTS — INTERACTIVE TIMELINE ████████████████████ -->
+<!-- ██ PAST PROJECTS — CINEMATIC FIELD ARCHIVE ████████████████████ -->
 <section id="past-projects">
-  <div class="archive-hdr">
-    <div class="eyebrow reveal">ARCHIVE</div>
-    <h2 class="archive-title reveal d1">A decade of work.</h2>
-    <p class="archive-sub reveal d2">Drag the timeline or click any project to explore ten years of initiatives — from our founding days to the present.</p>
-  </div>
 
-  <div id="timeline-wrap" class="reveal d1">
-    <div class="tl-top">
+  <!-- ambient light orbs -->
+  <div class="arch-orb arch-orb-a"></div>
+  <div class="arch-orb arch-orb-b"></div>
+  <div class="arch-orb arch-orb-cursor" id="archOrbCursor"></div>
+  <div class="arch-grain"></div>
 
-      <!-- Left: detail panel -->
-      <div class="tl-detail">
-        <div>
-          <div class="tl-detail-year" id="tl-year">2013</div>
-          <div class="tl-detail-period" id="tl-period">OCT 27, 2013 – 2014</div>
-          <h3 class="tl-detail-name" id="tl-name">Foundation &amp; Immediate Emergency Relief</h3>
-          <p class="tl-detail-desc" id="tl-desc">Emergency relief in informal tented settlements across the Bekaa — food, clothing, and winter assistance. Established the civilian-only, non-sectarian approach that defines Syrian Eyes today.</p>
-          <div class="tl-photostrip" id="tl-photostrip" hidden></div>
-        </div>
-        <div class="tl-detail-counter" id="tl-counter">01 / 20</div>
-      </div>
-
-      <!-- Right: scrollable project list -->
-      <div class="tl-nav-col" id="tl-nav">
-        <!-- Items injected by JS -->
-      </div>
+  <!-- nav bar -->
+  <div class="arch-nav">
+    <div class="arch-mark">
+      <div class="arch-mark-dot"></div>
+      SYRIAN EYES · FIELD ARCHIVE
     </div>
-
-    <!-- Scrubber -->
-    <div class="tl-scrubber">
-      <div class="tl-scrubber-label">
-        <span>DRAG TO EXPLORE HISTORY</span>
-        <span id="tl-scrubber-year">2013</span>
-      </div>
-      <div class="tl-track-wrap" id="tl-track">
-        <div class="tl-track-fill" id="tl-fill"></div>
-        <div class="tl-thumb" id="tl-thumb"></div>
-      </div>
-      <div class="tl-year-markers">
-        <span class="tl-year-mark">2013</span>
-        <span class="tl-year-mark">2015</span>
-        <span class="tl-year-mark">2017</span>
-        <span class="tl-year-mark">2019</span>
-        <span class="tl-year-mark">2021</span>
-        <span class="tl-year-mark">2023</span>
-        <span class="tl-year-mark">2026</span>
-      </div>
+    <div class="arch-cats">
+      <button class="arch-cb on" onclick="archSetCat('all',this)">All</button>
+      <button class="arch-cb" onclick="archSetCat('emergency',this)">Emergency</button>
+      <button class="arch-cb" onclick="archSetCat('art',this)">Art</button>
+      <button class="arch-cb" onclick="archSetCat('film',this)">Film</button>
+      <button class="arch-cb" onclick="archSetCat('medical',this)">Medical</button>
     </div>
   </div>
+
+  <!-- film strip timeline -->
+  <div class="arch-fstrip">
+    <div class="arch-sprockets" id="archSpT"></div>
+    <div class="arch-rail" id="archRail">
+      <div class="arch-rail-bg"></div>
+      <div class="arch-rail-line" id="archRline"></div>
+      <div class="arch-rail-glow" id="archRglow"></div>
+      <div class="arch-ticks" id="archTicks"></div>
+      <div id="archDots"></div>
+      <div class="arch-ph" id="archPh">
+        <div class="arch-ph-inner"></div>
+        <div class="arch-ph-tag" id="archPhtag">2013</div>
+      </div>
+    </div>
+    <div class="arch-sprockets" id="archSpB"></div>
+  </div>
+
+  <!-- year stage -->
+  <div class="arch-stage">
+    <div class="arch-stage-beam" id="archBeam"></div>
+    <div class="arch-stage-yr" id="archSyr">2013</div>
+    <div class="arch-stage-info">
+      <div class="arch-stage-phrase" id="archPhrase">The founding <em>year</em></div>
+      <div class="arch-stage-sub">DRAG · EXPLORE · DISCOVER</div>
+    </div>
+    <div class="arch-stage-count">
+      <div class="arch-sc-num" id="archScNum">—</div>
+      <div class="arch-sc-lbl">PROJECTS</div>
+    </div>
+  </div>
+
+  <!-- cards grid -->
+  <div class="arch-cards-zone">
+    <div class="arch-grid" id="archGrid"></div>
+    <div class="arch-hint" id="archHint">← DRAG THE FILM STRIP TO MOVE THROUGH TIME →</div>
+  </div>
+
+  <!-- legend -->
+  <div class="arch-legend">
+    <div class="arch-leg-item"><div class="arch-leg-dot" style="background:#df4848"></div><span>Emergency</span></div>
+    <div class="arch-leg-item"><div class="arch-leg-dot" style="background:#e4a63e"></div><span>Art</span></div>
+    <div class="arch-leg-item"><div class="arch-leg-dot" style="background:#4b8cfa"></div><span>Film</span></div>
+    <div class="arch-leg-item"><div class="arch-leg-dot" style="background:#2d6b5e"></div><span>Medical</span></div>
+  </div>
+
+  <!-- case file overlay -->
+  <div class="arch-case" id="archCase">
+    <div class="arch-grain"></div>
+    <div class="arch-orb arch-orb-a" style="opacity:.4"></div>
+    <div class="arch-case-top">
+      <button class="arch-bk" onclick="archCloseCase()">← Back to archive</button>
+      <div class="arch-case-nav">
+        <button class="arch-cn" onclick="archNavCase(-1)">‹</button>
+        <button class="arch-cn" onclick="archNavCase(1)">›</button>
+        <span class="arch-cst" id="archCst"></span>
+      </div>
+    </div>
+    <div class="arch-case-body">
+      <div class="arch-cmeta" id="archCmeta"></div>
+      <div class="arch-ccont" id="archCcont"></div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ██ ARTWORK DIVIDER 3 — between Archive and Voices ████████ -->
@@ -3003,124 +3006,248 @@ footer {
 <!-- StPageFlip — realistic 3D page-curl for the booklet (MIT) -->
 <script src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script>
-/* ── Timeline data ─────────────────────────────────────────── */
-const PROJECTS = [
-  { year:'2013', period:'Oct 2013 – 2014', name:'Foundation & Immediate Emergency Relief', desc:'Emergency relief in informal tented settlements across the Bekaa — food, clothing, and winter assistance. Established the civilian-only, non-sectarian approach that defines Syrian Eyes today.' },
-  { year:'2014', period:'2014 – 2019', name:'Future Together Now! I', desc:'Social inclusion, joint decision making, conflict transformation, and a recycling project across North and Central Beqaa. With Basmeh & Zeitooneh and forumZFD.' },
-  { year:'2014', period:'2014 – 2015', name:'WASH & Camp Rehabilitation — Phase I', desc:'First flood response and camp drainage work in the Bekaa. Tent repair, waterproofing, and basic sanitation infrastructure in Al Fares and Al Amniye settlements. Cleaning campaigns with community volunteers.' },
-  { year:'2015', period:'2015', name:'Mobile Clinic Program', desc:'A doctor-led mobile unit serving isolated camps and villages — Al Amniye, Al Sweiri, Al Karoun. 812 cases served in the first half of 2015 alone, in partnership with Oxfam GB and volunteer doctors.' },
-  { year:'2015', period:'2015 – 2018', name:'Syria in My Mind — Heritage Project', desc:'Heritage education for ~2,000 Syrian refugee children (ages 4–15) through archaeological reconstruction, geography games, and visual storytelling. With Biladi, AVSI, UNICEF.' },
-  { year:'2015', period:'2015 – 2018', name:'Agricultural & Cultivation Projects', desc:'Small-scale organic farming, agricultural basins, and skills transfer in informal settlements like Al Fares Camp — strengthening food self-sufficiency against hyperinflation.' },
-  { year:'2015', period:'2015 – Ongoing', name:'Jarrahieh Community Bakery', desc:'A community bakery producing fresh saj bread for 100–500 families daily, creating four full-time vocational jobs for refugee women. With Jasmin-Hilfe (Germany).' },
-  { year:'2016', period:'2016 – 2019', name:'Art & Creative Expression Programs', desc:'Drawing, painting, and storytelling workshops in Lebanon, with local and international art exhibitions. Fifty drawings exhibited in Toronto to support educational activities.' },
-  { year:'2016', period:'2016 – 2017', name:'WASH & Water Tank Installation', desc:'Installation of water storage tanks in isolated tented settlements lacking municipal water access. Sanitation support, sewage pit construction, and hygiene kit distribution across North Bekaa communities.' },
-  { year:'2017', period:'2017 – 2018', name:'Camp Rehabilitation & Winterization', desc:'Structural reinforcement of informal shelters ahead of winter — tent rehabilitation, plastic sheeting, insulation, and floor leveling. Coordinated cleaning campaigns in Al Shaher, Dalhamiya, and Al Rawda.' },
-  { year:'2018', period:'2018', name:'Cinema Station — Experimental Screenings with Kırkayak Kültür', desc:'An experimental film programme held at our community centre in Al Fares Camp, Bekaa Valley, in partnership with Kırkayak Kültür association. We screened films with women of the camp and held guided discussions after each screening exploring the relationship between cinema and everyday life. A space for reflection, storytelling, and shared meaning-making through film.', photos:['42600686_1420647654732080_1277128905085419520_n.jpg','42686597_1420647664732079_7939259832773640192_n.jpg'] },
-  { year:'2018', period:'2018 – 2019', name:'Flood Response & Drainage', desc:'Emergency flood response in Bekaa settlements after winter storms — drainage clearing, mud removal, tent repair, and material distribution to affected families within 48 hours of flooding.' },
-  { year:'2019', period:'2019 – 2020', name:'Wildfire Response', desc:'Supported the Lebanese Civil Defence with food, water, equipment, and volunteers during wildfire emergencies in Chouf and Moftaka al Nahreen — cross-community solidarity in environmental crisis.' },
-  { year:'2019', period:'2019 – 2020', name:'WASH & Sanitation Support — Phase II', desc:'Sewage infrastructure repairs, latrine construction, and refugee camp cleaning campaigns across Central Bekaa. Focus on hygiene-sensitive areas with young children and elderly residents.' },
-  { year:'2020', period:'2020', name:'WASH & COVID Sanitation Response', desc:'Emergency hygiene and sanitation response during the pandemic — disinfection of camp pathways, installation of handwashing stations, and distribution of sanitation kits to prevent community spread in overcrowded settlements.' },
-  { year:'2020', period:'August 2020', name:'Beirut Port Explosion Response', desc:'Community kitchens delivering 400+ dishes daily across Gemmayze, Jeiteawi, Mar Mikhayel and Karantina; rubble cleanup; medication delivery to the elderly; safe houses for abandoned migrant domestic workers.' },
-  { year:'2020', period:'2020 – 2021', name:'COVID-19 Pandemic Response', desc:'Hygiene kits, masks, sanitation supplies, and food aid distributed to refugees and high-risk groups across Lebanon during lockdown and economic collapse.' },
-  { year:'2020', period:'2020 – 2022', name:'Safe Houses for Migrant Communities', desc:'Shelter, rent assistance, food, and healthcare access for African migrant workers and domestic workers abandoned during Lebanon\'s collapse. With Migrant Workers\' Action.' },
-  { year:'2022', period:'2022 – 2023', name:'Syria Earthquake Emergency Response', desc:'Cross-border aid to Latakia, Aleppo, Hama and Turkey: house rehabilitation, solar system repairs, medical supplies, heating, and infant formula. Team members traveled in person.' },
-  { year:'2023', period:'2023', name:'Voices of the Unseen — New Displacement Response', desc:'Emergency evacuations, community kitchens serving 500 families daily in Tripoli, medical assistance, hygiene supplies, shelter and rent support for those excluded from state aid.' },
+/* ── Field archive data ────────────────────────────────────── */
+const ARCH_PROJECTS = [
+  {year:2013,title:'Foundation & Emergency Relief',cat:'emergency',period:'Oct 2013 – 2014',location:'Bekaa Valley, Lebanon',partners:'Volunteer team',desc:'Emergency relief in informal tented settlements across the Bekaa — food, clothing, and winter assistance. Established the civilian-only, non-sectarian approach that defines Syrian Eyes today.',photos:4,video:false},
+  {year:2014,title:'Future Together Now! I',cat:'art',period:'2014 – 2019',location:'North & Central Bekaa',partners:'Basmeh & Zeitooneh · forumZFD',desc:'Social inclusion, joint decision making, conflict transformation, and a recycling project across the Bekaa.',photos:3,video:false},
+  {year:2014,title:'WASH & Camp Rehabilitation — Phase I',cat:'emergency',period:'2014 – 2015',location:'Bekaa Valley',partners:'Community volunteers',desc:'First flood response and camp drainage work in the Bekaa. Tent repair, waterproofing, and basic sanitation infrastructure in Al Fares and Al Amniye settlements.',photos:3,video:false},
+  {year:2015,title:'Mobile Clinic Program',cat:'medical',period:'2015',location:'North Bekaa',partners:'Oxfam GB · Volunteer doctors',desc:'A doctor-led mobile unit serving isolated camps and villages — 812 cases served in the first half of 2015 alone.',photos:3,video:false},
+  {year:2015,title:'Syria in My Mind — Heritage Project',cat:'art',period:'2015 – 2018',location:'Multiple settlements',partners:'UNICEF · Biladi · AVSI',desc:'Heritage education for ~2,000 Syrian refugee children through archaeological reconstruction, geography games, and visual storytelling.',photos:5,video:true},
+  {year:2015,title:'Community Bakery — Jarrahieh',cat:'art',period:'2015 – Ongoing',location:'Jarrahieh Camp',partners:'Jasmin-Hilfe',desc:'Fresh saj bread for 100–500 families daily, creating four full-time vocational jobs for refugee women.',photos:4,video:false},
+  {year:2016,title:'Art & Creative Expression',cat:'art',period:'2016 – 2019',location:'Lebanon',partners:'Local & international',desc:'Drawing, painting, and storytelling workshops with exhibitions in Lebanon and Toronto.',photos:6,video:false},
+  {year:2016,title:'WASH & Water Tank Installation',cat:'emergency',period:'2016 – 2017',location:'North Bekaa',partners:'Community partners',desc:'Installation of water storage tanks in isolated tented settlements. Sanitation support and hygiene kit distribution.',photos:3,video:false},
+  {year:2017,title:'Camp Rehabilitation & Winterization',cat:'emergency',period:'2017 – 2018',location:'Al Shaher · Dalhamiya · Al Rawda',partners:'Community volunteers',desc:'Structural reinforcement of informal shelters ahead of winter — tent rehabilitation, plastic sheeting, insulation, and floor leveling.',photos:4,video:false},
+  {year:2018,title:'Cinema Station',cat:'film',period:'2018',location:'Al Fares Camp, Bekaa',partners:'Kırkayak Kültür',desc:'Experimental film screenings with women of the camp at our community centre. Post-screening discussions exploring the relationship between cinema and everyday life.',photos:4,video:true},
+  {year:2018,title:'Flood Response & Drainage',cat:'emergency',period:'2018',location:'Bekaa Valley',partners:'Community volunteers',desc:'Emergency flood response in Bekaa settlements — drainage clearing, mud removal, tent repair, and material distribution within 48 hours.',photos:3,video:false},
+  {year:2019,title:'Wildfire Response',cat:'emergency',period:'2019 – 2020',location:'Chouf & North Lebanon',partners:'Lebanese Civil Defence',desc:'Supported firefighting with food, water, equipment, and volunteers during wildfire emergencies.',photos:3,video:false},
+  {year:2019,title:'WASH & Sanitation — Phase II',cat:'emergency',period:'2019 – 2020',location:'Central Bekaa',partners:'Community partners',desc:'Sewage infrastructure repairs, latrine construction, and camp cleaning campaigns across Central Bekaa.',photos:3,video:false},
+  {year:2020,title:'WASH & COVID Sanitation',cat:'medical',period:'2020',location:'Bekaa settlements',partners:'Community volunteers',desc:'Emergency hygiene response during the pandemic — disinfection, handwashing stations, and sanitation kit distribution.',photos:4,video:false},
+  {year:2020,title:'Beirut Port Explosion Response',cat:'emergency',period:'August 2020',location:'Beirut',partners:'Multiple organisations',desc:'Community kitchens delivering 400+ dishes daily across Gemmayze and Karantina. Rubble cleanup, medication delivery, and safe houses for migrant workers.',photos:7,video:true},
+  {year:2020,title:'COVID-19 Response',cat:'medical',period:'2020 – 2021',location:'Lebanon-wide',partners:'Multiple partners',desc:'Hygiene kits, masks, and food aid for refugees and high-risk groups during lockdown and economic collapse.',photos:5,video:false},
+  {year:2020,title:'Safe Houses for Migrant Communities',cat:'emergency',period:'2020 – 2022',location:'Beirut',partners:'Migrant Workers\' Action',desc:'Shelter, rent assistance, food, and healthcare for African migrant workers abandoned during Lebanon\'s collapse.',photos:4,video:false},
+  {year:2022,title:'Syria Earthquake Emergency Response',cat:'emergency',period:'2022 – 2023',location:'Syria & Turkey',partners:'Cross-border network',desc:'House rehabilitation, solar repairs, medical supplies, heating, and infant formula across Latakia, Aleppo, and Hama.',photos:6,video:true},
+  {year:2023,title:'Film Lab — Youth Documentary',cat:'film',period:'2023 – 2024',location:'Beirut',partners:'WASL Documentary',desc:'Training refugee and migrant youth in filmmaking and podcasting. 5 films produced, 3 podcasts recorded.',photos:5,video:true},
 ];
 
-/* ── Build timeline nav list ──────────────────────────────── */
-const navCol = document.getElementById('tl-nav');
-PROJECTS.forEach((p, i) => {
-  const item = document.createElement('div');
-  item.className = 'tl-item' + (i === 0 ? ' active' : '');
-  item.dataset.idx = i;
-  item.innerHTML = `
-    <div class="tl-item-dot"></div>
-    <span class="tl-item-year">${p.year}</span>
-    <span class="tl-item-name">${p.name}</span>
-  `;
-  item.addEventListener('click', () => setActive(i));
-  navCol.appendChild(item);
-});
+const ARCH_PHRASES = {
+  2013:'The founding <em>year</em>',
+  2014:'Building <em>roots</em>',
+  2015:'Three programs, <em>one vision</em>',
+  2016:'Art as <em>witness</em>',
+  2017:'Quiet <em>continuity</em>',
+  2018:'Cinema & <em>memory</em>',
+  2019:'Fire & <em>response</em>',
+  2020:'A year the world <em>broke</em>',
+  2021:'Slow <em>rebuilding</em>',
+  2022:'Across <em>borders</em>',
+  2023:'New <em>voices</em>',
+  2024:'A decade of <em>witness</em>'
+};
 
-/* ── Set active project ────────────────────────────────────── */
-let tlInitDone = false;
+const ARCH_ICONS = {emergency:'◈',art:'◎',film:'▶',medical:'✦'};
+const ARCH_START=2013, ARCH_END=2024;
+let archYear=2013, archCat='all', archDragging=false;
+let archCasePs=[], archCaseIdx=0, archHinted=false;
 
-function setActive(idx) {
-  const p = PROJECTS[idx];
-  ['tl-year','tl-period','tl-name','tl-desc'].forEach(id => {
-    document.getElementById(id).style.opacity = '0';
-    document.getElementById(id).style.transform = 'translateY(8px)';
-  });
-  setTimeout(() => {
-    document.getElementById('tl-year').textContent   = p.year;
-    document.getElementById('tl-period').textContent = p.period;
-    document.getElementById('tl-name').innerHTML     = p.name;
-    document.getElementById('tl-desc').textContent   = p.desc;
-    document.getElementById('tl-counter').textContent = String(idx+1).padStart(2,'0') + ' / ' + PROJECTS.length;
-    // Photo strip — only for entries that carry a `photos` array
-    const _strip = document.getElementById('tl-photostrip');
-    if (_strip) {
-      if (p.photos && p.photos.length) {
-        _strip.innerHTML = p.photos.map(src =>
-          '<div class="tl-ps-cell"><img src="' + src + '" width="960" height="640" decoding="async" alt="' + p.name.replace(/"/g,'&quot;') + '" loading="lazy"></div>'
-        ).join('');
-        _strip.hidden = false;
-      } else {
-        _strip.innerHTML = '';
-        _strip.hidden = true;
-      }
+/* Build sprockets */
+function archBuildSprockets(){
+  ['archSpT','archSpB'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    for(let i=0;i<40;i++){
+      const s=document.createElement('div');
+      s.className='arch-sprocket';
+      el.appendChild(s);
     }
-    ['tl-year','tl-period','tl-name','tl-desc'].forEach(id => {
-      document.getElementById(id).style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-      document.getElementById(id).style.opacity = '1';
-      document.getElementById(id).style.transform = 'translateY(0)';
-    });
-  }, 200);
-  document.querySelectorAll('.tl-item').forEach((el, i) => {
-    el.classList.toggle('active', i === idx);
   });
-  // Only scrollIntoView after user interaction, not on init
-  if (tlInitDone) {
-    const activeItem = navCol.querySelector('.tl-item.active');
-    if (activeItem) activeItem.scrollIntoView({ block:'nearest', behavior:'smooth' });
+}
+
+/* Build ticks */
+function archBuildTicks(){
+  const c=document.getElementById('archTicks');
+  if(!c)return;
+  c.innerHTML='';
+  for(let y=ARCH_START;y<=ARCH_END;y++){
+    const pct=((y-ARCH_START)/(ARCH_END-ARCH_START))*100;
+    const maj=y===ARCH_START||y===ARCH_END||y%2===1;
+    const d=document.createElement('div');
+    d.className='arch-tk'+(maj?' mj':'');
+    d.style.cssText=`position:absolute;left:${pct}%;bottom:5px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:2px`;
+    d.innerHTML=`<span class="arch-tk-l">${y}</span><div class="arch-tk-b" style="height:${maj?14:8}px"></div>`;
+    c.appendChild(d);
   }
-  const pct = idx / (PROJECTS.length - 1) * 100;
-  updateScrubberUI(pct);
 }
 
-/* ── Scrubber ──────────────────────────────────────────────── */
-const track = document.getElementById('tl-track');
-const fill  = document.getElementById('tl-fill');
-const thumb = document.getElementById('tl-thumb');
-const scrubYear = document.getElementById('tl-scrubber-year');
-let dragging = false;
-
-function updateScrubberUI(pct) {
-  pct = Math.max(0, Math.min(100, pct));
-  fill.style.width  = pct + '%';
-  thumb.style.left  = pct + '%';
-  const idx = Math.round(pct / 100 * (PROJECTS.length - 1));
-  scrubYear.textContent = PROJECTS[idx].year;
+/* Build event dots */
+function archBuildDots(){
+  const c=document.getElementById('archDots');
+  if(!c)return;
+  c.innerHTML='';
+  ARCH_PROJECTS.filter(p=>archCat==='all'||p.cat===archCat).forEach(p=>{
+    const pct=((p.year-ARCH_START)/(ARCH_END-ARCH_START))*100;
+    const d=document.createElement('div');
+    d.className=`arch-edot ${p.cat}`;
+    d.style.cssText=`position:absolute;left:${pct}%;top:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;border:1.5px solid #080706;cursor:pointer;z-index:4;transition:all .22s`;
+    d.title=p.title;
+    d.addEventListener('click',e=>{
+      e.stopPropagation();
+      archGoYear(p.year,true);
+      const yp=ARCH_PROJECTS.filter(x=>x.year===p.year&&(archCat==='all'||x.cat===archCat));
+      archOpenCase(yp,Math.max(0,yp.indexOf(p)));
+    });
+    c.appendChild(d);
+  });
 }
 
-function scrubTo(clientX) {
-  const rect = track.getBoundingClientRect();
-  const pct  = Math.max(0, Math.min(100, (clientX - rect.left) / rect.width * 100));
-  const idx  = Math.round(pct / 100 * (PROJECTS.length - 1));
-  setActive(idx);
+function archPct(y){return(y-ARCH_START)/(ARCH_END-ARCH_START);}
+function archClampY(v){return Math.max(ARCH_START,Math.min(ARCH_END,v));}
+
+function archGoYear(y,snap=false){
+  const ny=archClampY(snap?y:Math.round(y));
+  const changed=ny!==archYear;
+  archYear=ny;
+  const p=archPct(archYear);
+  const ph=document.getElementById('archPh');
+  if(ph)ph.style.left=(p*100)+'%';
+  const rl=document.getElementById('archRline');
+  if(rl)rl.style.width=(p*100)+'%';
+  const rg=document.getElementById('archRglow');
+  if(rg)rg.style.width=(p*100)+'%';
+  const pt=document.getElementById('archPhtag');
+  if(pt)pt.textContent=archYear;
+  const sy=document.getElementById('archSyr');
+  if(sy)sy.textContent=archYear;
+  const bm=document.getElementById('archBeam');
+  if(bm)bm.style.left=((p*100)-4)+'%';
+
+  /* sprocket highlight near playhead */
+  const spT=document.getElementById('archSpT');
+  const spB=document.getElementById('archSpB');
+  if(spT&&spB){
+    const si=Math.round(p*(spT.children.length-1));
+    [...spT.children].forEach((s,i)=>s.classList.toggle('lit',Math.abs(i-si)<=2));
+    [...spB.children].forEach((s,i)=>s.classList.toggle('lit',Math.abs(i-si)<=2));
+  }
+
+  if(changed){
+    const ph2=document.getElementById('archPhrase');
+    if(ph2){
+      ph2.classList.add('fade');
+      setTimeout(()=>{
+        ph2.innerHTML=ARCH_PHRASES[archYear]||(archYear+' — <em>witness</em>');
+        ph2.classList.remove('fade');
+      },200);
+    }
+    const sc=document.getElementById('archScNum');
+    if(sc){sc.style.transform='scale(1.15)';sc.style.opacity='.4';setTimeout(()=>{sc.style.transform='';sc.style.opacity='';},150);}
+  }
+
+  const ys=ARCH_PROJECTS.filter(p=>p.year===archYear&&(archCat==='all'||p.cat===archCat));
+  const sn=document.getElementById('archScNum');
+  if(sn)sn.textContent=ys.length||'—';
+  archRenderCards(ys);
+  if(!archHinted){const h=document.getElementById('archHint');if(h)h.style.opacity='0';archHinted=true;}
 }
 
-track.addEventListener('mousedown', e => { dragging = true; scrubTo(e.clientX); });
-track.addEventListener('touchstart', e => { dragging = true; scrubTo(e.touches[0].clientX); }, { passive: true });
-document.addEventListener('mousemove', e => { if (dragging) scrubTo(e.clientX); });
-document.addEventListener('touchmove', e => { if (dragging) scrubTo(e.touches[0].clientX); }, { passive: true });
-document.addEventListener('mouseup',  () => dragging = false);
-document.addEventListener('touchend', () => dragging = false);
-track.addEventListener('click', e => scrubTo(e.clientX));
+function archRenderCards(ys){
+  window._archCps=ys;
+  const g=document.getElementById('archGrid');
+  if(!g)return;
+  if(!ys.length){g.innerHTML=`<div class="arch-no-p">No records for ${archYear}</div>`;return;}
+  g.innerHTML=ys.map((p,i)=>`
+    <div class="arch-pc in" style="animation-delay:${i*65}ms" onclick="archOpenCase(window._archCps,${i})">
+      <div class="arch-pc-yr">${p.year}</div>
+      <div class="arch-pc-frame">
+        <span class="arch-pc-mtag ${p.video?'vd':'ph'}">${p.video?'▶ VIDEO':'◉ PHOTO'}</span>
+        <span class="arch-pc-fi">${ARCH_ICONS[p.cat]||'◈'}</span>
+      </div>
+      <div class="arch-pc-title">${p.title}</div>
+      <span class="arch-pc-tag ${p.cat}">${p.cat}</span>
+    </div>
+  `).join('');
+}
 
-// Init — no scroll on first call
-setActive(0);
-tlInitDone = true;
+function archOpenCase(ps,idx){
+  archCasePs=ps;archCaseIdx=idx;archRenderCase();
+  const c=document.getElementById('archCase');
+  if(!c)return;
+  c.style.display='flex';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>c.classList.add('open')));
+}
+function archCloseCase(){
+  const c=document.getElementById('archCase');
+  if(!c)return;
+  c.classList.remove('open');
+  setTimeout(()=>c.style.display='none',360);
+}
+function archNavCase(d){archCaseIdx=(archCaseIdx+d+archCasePs.length)%archCasePs.length;archRenderCase();}
+
+function archRenderCase(){
+  const p=archCasePs[archCaseIdx];
+  const cst=document.getElementById('archCst');
+  if(cst)cst.textContent=String(archCaseIdx+1).padStart(2,'0')+' / '+String(archCasePs.length).padStart(2,'0');
+  const tC={emergency:'rgba(223,72,72,.18);color:#f09090',art:'rgba(228,166,62,.15);color:#e4a63e',film:'rgba(75,140,250,.13);color:#4b8cfa',medical:'rgba(45,107,94,.18);color:#5dbfaa'}[p.cat];
+  const cm=document.getElementById('archCmeta');
+  if(cm)cm.innerHTML=`
+    <div class="arch-cm-yr">${p.year}</div>
+    <div class="arch-mf"><div class="arch-ml">Period</div><div class="arch-mv">${p.period}</div></div>
+    <div class="arch-mf"><div class="arch-ml">Location</div><div class="arch-mv">${p.location}</div></div>
+    <div class="arch-mf"><div class="arch-ml">Partners</div><div class="arch-mv">${p.partners}</div></div>
+    <div class="arch-mf"><div class="arch-ml">Category</div><span class="arch-mtag" style="background:${tC};font-size:8px;letter-spacing:.12em;padding:2px 9px">${p.cat.toUpperCase()}</span></div>
+  `;
+  const photos=Array.from({length:p.photos},(_,i)=>`<div class="arch-pth"><span style="font-size:15px;color:rgba(255,255,255,.18)">◉</span><span>FRAME ${String(i+1).padStart(2,'0')}</span></div>`).join('');
+  const vid=p.video?`<div class="arch-ms"><div class="arch-ml2">Video footage</div><div class="arch-pstrip"><div class="arch-vth"><span style="font-size:22px;color:#e4a63e">▶</span><span>PLAY FOOTAGE</span></div></div></div>`:'';
+  const cc=document.getElementById('archCcont');
+  if(cc)cc.innerHTML=`
+    <div class="arch-ct">${p.title}</div>
+    <div class="arch-cp">${p.period} · ${p.location}</div>
+    <div class="arch-cd">${p.desc}</div>
+    ${vid}
+    <div class="arch-ms"><div class="arch-ml2">Field photographs · ${p.photos} frames</div><div class="arch-pstrip">${photos}</div></div>
+  `;
+}
+
+function archSetCat(c,btn){
+  archCat=c;
+  document.querySelectorAll('.arch-cb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  archBuildDots();
+  archGoYear(archYear,true);
+}
+
+/* Drag */
+const archRailEl=document.getElementById('archRail');
+if(archRailEl){
+  const archGetX=e=>e.touches?e.touches[0].clientX:e.clientX;
+  function archMoveHead(e){
+    const r=archRailEl.getBoundingClientRect();
+    const pct=Math.max(0,Math.min(1,(archGetX(e)-r.left)/r.width));
+    archGoYear(ARCH_START+pct*(ARCH_END-ARCH_START));
+  }
+  archRailEl.addEventListener('mousedown',e=>{archDragging=true;archMoveHead(e);});
+  archRailEl.addEventListener('touchstart',e=>{archDragging=true;archMoveHead(e);},{passive:true});
+  window.addEventListener('mousemove',e=>{if(archDragging)archMoveHead(e);});
+  window.addEventListener('touchmove',e=>{if(archDragging)archMoveHead(e);},{passive:true});
+  window.addEventListener('mouseup',()=>archDragging=false);
+  window.addEventListener('touchend',()=>archDragging=false);
+}
+
+/* Cursor light orb */
+const archSection=document.getElementById('past-projects');
+const archOrbC=document.getElementById('archOrbCursor');
+if(archSection&&archOrbC){
+  archSection.addEventListener('mousemove',e=>{
+    const r=archSection.getBoundingClientRect();
+    archOrbC.style.left=(e.clientX-r.left)+'px';
+    archOrbC.style.top=(e.clientY-r.top)+'px';
+  });
+}
+
+/* Boot */
+archBuildSprockets();
+archBuildTicks();
+archBuildDots();
+archGoYear(2013,true);
 
 // Guarantee page starts at top regardless of any hash
 if (window.location.hash) { history.replaceState(null, '', window.location.pathname); }

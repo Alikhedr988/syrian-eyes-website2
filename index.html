@@ -99,7 +99,9 @@ a { text-decoration: none; color: inherit; }
   border-bottom: 1px solid transparent;
 }
 #nav.on-dark {
-  background: rgba(26,23,20,0.94);
+  background: rgba(26,23,20,0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom-color: rgba(255,255,255,0.06);
 }
 #nav.on-light {
@@ -121,7 +123,10 @@ a { text-decoration: none; color: inherit; }
   gap: 12px;
 }
 .nav-logo-old {
-  height: 38px;
+  /* Stacked PNG with transparent padding: the box overflows the 64px nav but
+     the artwork stays inside it. margin-top recentres the bottom-heavy padding. */
+  height: 76px;
+  margin-top: 4px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -3371,26 +3376,6 @@ window.scrollTo(0, 0);
   startTimer();
   rafId = requestAnimationFrame(tick);
 })();
-
-/* ── Nav switch ────────────────────────────────────────────── */
-const heroEl = document.getElementById('hero');
-const nav = document.getElementById('nav');
-const navLogoImg = document.getElementById('nav-logo-img');
-function updateNavLogo() {
-  if (!navLogoImg) return;
-  if (nav.classList.contains('on-light')) {
-    navLogoImg.src = 'logo-dark.svg';
-  } else {
-    navLogoImg.src = 'logo-light.svg';
-  }
-}
-function updateNav() {
-  const h = heroEl.getBoundingClientRect().bottom;
-  nav.className = h <= 64 ? 'on-light' : 'on-dark';
-  updateNavLogo();
-}
-window.addEventListener('scroll', updateNav, { passive: true });
-updateNavLogo();
 
 /* ── Scroll reveal ─────────────────────────────────────────── */
 const revealObs = new IntersectionObserver(entries => {

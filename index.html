@@ -115,6 +115,20 @@ a { text-decoration: none; color: inherit; }
   transition: opacity 0.2s ease;
 }
 .nav-logo-img:hover { opacity: 0.82; }
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-logo-old {
+  height: 38px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0.82;
+  transition: opacity 0.2s;
+}
+.nav-logo-old:hover { opacity: 1; }
 
 .nav-links { display: flex; align-items: center; gap: 34px; }
 .nav-links a {
@@ -2207,12 +2221,17 @@ footer {
   <a class="nav-logo" href="#">
     <img
       src="logo-light.svg"
-      alt="Syrian Eyes — Relief & Development"
+      alt="Syrian Eyes"
       id="nav-logo-img"
       class="nav-logo-img"
-      width="160"
-      height="52"
       loading="eager"
+    >
+    <img
+      src="logo colored.png"
+      alt=""
+      class="nav-logo-old"
+      loading="eager"
+      aria-hidden="true"
     >
   </a>
   <div class="nav-links">
